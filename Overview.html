@@ -105,7 +105,7 @@
       </ul>
       <p>This API is designed to be used in conjunction with DOM events and
       elements on the web platform, notably: composition events and the
-      <a href="http://dev.w3.org/html5/2dcontext/">Canvas 2D Context API</a>.</p>
+      <a href="http://dev.w3.org/html5/2dcontext/">Canvas 2D Context API</a> [[CANVAS-2D]].</p>
     </section>
     <section id='sotd'>
       <p>
@@ -119,7 +119,8 @@
       or a <code>&lt;canvas&gt;</code> element, developers have difficulties when implementing
       a web application that controls an IME. To provide ability to notify the
       data of an IME associated with the hosting user-agent to web applications,
-      <a href="http://www.w3.org/TR/DOM-Level-3-Events/">the &ldquo;DOM Level 3 Event&rdquo; specification</a>
+      <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html">the DOM Level 3 Events specification</a>
+      [[DOM-LEVEL-3-EVENTS]]
       introduces composition events. To use these events, web applications
       can retrieve the text being composed with an IME. On the other hand, web
       applications have difficulties when they manipulate IMEs on non-editable
@@ -629,9 +630,8 @@ function onKeyUp(event) {
           when a user agent can change the input mode of its associated IME.
           Otherwise it returns <code>false</code>.</p>
           <p class="note">The parameters for this function are copied from
-          <a href="http://www.w3.org/TR/2002/CR-xforms-20021112/sliceE.html">Annex E of
-          the &ldquo;XForms 1.0&rdquo; specification</a>, for consistency with
-          that specification.</p>
+          <a href="http://www.w3.org/TR/xforms/#mode">Annex E of the &ldquo;XForms 1.0&rdquo; specification</a>
+          [[XFORMS10]], for consistency with that specification.</p>
           <ul>
             <li>The <var>script</var> parameter represents a Unicode script name.</li>
             <li>The <var>modifier</var> parameter represents a string added
@@ -669,7 +669,8 @@ function onKeyUp(event) {
           <p>When a web application calls this function, a user-agent sends a
           compositionend event and a textInput event as a user types an
           &lsquo;Accept&rsquo; key as written in
-          <a href="http://www.w3.org/TR/DOM-Level-3-Events/#keys-IME">Section 6.2.4 of the DOM Level 3 Event Specification</a>.</p>
+          <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
+          [[!DOM-LEVEL-3-EVENTS]].</p>
           <p class="note">This function is just copied from WebKit, to solicit opinions
           from developers of JavaScript-based IMEs.</p>
           </dd>
@@ -733,7 +734,9 @@ function onKeyUp(event) {
         user agent sends a composition event and renders the composition text as it
         does for system IMEs. The following figure  illustrates a sequence
         that composes text with a JavaScript IME which emulates the first example
-        in Section 6.2.4 of the &ldquo;DOM Level 3 Event&rdquo; specification.</p>
+        in the
+        <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
+        [[DOM-LEVEL-3-EVENTS]].</p>
         <figure id="fig-composing-with-js-ime">
           <p><img height="1285" src="images/image12.png" width="707"></p>
           <figcaption>Composing Text with JavaScript IME</figcaption>
