@@ -106,11 +106,12 @@
         <a href="#ime-composition">composition</a>
         such as the actual text being input, its length, and its target
         <a href="#clause">clause</a>.
-        <p class="issue">need to define what a <i>clause</i> is</p>.</li>
+        <p class="issue">need to define what a <i>clause</i> is</p></li>
       </ul>
       <p>This API is designed to be used in conjunction with DOM events and
       elements on the Web platform, notably: composition events and the
-      <a href="http://dev.w3.org/html5/2dcontext/">Canvas 2D Context API</a> [[CANVAS-2D]].</p>
+      <a href="http://dev.w3.org/html5/2dcontext/">Canvas 2D Context API</a>
+      [[CANVAS-2D]].</p>
     </section>
     <section id='sotd'>
       <p>
@@ -343,18 +344,25 @@ function onKeyUp(event) {
     </section>
     <section class='informative' id="background">
       <h1>Background: What’s an Input Method Editor?</h1>
-      <p>An <dfn id="IME">IME</dfn> (input-method editor) is an application that allows users
-      to type the thousands of characters with a standard US-101 keyboard or
-      phonetic keyboards used in China, Japan, and Korea. An IME consists of two
-      modules; a <a href="#composer">composer</a> and a <a href="#converter">converter</a>.</p>
-      <p>A <dfn id="composer">composer</dfn>
-      is a context-free parser that composes non-ASCII characters (including phonetic characters) from
+      <p>An <dfn id="IME">IME</dfn> (input-method editor) is an application
+      that allows a standard keyboard (such as a US-101 keyboard) to be used to
+      type characters and symbols that are not directly represented on the
+      keyboard itself. In China, Japan, and Korea, IMEs are used ubiquitously to
+      enable standard keyboards to be employed to type the very large number
+      of characters required for writing in Chinese, Japanese, and Korean.</p>
+
+      <p>An IME consists of two modules; a <a href="#composer">composer</a>
+      and a <a href="#converter">converter</a>.</p>
+
+      <p>A <dfn id="composer">composer</dfn> is a context-free parser that
+      composes non-ASCII characters (including phonetic characters) from
       keystrokes.</p>
       <p>A <dfn id="converter">converter</dfn> is a context-sensitive parser that looks up a
       dictionary to convert phonetic characters to a set of ideographic
       characters.</p>
       <p>A <dfn id="ime-composition">IME composition</dfn>
       is a instance of text produced in an IME.</p>
+
       <p>When an IME receives keystrokes, it sends the keystrokes to a
       composer and receives phonetic characters matching to the keystrokes. When
       an IME receives phonetic characters from a composer, it sends the phonetic
