@@ -6,6 +6,7 @@
     <style rel="stylesheet">
       body {
         counter-reset: figcaption;
+        counter-reset: example;
       }
       figcaption {
         font-weight: bold;
@@ -29,6 +30,10 @@
       }
       .ed_mailto:after {
         content: ">";
+      }
+      pre.example::before {
+        content: "Example " counter(example) " " !important;
+        counter-increment: example;
       }
     </style>
     <script class='remove'>
@@ -151,7 +156,7 @@
     <p>The following example shows the source for a web application that
     renders composition text by itself and uses the candidate window provided
     by an IME.</p>
-<pre class="example sh_javascript">
+<pre class="example sh_javascript" id="ex-candidate-window">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -222,7 +227,7 @@ function onCompositionEnd(event) {
     <p>The following shows an example of a simple IME that composes
     Japanese Hiragana characters from key strokes.</p>
     <p class="note">This is just a sample and not suitable for real use.</p>
-<pre class="example sh_javascript">
+<pre class="example sh_javascript" id="ex-hiragana-keystrokes">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
