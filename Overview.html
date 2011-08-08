@@ -98,13 +98,13 @@
       hosting user agent. The IME API  includes:</p>
       <ul>
        <li>An <a>InputMethodContext</a> interface, which provides methods to
-        retrieve the detailed data of an ongoing composition and to update it</li>
+        retrieve the detailed data of an ongoing composition and to update it.</li>
        <li>A <a>Composition</a> interface, which represents read-only attributes
         about the current composition such as its string, its length, its target
         clause.</li>
       </ul>
       <p>This API is designed to be used in conjunction with DOM events and
-      elements on the web platform, notably: composition events and the
+      elements on the Web platform, notably: composition events and the
       <a href="http://dev.w3.org/html5/2dcontext/">Canvas 2D Context API</a> [[CANVAS-2D]].</p>
     </section>
     <section id='sotd'>
@@ -115,14 +115,14 @@
     <section class='informative' id="introduction">
       <h2>Introduction</h2>
       <p>Even though HTML5 APIs allow developers to implement very
-      complicated web applications such as a visual chat application using an SVG
+      complicated Web applications such as a visual chat application using an SVG
       or a <code>&lt;canvas&gt;</code> element, developers have difficulties when implementing
-      a web application that controls an IME. To provide ability to notify the
-      data of an IME associated with the hosting user-agent to web applications,
+      a Web application that controls an IME. To provide ability to notify the
+      data of an IME associated with the hosting user-agent to Web applications,
       <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html">the DOM Level 3 Events specification</a>
       [[DOM-LEVEL-3-EVENTS]]
-      introduces composition events. To use these events, web applications
-      can retrieve the text being composed with an IME. On the other hand, web
+      introduces composition events. To use these events, Web applications
+      can retrieve the text being composed with an IME. On the other hand, Web
       applications have difficulties when they manipulate IMEs on non-editable
       elements such as <code>&lt;canvas&gt;</code> elements:</p>
       <ul>
@@ -141,7 +141,7 @@
     <p>HTML5 also introduces APIs useful for implementing an IME, e.g., Web
     Storage can store an IME dictionary, WebSocket and XMLHttpRequest allow to
     send a server request that looks up an IME dictionary, etc. In fact,
-    web-application developers publish IMEs that use these APIs. But, it is not
+    Web-application developers publish IMEs that use these APIs. But, it is not
     so easy to make these JavaScript-based IMEs work on all user agents because
     they often rely on APIs specific to the hosting user-agent, such as
     extension APIs.</p>
@@ -156,7 +156,7 @@
     position of a composition window and retrieves the attributed text of the
     ongoing composition. The examples will be illustrative.</p>
 
-    <p>The following example shows the source for a web application that
+    <p>The following example shows the source for a Web application that
     renders composition text by itself and uses the
     <a href="#candidate-window">candidate window</a>
     provided by an IME.</p>
@@ -662,7 +662,7 @@ function onKeyUp(event) {
           function with a composition object whose text is empty. A user agent
           sends a compositionstart event when this function is called while
           hasComposition() returns <code>false</code>. On the other hand, a
-          user agent sends a compositionupdate event when a web application calls
+          user agent sends a compositionupdate event when a Web application calls
           this function while hasComposition() returns <code>true</code>.</p>
           <p class="note">This function is just copied from WebKit, to solicit opinions
           from developers of JavaScript-based IMEs.</p>
@@ -674,7 +674,7 @@ function onKeyUp(event) {
         <dt>void confirmComposition()</dt>
           <dd>
           <p>Finishes the ongoing composition of the hosting user-agent.</p>
-          <p>When a web application calls this function, a user-agent sends a
+          <p>When a Web application calls this function, a user-agent sends a
           compositionend event and a textInput event as a user types an
           &lsquo;Accept&rsquo; key as written in
           <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
@@ -722,13 +722,13 @@ function onKeyUp(event) {
     <p>This specification provides two types of interfaces:</p>
     <ol>
       <li>Interfaces for developing IMEs in JavaScript (JavaScript IMEs)</li>
-      <li>Interfaces for developing web applications that are aware of IMEs
-      (IME-aware web applications).</li>
+      <li>Interfaces for developing Web applications that are aware of IMEs
+      (IME-aware Web applications).</li>
     </ol>
     <p>Moreover, this API depends on several existing specifications to
     minimize the change for existing JavaScript IMEs.</p>
     <p>These dependencies make developers harder to use this API in their
-    JavaScript IMEs or IME-aware web applications. This section describes
+    JavaScript IMEs or IME-aware Web applications. This section describes
     practices for some use-cases.</p>
     <section id="javascript-imes">
       <h1>JavaScript IMEs</h1>
@@ -762,12 +762,12 @@ function onKeyUp(event) {
       <section id="enabling-disabling-js-imes">
         <h3>Enabling or Disabling JavaScript IMEs</h3>
         <p>A JavaScript IME should not consume keyboard events when hosting
-        web applications disable it. The JavaScript IME should call
+        Web applications disable it. The JavaScript IME should call
         getInputContext().isEnabled() when it receives a keyboard event and
         does not consume it only when it returns false.</p>
         <figure id="fig-disabled-js-ime">
           <p><img height="296" src="images/image03.png" width="699"></p>
-          <figcaption>A JavaScript IME disabled by web applications</figcaption>
+          <figcaption>A JavaScript IME disabled by Web applications</figcaption>
         </figure>
       </section>
       <section id="candidate-window-section">
@@ -790,16 +790,16 @@ function onKeyUp(event) {
     </section>
     <section id="ime-aware-webapps">
       <h1>IME-aware Web applications</h1>
-      <p>When developers develop an IME-aware web application, they need to
-      decide which IME to use in their web application: JavaScript IMEs, system
+      <p>When developers develop an IME-aware Web application, they need to
+      decide which IME to use in their Web application: JavaScript IMEs, system
       IMEs, or none. The following sections describe practices of these three
       cases.</p>
       <section id="using-js-imes">
         <h1>Using JavaScript IMEs</h1
-        <p>A web application that uses only JavaScript IMEs MUST disable
+        <p>A Web application that uses only JavaScript IMEs MUST disable
         the system IMEs associated with the hosting user-agent to prevent keyboard
         events from being consumed by system IMEs. To disable the system IMEs
-        associated with a user-agent, the web application MUST call
+        associated with a user-agent, the Web application MUST call
         getInputContext().setEnabled(true) and
         window.inputmethodmanager.setOpenState(false) when initializing itself
         and when it gains the focus.</p>
@@ -808,17 +808,17 @@ function onKeyUp(event) {
           <figcaption>Disable the system IME and enable a JavaScript IME</figcaption>
         </figure>
         <p>JavaScript IMEs MAY not dispatch keyboard events consumed by them
-        to web applications. Therefore, developers should not depend on such
-        keyboard events to develop their web applications when using JavaScript
+        to Web applications. Therefore, developers should not depend on such
+        keyboard events to develop their Web applications when using JavaScript
         IMEs.</p>
       </section>
       <section id="using-system-imes">
         <h1>Using system IMEs</h1>
-        <p>On the other hand, a web application that uses the system IME
+        <p>On the other hand, a Web application that uses the system IME
         MUST enable the system IME when it becomes active as well as it disables
         the JavaScript IMEs. JavaScript IMEs MAY consume keyboard events even
-        though the web application calls getInputContext().setEnabled(false). To
-        prevent such JavaScript IMEs from consuming keyboard events, the web
+        though the Web application calls getInputContext().setEnabled(false). To
+        prevent such JavaScript IMEs from consuming keyboard events, the Web
         application should add event handlers to keyboard events.</p>
         <figure id="enabling-system-ime">
           <p><img height="469" src="images/image09.png" width="657"></p>
@@ -827,7 +827,7 @@ function onKeyUp(event) {
       </section>
       <section id="does-not-use-imes">
         <h1>Does not use IMEs</h1>
-        <p>When a web application does not use any IMEs, it…</p>
+        <p>When a Web application does not use any IMEs, it…</p>
         <figure id="no-imes">
           <p><img height="305" src="images/image00.png" width="657"></p>
           <figcaption>[to come]</figcaption>
