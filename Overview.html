@@ -105,7 +105,7 @@
         about the current
         <a href="#ime-composition">composition</a>
         such as the actual text being input, its length, and its target
-        <a href="#clause">clause</a>
+        <a href="#clause">clause</a>.
         <p class="issue">need to define what a <i>clause</i> is</p>.</li>
       </ul>
       <p>This API is designed to be used in conjunction with DOM events and
@@ -126,29 +126,31 @@
       complicated Web applications, such as visual chat applications, using
       technologies such as SVG or the <code>&lt;canvas&gt;</code> element and API,
       developers have difficulties when implementing Web applications that
-      control <a href="#IME">input-method editors</a>. To provide the ability for hosting user
-      agents to expose Web applications to the text being composed in an
-      associated IME,
+      control <a href="#IME">input-method editors</a>. To provide the
+      ability for hosting user agents to expose Web applications to the
+      <a href="#ime-composition">composition text</a>
+      being composed in an associated IME,
       <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html">the DOM Level 3 Events specification</a>
       [[DOM-LEVEL-3-EVENTS]]
-      introduces <i>composition events</i>. In other words, using
-      composition events, Web applications can retrieve the text being composed
-      within an IME. However, Web applications can still run into
-      difficulties when they manipulate IMEs on non-editable elements such as
-      the <code>&lt;canvas&gt;</code> element; those difficulties include:</p>
+      introduces <i>composition events</i>. Using composition events, Web
+      applications can retrieve the
+      <a href="#ime-composition">composition text</a>,
+      from an IME.</p>
+
+      <p>However, Web applications can still run into difficulties when
+      they manipulate IMEs on non-editable elements such as the
+      <code>&lt;canvas&gt;</code> element; those difficulties include the fact
+      that a Web application cannot do the following:</p>
 
       <ul>
-        <li>Web applications cannot tell user agents whether Web
-        applications render composition text by themselves or ask user agents to
-        render it;</li>
-        <li>Web applications cannot tell user agents the place where user
-        agents render composition text;</li>
-        <li>Web applications cannot tell user agents whether they render
+        <li>indicate to the user whether the Web application renders
+        composition text by itself, or needs to ask user agents to render it</li>
+        <li>determine the place where user agents render composition text</li>
+        <li>detect whether the user agent renders
         <a href="#candidate-window">candidate windows</a>
-        by themselves;</li>
-        <li>Web applications cannot tell user agents the place where user
-        agents render
-        <a href="#candidate-window">candidate windows</a>.</li>
+        by themselves</li>
+        <li>determine the place where user agents render
+        <a href="#candidate-window">candidate windows</a></li>
       </ul>
 
       <p>The Web platform has a number of existing APIs useful for
