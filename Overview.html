@@ -97,9 +97,9 @@
       with scripted access to an IME (Input-Method Editor) associated with the
       hosting user agent. The IME API  includes:</p>
       <ul>
-       <li>An InputMethodManager interface, which provides methods to
+       <li>An <a>InputMethodContext</a> interface, which provides methods to
         retrieve the detailed data of an ongoing composition and to update it</li>
-       <li>A Composition interface, which represents read-only attributes
+       <li>A <a>Composition</a> interface, which represents read-only attributes
         about the current composition such as its string, its length, its target
         clause.</li>
       </ul>
@@ -520,9 +520,9 @@ function onKeyUp(event) {
       To control the IME attached to an element, it is a good idea to add a
       method to the HTMLElement interface.</p>
       <p class="issue">If the
-      <a href="#widl-HTMLElement-getInputContext-Object">getInputContext()</a>
+      <code>getInputContext()</code>
       method cannot be added to the HTMLElement
-      interface, it should be moved to the InputMethodManager interface.</p>
+      interface, it should be moved to the <a>InputMethodContext</a> interface.</p>
 
       <dl title='interface HTMLElement' class='idl'>
         <dt>Object getInputContext()</dt>
