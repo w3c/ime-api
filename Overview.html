@@ -132,9 +132,11 @@
         <li>Web applications cannot tell user agents the place where user
         agents render composition text;</li>
         <li>Web applications cannot tell user agents whether they render
-        candidate windows by themselves;</li>
+        <a href="#candidate-window">candidate windows</a>
+        by themselves;</li>
         <li>Web applications cannot tell user agents the place where user
-        agents render candidate windows.</li>
+        agents render
+        <a href="#candidate-window">candidate windows</a>.</li>
       </ul>
     <p>HTML5 also introduces APIs useful for implementing an IME, e.g., Web
     Storage can store an IME dictionary, WebSocket and XMLHttpRequest allow to
@@ -155,8 +157,9 @@
     ongoing composition. The examples will be illustrative.</p>
 
     <p>The following example shows the source for a web application that
-    renders composition text by itself and uses the candidate window provided
-    by an IME.</p>
+    renders composition text by itself and uses the
+    <a href="#candidate-window">candidate window</a>
+    provided by an IME.</p>
 <pre class="example sh_javascript" id="ex-candidate-window">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -355,6 +358,10 @@ function onKeyUp(event) {
         some composers (such as Bopomofo composers) output a placeholder character
         instead of phonetic characters while composing text.</p>
 
+        <p class="issue">need to define <i>composition window</i></p>
+
+        <p class="issue">probably should define <i>radical</i></p>
+
         <section id="phonetic-composer-section">
           <h3>Phonetic composer</h3>
           <p>Phonetic composers are not only used for typing Simplified
@@ -383,8 +390,7 @@ function onKeyUp(event) {
           </figure>
           <p>A phonetic composer for mathematical symbols outputs a
           composed mathematical symbol and shows the source keystrokes to its own
-          window, which is called as a
-          <dfn id="composition-window">composition window</dfn>.</p>
+          window, which is an example of a composition window.</p>
           <figure id="fig-composition-window">
             <p><img height="214" src="images/image14.png" width="435"></p>
             <figcaption>Composition text (Latex input)</figcaption>
@@ -411,7 +417,7 @@ function onKeyUp(event) {
           </figure>
           <p>A radical composer for Traditional Chinese outputs a
           placeholder character (U+3000) and shows the phonetic radicals being
-          composed to its own window. This window is called as a composition
+          composed to its own window. This window is an example of a composition
           window.</p>
           <figure id="fig-radical-composer-chinese">
             <p><img height="180" src="images/image02.png" width="352"></p>
@@ -446,8 +452,8 @@ function onKeyUp(event) {
         &lsquo;&#20103;&rsquo;, etc.</p>
         <p>A converter looks up a dictionary and shows a
         list of candidates of possible ideographic characters so a user can choose
-        one. This list is called as a <dfn id="candidate-list">candidate list</dfn>.
-        A candidate list is called as a <dfn id="candidate-window">candidate window</dfn>
+        one. This list is known as a <dfn id="candidate-list">candidate list</dfn>.
+        A candidate list is known as a <dfn id="candidate-window">candidate window</dfn>
         when it has its own window.</p>
         <p>Some Japanese IMEs show annotations in its <a href="#candidate-window">candidate window</a>
         for a character that is not so easy to distinguish from other characters
@@ -471,7 +477,9 @@ function onKeyUp(event) {
         Even though there are many ideographic characters for each phonetic
         character (or phonetic radical), a user does not usually use all these
         ideographic characters. A converter uses an <a href="MRU">MRU list</a> to filter out
-        ideographic characters not used so often from a candidate list. A converter
+        ideographic characters not used so often from a
+        <a href="#candidate-list">candidate list</a>.
+        A converter
         sometimes integrates a grammar parser. A converter that integrates a
         grammar parser splits the given phonetic characters into grammatical
         clauses and converts only one clause at once. When a sequence of phonetic
@@ -677,7 +685,9 @@ function onKeyUp(event) {
         <dt>void setCaretRectangle(in int x, in int y, in int w, in int h)</dt>
           <dd>
             <p>Notifies the rectangle of composition text to a user agent. When
-            a user agent renders a candidate window or a composition window, it uses
+            a user agent renders a
+            <a href="#candidate-window">candidate window</a>
+            or a composition window, it uses
             this rectangle to prevent these windows from being rendered on this
             rectangle.</p>
             <p>On Windows, this rectangle is used as a parameter for
@@ -688,7 +698,8 @@ function onKeyUp(event) {
               <li>The <var>x</var>, <var>y</var>, <var>w</var>, and <var>h</var>
               parameters represent the local coordinates of a
               composition-text rectangle. A user-agent MAY need to convert these
-              coordinates to the screen coordinates when it shows a candidate window.</li>
+              coordinates to the screen coordinates when it shows a
+              <a href="#candidate-window">candidate window</a>.</li>
             </ul>
           </dd>
         <dt>boolean setOpenState(in boolean open)</dt>
