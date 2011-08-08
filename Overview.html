@@ -93,15 +93,20 @@
   </head>
   <body>
     <section id='abstract'>
-      <p>This specification defines an API that provides Web applications
-      with scripted access to an IME (Input-Method Editor) associated with the
-      hosting user agent. The IME API  includes:</p>
+      <p>This specification defines an “IME API” that provides Web applications
+      with scripted access to an IME (<a href="#IME">input-method editor</a>)
+      associated with a hosting user agent. This IME API includes:</p>
       <ul>
        <li>An <a>InputMethodContext</a> interface, which provides methods to
-        retrieve the detailed data of an ongoing composition and to update it.</li>
+        retrieve the detailed data of an ongoing IME
+        <a href="#ime-composition">composition</a>
+        and to update it.</li>
        <li>A <a>Composition</a> interface, which represents read-only attributes
-        about the current composition such as its string, its length, its target
-        clause.</li>
+        about the current
+        <a href="#ime-composition">composition</a>
+        such as the actual text being input, its length, and its target
+        <a href="#clause">clause</a>
+        <p class="issue">need to define what a <i>clause</i> is</p>.</li>
       </ul>
       <p>This API is designed to be used in conjunction with DOM events and
       elements on the Web platform, notably: composition events and the
@@ -109,22 +114,29 @@
     </section>
     <section id='sotd'>
       <p>
-        <i>[more to come later…]</i>
+        This document is a proposal that is being made available for public
+        review in order to solicit feedback, particularly from
+        implementors, with a goal of potential cross-browser implementation
+        and standardization.
       </p>
     </section>
     <section class='informative' id="introduction">
       <h2>Introduction</h2>
-      <p>Even though HTML5 APIs allow developers to implement very
-      complicated Web applications such as a visual chat application using an SVG
-      or a <code>&lt;canvas&gt;</code> element, developers have difficulties when implementing
-      a Web application that controls an IME. To provide ability to notify the
-      data of an IME associated with the hosting user-agent to Web applications,
+      <p>Even though existing Web-platform APIs allow developers to implement very
+      complicated Web applications, such as visual chat applications, using
+      technologies such as SVG or the <code>&lt;canvas&gt;</code> element and API,
+      developers have difficulties when implementing Web applications that
+      control <a href="#IME">input-method editors</a>. To provide the ability for hosting user
+      agents to expose Web applications to the text being composed in an
+      associated IME,
       <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html">the DOM Level 3 Events specification</a>
       [[DOM-LEVEL-3-EVENTS]]
-      introduces composition events. To use these events, Web applications
-      can retrieve the text being composed with an IME. On the other hand, Web
-      applications have difficulties when they manipulate IMEs on non-editable
-      elements such as <code>&lt;canvas&gt;</code> elements:</p>
+      introduces <i>composition events</i>. In other words, using
+      composition events, Web applications can retrieve the text being composed
+      within an IME. However, Web applications can still run into
+      difficulties when they manipulate IMEs on non-editable elements such as
+      the <code>&lt;canvas&gt;</code> element; those difficulties include:</p>
+
       <ul>
         <li>Web applications cannot tell user agents whether Web
         applications render composition text by themselves or ask user agents to
@@ -138,28 +150,38 @@
         agents render
         <a href="#candidate-window">candidate windows</a>.</li>
       </ul>
-    <p>HTML5 also introduces APIs useful for implementing an IME, e.g., Web
-    Storage can store an IME dictionary, WebSocket and XMLHttpRequest allow to
-    send a server request that looks up an IME dictionary, etc. In fact,
-    Web-application developers publish IMEs that use these APIs. But, it is not
-    so easy to make these JavaScript-based IMEs work on all user agents because
-    they often rely on APIs specific to the hosting user-agent, such as
-    extension APIs.</p>
-    <p>To solve these IME-related problems, this specification introduces
-    an IME API that allows developers to read and write the composition data
-    owned by user agents. Moreover, this specification introduces interfaces
-    for compositions so Web applications can read their detailed data and
-    update it. A Composition object provides a reference to the ongoing
-    composition of an IME so Web applications can retrieve its text and
-    attributes.</p>
-    <p>The use of interfaces allows Web applications the ability to set the
-    position of a composition window and retrieves the attributed text of the
-    ongoing composition. The examples will be illustrative.</p>
 
-    <p>The following example shows the source for a Web application that
-    renders composition text by itself and uses the
-    <a href="#candidate-window">candidate window</a>
-    provided by an IME.</p>
+      <p>The Web platform has a number of existing APIs useful for
+      implementing a custom IME in JavaScript. For example, the Web Storage
+      API can store an IME dictionary, and the WebSocket and XMLHttpRequest APIs
+      allow sending a server request that performs a lookup in an IME dictionary,
+      and so on. In fact, Web-application developers are already developing and
+      deploying JavaScript-based IMEs that use these APIs. However, it is
+      currently difficult to make those JavaScript-based IMEs work on all user
+      agents, because they often rely on APIs specific to the hosting user agent,
+      such as browser extension APIs.</p>
+
+      <p>To solve these IME-related problems, this specification introduces
+      an IME API that allows Web applications to read and write composition
+      data made available by user agents. Moreover, this specification introduces
+      interfaces for
+      <a href="#ime-composition">compositions</a>,
+      so Web applications can read detailed composition
+      data and update it. A <a>Composition</a> object provides a reference
+      to an ongoing IME
+      <a href="#ime-composition">composition</a>,
+      so Web applications can retrieve the composition text and attributes.</p>
+
+      <p>The use of those APIs allows Web applications the ability to set the
+      position of a <a href="#composition-window">composition window</a>
+      and to retrieve the text and attributes of the ongoing
+      <a href="#ime-composition">composition</a>.</p>
+
+      <p>Consider the following examples. The first example shows the
+      source for a Web application that renders composition text by itself
+      and uses the
+      <a href="#candidate-window">candidate window</a>
+      provided by an IME.</p>
 <pre class="example sh_javascript" id="ex-candidate-window">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -228,7 +250,7 @@ function onCompositionEnd(event) {
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
-    <p>The following shows an example of a simple IME that composes
+    <p>The next example shows the source for a simple IME that composes
     Japanese Hiragana characters from key strokes.</p>
     <p class="note">This is just a sample and not suitable for real use.</p>
 <pre class="example sh_javascript" id="ex-hiragana-keystrokes">
@@ -319,7 +341,7 @@ function onKeyUp(event) {
     </section>
     <section class='informative' id="background">
       <h1>Background: What’s an Input Method Editor?</h1>
-      <p>An <dfn id="IME">IME</dfn> (Input Method Editor) is an application that allows users
+      <p>An <dfn id="IME">IME</dfn> (input-method editor) is an application that allows users
       to type the thousands of characters with a standard US-101 keyboard or
       phonetic keyboards used in China, Japan, and Korea. An IME consists of two
       modules; a <a href="#composer">composer</a> and a <a href="#converter">converter</a>.</p>
@@ -329,6 +351,8 @@ function onKeyUp(event) {
       <p>A <dfn id="converter">converter</dfn> is a context-sensitive parser that looks up a
       dictionary to convert phonetic characters to a set of ideographic
       characters.</p>
+      <p>A <dfn id="ime-composition">IME composition</dfn>
+      is a instance of text produced in an IME.</p>
       <p>When an IME receives keystrokes, it sends the keystrokes to a
       composer and receives phonetic characters matching to the keystrokes. When
       an IME receives phonetic characters from a composer, it sends the phonetic
@@ -361,6 +385,8 @@ function onKeyUp(event) {
         <p class="issue">need to define <i>composition window</i></p>
 
         <p class="issue">probably should define <i>radical</i></p>
+
+        <p class="issue">probably should define <i>clause</i> here too</p>
 
         <section id="phonetic-composer-section">
           <h3>Phonetic composer</h3>
@@ -649,13 +675,13 @@ function onKeyUp(event) {
           </dd>
         <dt>boolean hasComposition()</dt>
           <dd>
-            <p>Returns true when the hosting user-agent is composing text.</p>
+            <p>Returns true when the hosting user agent is composing text.</p>
             <p class="note">This function is just copied from WebKit, to solicit opinions
             from developers of JavaScript-based IMEs.</p>
           </dd>
         <dt>void setComposition(in Composition composition)</dt>
           <dd>
-          <p>Updates the composition information of the hosting user-agent.</p>
+          <p>Updates the composition information of the hosting user agent.</p>
           <p>When a JavaScript-based IME starts a composition, it MUST call
           this function with the appropriate composition information. When a
           JavaScript-based IME cancels an ongoing composition, it MUST call this
@@ -673,8 +699,8 @@ function onKeyUp(event) {
           </dd>
         <dt>void confirmComposition()</dt>
           <dd>
-          <p>Finishes the ongoing composition of the hosting user-agent.</p>
-          <p>When a Web application calls this function, a user-agent sends a
+          <p>Finishes the ongoing composition of the hosting user agent.</p>
+          <p>When a Web application calls this function, a user agent sends a
           compositionend event and a textInput event as a user types an
           &lsquo;Accept&rsquo; key as written in
           <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
@@ -697,7 +723,7 @@ function onKeyUp(event) {
             <ul>
               <li>The <var>x</var>, <var>y</var>, <var>w</var>, and <var>h</var>
               parameters represent the local coordinates of a
-              composition-text rectangle. A user-agent MAY need to convert these
+              composition-text rectangle. A user agent MAY need to convert these
               coordinates to the screen coordinates when it shows a
               <a href="#candidate-window">candidate window</a>.</li>
             </ul>
@@ -705,7 +731,7 @@ function onKeyUp(event) {
         <dt>boolean setOpenState(in boolean open)</dt>
           <dd>
           <p>Controls the state of the IME currently associated with the hosting
-          user-agent. This function returns <code>true</code> if a user agent can activate or
+          user agent. This function returns <code>true</code> if a user agent can activate or
           deactivate its associated IME.</p>
           <ul>
             <li>The <var>open</var> parameter represents whether a user agent
@@ -756,7 +782,7 @@ function onKeyUp(event) {
       <section id="consuming-events">
         <h1>Consuming events</h1>
         <p>When a JavaScript IME calls setComposition(), it MUST call
-        preventDefault()&nbsp;to prevent user-agents from inserting this character
+        preventDefault()&nbsp;to prevent user agents from inserting this character
         to an element.</p>
       </section>
       <section id="enabling-disabling-js-imes">
@@ -797,9 +823,9 @@ function onKeyUp(event) {
       <section id="using-js-imes">
         <h1>Using JavaScript IMEs</h1
         <p>A Web application that uses only JavaScript IMEs MUST disable
-        the system IMEs associated with the hosting user-agent to prevent keyboard
+        the system IMEs associated with the hosting user agent to prevent keyboard
         events from being consumed by system IMEs. To disable the system IMEs
-        associated with a user-agent, the Web application MUST call
+        associated with a user agent, the Web application MUST call
         getInputContext().setEnabled(true) and
         window.inputmethodmanager.setOpenState(false) when initializing itself
         and when it gains the focus.</p>
