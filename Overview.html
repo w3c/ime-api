@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <!-- foo -->
     <meta charset="UTF-8">
     <title>Input Method Editor API (Proposal)</title>
     <style rel="stylesheet">
@@ -98,12 +99,12 @@
       associated with a hosting user agent. This IME API includes:</p>
       <ul>
        <li>An <a>InputMethodContext</a> interface, which provides methods to
-        retrieve the detailed data of an ongoing IME
-        <a href="#ime-composition">composition</a>
-        and to update it.</li>
+        retrieve detailed data from an in-progress IME
+        <a href="#ime-composition">composition</a>,
+        and to update that data.</li>
        <li>A <a>Composition</a> interface, which represents read-only attributes
         about the current
-        <a href="#ime-composition">composition</a>
+        <a href="#ime-composition">composition</a>,
         such as the actual text being input, its length, and its target
         <a href="#clause">clause</a>.
         <p class="issue">need to define what a <i>clause</i> is</p></li>
@@ -134,8 +135,8 @@
       <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html">the DOM Level 3 Events specification</a>
       [[DOM-LEVEL-3-EVENTS]]
       introduces <i>composition events</i>. Using composition events, Web
-      applications can retrieve the
-      <a href="#ime-composition">composition text</a>,
+      applications can retrieve
+      <a href="#ime-composition">composition text</a>
       from an IME.</p>
 
       <p>However, Web applications can still run into difficulties when
