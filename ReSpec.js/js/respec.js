@@ -900,48 +900,48 @@ berjon.respec.prototype = {
         if (this.specStatus == "REC")
             header += '<p>The English version of this specification is the only normative version. Non-normative <a href="http://www.w3.org/Consortium/Translation/">translations</a> may also be available.</p>';
 
-        header += "<p class='copyright'>";
-        if (this.specStatus == "unofficial") {
-            header += 'Copyright © ';
-            if (this.additionalCopyrightHolders) {
-              if (this.copyrightStart && this.copyrightStart != this.publishDate.getFullYear()) {
-                header += this.copyrightStart + '-';
-              }
-              header += this.publishDate.getFullYear();
-              header += ' ';
-              header += this.additionalCopyrightHolders;
-              header += '<br>Permission is hereby granted, free of charge, to any person obtaining a copy of this document (the “Document”), to deal in the Document without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Document, and to permit persons to whom the Document is furnished to do so, subject to the following conditions:<br> The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Document.';
-            }
-            else header += "This document is licensed under a <a class='subfoot' href='http://creativecommons.org/licenses/by/3.0/' rel='license'>Creative Commons Attribution 3.0 License</a>.";
-        }
-        else {
-            if (this.doRDFa) {
-            header += 
-                "<a rel='license' href='http://www.w3.org/Consortium/Legal/ipr-notice#Copyright'>Copyright</a> &copy; " ;
-            } else {
-            header += 
-                "<a href='http://www.w3.org/Consortium/Legal/ipr-notice#Copyright'>Copyright</a> &copy; " ;
-            }
-            if (this.copyrightStart) {
-                header += this.copyrightStart + '-';
-            }
-            header += this.publishDate.getFullYear();
-            if (this.additionalCopyrightHolders) header += " " + this.additionalCopyrightHolders + " &amp;";
-            if (this.doRDFa) {
-                header += " <span rel='dcterms:publisher'><span typeof='foaf:Organization'><a rel='foaf:homepage' property='foaf:name' content='World Wide Web Consotrium' href='http://www.w3.org/'><acronym title='World Wide Web Consortium'>W3C</acronym></a><sup>&reg;</sup></span></span> ";
-            } else {
-                header += " <a href='http://www.w3.org/'><acronym title='World Wide Web Consortium'>W3C</acronym></a><sup>&reg;</sup> " ;
-            }
-            header +=
-                "(<a href='http://www.csail.mit.edu/'><acronym title='Massachusetts Institute of Technology'>MIT</acronym></a>, " +
-                "<a href='http://www.ercim.eu/'><acronym title='European Research Consortium for Informatics and Mathematics'>ERCIM</acronym></a>, " +
-                "<a href='http://www.keio.ac.jp/'>Keio</a>), All Rights Reserved. " +
-                "W3C <a href='http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer'>liability</a>, " + 
-                "<a href='http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks'>trademark</a> and " +
-                "<a href='http://www.w3.org/Consortium/Legal/copyright-documents'>document use</a> rules apply.";
-            
-        }
-        header += "</p><hr/></div>";
+        // header += "<p class='copyright'>";
+        // if (this.specStatus == "unofficial") {
+            // header += 'Copyright © ';
+            // if (this.additionalCopyrightHolders) {
+              // if (this.copyrightStart && this.copyrightStart != this.publishDate.getFullYear()) {
+                // header += this.copyrightStart + '-';
+              // }
+              // header += this.publishDate.getFullYear();
+              // header += ' ';
+              // header += this.additionalCopyrightHolders;
+              // header += '<br>Permission is hereby granted, free of charge, to any person obtaining a copy of this document (the “Document”), to deal in the Document without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Document, and to permit persons to whom the Document is furnished to do so, subject to the following conditions:<br> The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Document.';
+            // }
+            // else header += "This document is licensed under a <a class='subfoot' href='http://creativecommons.org/licenses/by/3.0/' rel='license'>Creative Commons Attribution 3.0 License</a>.";
+        // }
+        // else {
+            // if (this.doRDFa) {
+            // header += 
+                // "<a rel='license' href='http://www.w3.org/Consortium/Legal/ipr-notice#Copyright'>Copyright</a> &copy; " ;
+            // } else {
+            // header += 
+                // "<a href='http://www.w3.org/Consortium/Legal/ipr-notice#Copyright'>Copyright</a> &copy; " ;
+            // }
+            // if (this.copyrightStart) {
+                // header += this.copyrightStart + '-';
+            // }
+            // header += this.publishDate.getFullYear();
+            // if (this.additionalCopyrightHolders) header += " " + this.additionalCopyrightHolders + " &amp;";
+            // if (this.doRDFa) {
+                // header += " <span rel='dcterms:publisher'><span typeof='foaf:Organization'><a rel='foaf:homepage' property='foaf:name' content='World Wide Web Consotrium' href='http://www.w3.org/'><acronym title='World Wide Web Consortium'>W3C</acronym></a><sup>&reg;</sup></span></span> ";
+            // } else {
+                // header += " <a href='http://www.w3.org/'><acronym title='World Wide Web Consortium'>W3C</acronym></a><sup>&reg;</sup> " ;
+            // }
+            // header +=
+                // "(<a href='http://www.csail.mit.edu/'><acronym title='Massachusetts Institute of Technology'>MIT</acronym></a>, " +
+                // "<a href='http://www.ercim.eu/'><acronym title='European Research Consortium for Informatics and Mathematics'>ERCIM</acronym></a>, " +
+                // "<a href='http://www.keio.ac.jp/'>Keio</a>), All Rights Reserved. " +
+                // "W3C <a href='http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer'>liability</a>, " + 
+                // "<a href='http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks'>trademark</a> and " +
+                // "<a href='http://www.w3.org/Consortium/Legal/copyright-documents'>document use</a> rules apply.";
+            // 
+        // }
+        header += "<hr/></div>";
         return header;
     },
     
@@ -968,10 +968,10 @@ berjon.respec.prototype = {
         var custom = document.getElementById("sotd");
 
         if (this.specStatus == "unofficial") {
-            sotd = "<section id='sotd' class='introductory'><h2>Status of This Document</h2>" +
-            "<p>This document is merely a public working draft of a potential specification. It has " +
-            "no official standing of any kind and does not represent the support or consensus of any " +
-            "standards organisation.</p>";
+            sotd = "<section id='sotd' class='introductory'><h2>Status of This Document</h2>"
+            // + "<p>This document is a public working draft of a potential specification. It has "
+            // + "no official standing of any kind and does not represent the support or consensus of any "
+            // + "standards organisation.</p>";
             if (custom) sotd += custom.innerHTML;
             sotd += "</section>";
         }
@@ -984,7 +984,7 @@ berjon.respec.prototype = {
         else if (this.isNoTrack) {
             var mc = (this.specStatus == "MO") ? " member-confidential" : "";
             sotd = "<section id='sotd' class='introductory'><h2>Status of This Document</h2>" +
-                "<p>This document is merely a W3C-internal" + mc + " document. It has no "+
+                "<p>This document is a W3C-internal" + mc + " document. It has no "+
                 "official standing of any kind and does not represent consensus of the W3C Membership.</p>";
             if (custom) sotd += custom.innerHTML;
             sotd += "</section>";

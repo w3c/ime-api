@@ -1,0 +1,397 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- foo -->
+    <meta charset="UTF-8">
+    <title>Use cases: Input Method Editor API</title>
+    <style rel="stylesheet">
+      body {
+        counter-reset: figcaption;
+        counter-reset: example;
+      }
+      figcaption {
+        font-weight: bold;
+      }
+      figcaption:before {
+        font-weight: bold;
+        content: "Figure " counter(figcaption) ": ";
+        counter-increment: figcaption;
+      }
+      var {
+        font-weight: bold;
+        color: green; 
+        padding-left: 2px;
+        padding-right: 4px;
+      }
+      .tocline {
+        padding-top: 2px;
+      }
+      .ed_mailto:before {
+        content: "<";
+      }
+      .ed_mailto:after {
+        content: ">";
+      }
+      pre.example::before {
+        content: "Example " counter(example) " " !important;
+        counter-increment: example;
+      }
+    </style>
+    <script class='remove'>
+      function addEllipsis(id) {
+        document.getElementById(id).childNodes.item(2).textContent = "\n    …\n";
+      }
+      function removeNodes(nodesToRemove) {
+        var i, j;
+        for (i = 0; i < nodesToRemove.length; ++i) {
+          for (j = 0; j < nodesToRemove[i].length; ++j) {
+            nodesToRemove[i][j].parentNode.removeChild(nodesToRemove[i][j]);
+          }
+        }
+      }
+    </script>
+    <script class='remove'>
+      function getLastModifiedDate() {
+        var d = new Date(document.lastModified);
+        return d.toISOString().substring(0,10);
+      }
+    </script>
+    <script type="text/javascript" src='../ReSpec.js/js/respec.js' class='remove'></script>
+    <script type="text/javascript" class='remove'>
+    var respecConfig = 
+      {
+          specStatus: "unofficial",
+          shortName:  "ime-api",
+          edDraftURI: "http://dvcs.w3.org/hg/ime-api/", // FIXME
+          editors: [
+                {   name:       "Hironori Bono (坊野 博典)",
+                    company:    "Google",
+                    mailto:     "hbono@google.com"
+                },
+                {   name:       "Kenji Baheux",
+                    company:    "Google",
+                    mailto:     "kenjibaheux@google.com"
+                },
+          ],
+          wgURI:        "[to come]",
+          wg:           "[to come]",
+          wgPublicList: "public-webapps",
+          wgPatentURI:  "[to come]",
+          additionalCopyrightHolders: "Hironori Bono, Kenji Baheux",
+          publishDate: getLastModifiedDate(),
+          extraCSS: ["../ReSpec.js/css/respec.css"],
+          after: function () {
+            var nodesToRemove = [
+              document.querySelectorAll("table.parameters"),
+              document.querySelectorAll("li.tocline > a[href^='#attributes']"),
+              document.querySelectorAll("li.tocline > a[href^='#methods']"),
+             ]
+            addEllipsis('idl-def-HTMLElement');
+            removeNodes(nodesToRemove);
+          }
+      }
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>This document describes use cases for a proposed
+      <a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">IME API</a>
+      that provides Web applications with scripted access to IMEs.
+    </section>
+    <section id='sotd'>
+      <p>
+        This document is a non-normative document that provides background
+        information relevant to the proposed
+        <a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">IME API</a>.
+      </p>
+    </section>
+    <section id="introduction">
+      <h2>Introduction</h2>
+      <p>An IME (input-method editor) is an application
+      that allows a standard keyboard (such as a US-101 keyboard) to be used to
+      type characters and symbols that are not directly represented on the
+      keyboard itself. In China, Japan, and Korea, IMEs are used ubiquitously to
+      enable standard keyboards to be employed to type the very large number
+      of characters required for writing in Chinese, Japanese, and Korean.</p>
+
+      <p>Web-application developers currently encounter a number of
+      problems, pain points, and shortcomings related to interaction with
+      operating-system IMEs.
+      The
+      <a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">IME API</a>
+      addresses those issues, and this document describes use cases to which the IME API
+      is applicable in addressing those issues.
+    </section>
+    <section id="use-cases">
+      <h2>Use cases</h2>
+      <p>This section lists use cases for the
+        <a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">IME API</a>.
+    <section id="games">
+      <h2>Prevent system IMEs from interfering with games.</h2>
+      <p class=note>Similar to pointer lock, etc. When you want to move a
+      character in a game, you want to make sure that if you press a key,
+      you don’t want the IME to interfere. BUT if you also want to be able
+      to enable Japanese text input in the game, should be able to do that also.</p>
+     </section>
+    <section id="suggest">
+      <h2>Prevent auto-complete suggestions in search engines, etc., from
+      overlapping with a <code>candidate window</code> created by an IME.</h2>
+      <p class=note>You go to a search engine, you start typing in
+      Japanese, and the search engine starts giving you suggestions,
+      and at the same time, your system IME starts giving you other suggestions,
+      in window that overlaps the suggestion window from the search engine.</p>
+     </section>
+    <section id="custom-ime">
+      <h2>Enable a Web application to provide its own IME.</h2>
+      <p class=note>There are cases where the Web application knows best
+      how to render an application-appropriate IME. Render text consistent with
+      its UI, optimized for the application.  You don’t want the system UI
+      showing up in the middle of your game.</p>
+    </section>
+    <section id="detect-ime">
+      <h2>“You can determine whether an IME is installed, whether or not the
+      IME is currently enabled, and which IME is enabled.” </h2>
+      <ul>
+        <li>indicate to the user whether the Web application renders
+        composition text by itself, or needs to ask user agents to render it</li>
+        <li>determine the place where user agents render composition text</li>
+        <li>detect whether the user agent renders
+        <a href="#candidate-window">candidate windows</a>
+        by themselves</li>
+        <li>determine the place where user agents render
+        <a href="#candidate-window">candidate windows</a></li>
+      </ul>
+
+      <p class=note>
+       <a href="http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/system/IME.html">flash.system.IME</a>;
+       feature parity with Flash
+    </section>
+    <section id="ime-interaction">
+      <h2>Send IME string to be converted, get back the results</h2>
+      <p class=note>FIXME</p>
+    </section>
+    <section id="disable-system-ime">
+      <h2>Enabling/disabling system IMEs and TIPs (text input processors)
+      on Windows, e.g. virtual keyboards, handwriting recognizers, voice
+      recognizers, etc.</h2>
+      <p class=note>FIXME</p>
+    </section>
+    <section id="render-text">
+      <h2>Rendering IME text on a SVG path</h2>
+      <p class=note>FIXME</p>
+    </section>
+    <section id="switch-keyboard-layouts">
+      <h2>Switching keyboard layouts</h2>
+      <p class=note>Mac and Linux cannot distinguish keyboard from IME.
+      Windows lets you have any keyboard you like with any IME you like.
+      Gives flexibility to Web application developer to allow user to choose
+      any combination of IME and keyboard.</p>
+    </section>
+    <section id="a11y">
+      <h2>Accessibility issues?</h2>
+      <p class=note>Being able to voice what the IME is actually showing;
+       for instance, this particular kanji, this particular kanji.</p>
+     </section>
+    <section id="caret-position">
+      <h2>Retrieving a caret position in a &lt;textarea> element or an
+      &lt;input> so we can show a window under the caret.</h2>
+      <p class=note>FIXME</p>
+    </section>
+    </section>
+
+    <section id="background">
+      <h1>Background: What’s an Input Method Editor?</h1>
+      <p>An <dfn id="ime">IME</dfn> (input-method editor) is an application
+      that allows a
+      standard keyboard (such as a US-101 keyboard) to be used to type characters
+      and symbols that are not directly represented on the keyboard itself.
+
+      <p>A <dfn id="system-ime">system IME</dfn> is an IME already
+      installed on a user’s system.
+
+      <p>An IME consists of two modules; a <a href="#composer">composer</a>
+      and a <a href="#converter">converter</a>.</p>
+
+      <p>A <dfn id="composer">composer</dfn> is a context-free parser that
+      composes non-ASCII characters (including phonetic characters) from
+      keystrokes.</p>
+      <p>A <dfn id="converter">converter</dfn> is a context-sensitive parser that looks up a
+      dictionary to convert phonetic characters to a set of ideographic
+      characters.</p>
+      <p>A <dfn id="ime-composition">IME composition</dfn>
+      is a instance of text produced in an IME.</p>
+
+      <p>When an IME receives keystrokes, it sends the keystrokes to a
+      composer and receives phonetic characters matching to the keystrokes. When
+      an IME receives phonetic characters from a composer, it sends the phonetic
+      characters to a converter and receives the list of ideographic characters
+      matching to the phonetic characters. The following figure shows the
+      basic structure of an IME.</p>
+      <figure id="fig-ime-structure">
+        <p><img height="199" src="../images/image10.png" width="615"></p>
+        <figcaption>Basic structure of an IME</figcaption>
+      </figure>
+      <section id="composer-section">
+        <h1>Composer</h1>
+        <p>A composer consists of two types of composers: a
+        <a href="#phonetic-composer">phonetic composer</a>
+        and a
+        <a href="#radical-composer">radical composer</a>.</p>
+
+        <p>A <dfn id="phonetic-composer">phonetic composer</dfn> composes a phonetic
+        character from its ASCII representation.</p>
+
+        <p>A <dfn id="radical-composer">radical composer</dfn> composes a
+        phonetic character from phonetic radicals.</p>
+
+        <p>An IME usually shows the text
+        being composed by a composer with its own style to distinguish it from the
+        existing text. Even though most of composers output phonetic characters,
+        some composers (such as Bopomofo composers) output a placeholder character
+        instead of phonetic characters while composing text.</p>
+
+        <section id="phonetic-composer-section">
+          <h3>Phonetic composer</h3>
+          <p>Phonetic composers are not only used for typing Simplified
+          Chinese and Japanese, but also used for typing non-ASCII characters (such
+          as mathematical symbols, Yi, Amharic, etc.) with a US-101 keyboard. Each of
+          these languages has a mapping table from its character to a sequence of
+          ASCII characters representing its pronunciation: e.g.,
+          &lsquo;&#12363;&rsquo; to &lsquo;ka&rsquo; in Japanese, and;
+          &lsquo;&#21345;&rsquo; to &lsquo;ka&rsquo; in Simplified Chinese. This
+          mapping table is called as Romaji for Japanese and Pinyin for Simplified
+          Chinese, respectively. A phonetic composer uses these mapping tables to
+          compose a phonetic character from a sequence of ASCII characters produced
+          by a US keyboard.</p>
+          <p>A phonetic composer for Simplified Chinese outputs the input
+          ASCII characters as its composition text.</p>
+          <figure id="fig-ascii-composition-text">
+            <p><img height="180" src="../images/image11.png" width="352"></p>
+            <figcaption>Composition text (Simplified Chinese)</figcaption>
+          </figure>
+          <p>On the other hand, a phonetic composer for Japanese outputs
+          phonetic characters when the input ASCII characters have matching phonetic
+          characters.</p>
+          <figure id="fig-kana-composition-text">
+            <p><img height="180" src="../images/image13.png" width="352"></p>
+            <figcaption>Composition text (Japanese)</figcaption>
+          </figure>
+          <p>A phonetic composer for mathematical symbols outputs a
+          composed mathematical symbol and shows the source keystrokes to its own
+          window, which is an example of a composition window.</p>
+          <figure id="fig-composition-window">
+            <p><img height="214" src="../images/image14.png" width="435"></p>
+            <figcaption>Composition text (Latex input)</figcaption>
+          </figure>
+        </section>
+        <section id="radical-composer-section">
+          <h3>Radical composer</h3>
+          <p>Radical composers are mainly used for typing Traditional
+          Chinese and Korean with phonetic keyboards. Each phonetic keyboard of these
+          languages can produce phonetic radicals: e.g., typing &lsquo;r&rsquo;
+          produces &lsquo;&#12593;&rsquo; on a Korean keyboard; typing
+          &lsquo;o&rsquo; produces &lsquo;&#20154;&rsquo; on a Traditional-Chinese
+          (or Bopomofo) keyboard, etc. A radical composer composes a phonetic
+          character from phonetic radicals given by these keyboards: e.g., typing
+          '&#12593;' (r) and '&#12623;' (k) produces '&#44032;' on a Korean keyboard;
+          typing &lsquo;&#20154;&rsquo; (o), &lsquo;&#24339;&rsquo; (n), and
+          &lsquo;&#28779;&rsquo; (f) produces &lsquo;&#20320;&rsquo; on a
+          Traditional-Chinese keyboard, etc.</p>
+          <p>A radical composer for Korean outputs the phonetic radicals as
+          its composition text.</p>
+          <figure id="fig-radical-composer-korean">
+            <p><img height="180" src="../images/image15.png" width="352"></p>
+            <figcaption>Radical composer (Korean)</figcaption>
+          </figure>
+          <p>A radical composer for Traditional Chinese outputs a
+          placeholder character (U+3000) and shows the phonetic radicals being
+          composed to its own window. This window is an example of a composition
+          window.</p>
+          <figure id="fig-radical-composer-chinese">
+            <p><img height="180" src="../images/image02.png" width="352"></p>
+            <figcaption>Radical composer (Traditional Chinese)</figcaption>
+          </figure>
+          <p>Some platforms (such as Mac and Linux) use radical composers
+          for typing accented characters used in European countries. For example,
+          typing &lsquo; &#776; &rsquo; (option+u) and &lsquo;a&rsquo; (a) produces
+          &lsquo;&auml;&rsquo; on US keyboards of Mac.</p>
+          <figure id="fig-radical-composer-mac">
+            <p><img height="177" src="../images/image01.png" width="479"></p>
+            <figcaption>Radical composer (Mac)</figcaption>
+          </figure>
+        </section>
+      </section>
+      <section id="converter-section">
+        <h2>Converter</h2>
+        <p>A converter is a context-sensitive parser used for replacing
+        the outputs of a composer to ideographic characters on Chinese, Japanese,
+        and Korean.</p>
+
+        <p>Because Chinese, Japanese, and Korean have many homonyms, each sequence of phonetic
+        characters usually matches many ideographic characters: e.g., a Japanese
+        phonetic character '&#12363;' matches Japanese ideographic characters
+        &lsquo;&#21270;&rsquo;, &lsquo;&#31185;&rsquo;, &lsquo;&#35506;&rsquo;,
+        etc.; Pinyin characters &lsquo;ka&rsquo; matches Simplified-Chinese
+        ideographic characters &lsquo;&#21345;', &lsquo;&#21888;&rsquo;,
+        &lsquo;&#21679;&rsquo;, etc.; Bopomofo characters
+        &lsquo;&#20154;&#24339;&rsquo; matches Traditional-Chinese ideographic
+        characters &lsquo;&#20062;&rsquo;, &lsquo;&#20159;&rsquo;,
+        &lsquo;&#20103;&rsquo;, etc.</p>
+        <p>A converter looks up a dictionary and shows a
+        list of candidates of possible ideographic characters so a user can choose
+        one. This list is known as a <dfn id="candidate-list">candidate list</dfn>.
+        A candidate list is known as a <dfn id="candidate-window">candidate window</dfn>
+        when it has its own window.</p>
+        <p>Some Japanese IMEs show annotations in its <a href="#candidate-window">candidate window</a>
+        for a character that is not so easy to distinguish from other characters
+        (such as full-width alphabets, full-width Katakanas, and half-width
+        Katakanas, etc.), as shown in the following figure.</p>
+        <figure id="fig-candidate-window-japanese">
+          <p><img height="342" src="../images/image05.png" width="393"></p>
+          <figcaption>Candidate window (Japanese)</figcaption>
+        </figure>
+        <p>The next figure shows a <a href="#candidate-window">candidate window</a> of a Simplified-Chinese IME.</p>
+        <figure id="fig-candidate-window-simplified-chinese">
+          <p><img height="308" src="../images/image04.png" width="390"></p>
+          <figcaption>Candidate window (Simplified Chinese)</figcaption>
+        </figure>
+        <p>And the next figure shows a <a href="#candidate-window">candidate window</a> of a Traditional-Chinese IME.</p>
+        <figure id="fig-candidate-window-traditional-chinese">
+          <p><img height="180" src="../images/image06.png" width="352"></p>
+          <figcaption>Candidate window (Traditional Chinese)</figcaption>
+        </figure>
+        <p>A converter often integrates an <dfn id="MRU">MRU</dfn> (Most-Recently Used) list.
+        Even though there are many ideographic characters for each phonetic
+        character (or phonetic radical), a user does not usually use all these
+        ideographic characters. A converter uses an <a href="MRU">MRU list</a> to filter out
+        ideographic characters not used so often from a
+        <a href="#candidate-list">candidate list</a>.
+        A converter
+        sometimes integrates a grammar parser. A converter that integrates a
+        grammar parser splits the given phonetic characters into grammatical
+        clauses and converts only one clause at once. When a sequence of phonetic
+        characters consists of n clauses and the i-th clause has m_i candidates,
+        the total number of the candidates for the input characters become (m_1 *
+        m_2 * &hellip; * m_n). To reduce the number of candidates owned by a
+        converter, a converter usually processes one clause at once. This clause is
+        called as a <dfn id="selected-clause">selected clause</dfn>.</p>
+
+        <p>An IME usually renders a <a href="#selected-clause">selected clause</a> with
+        a special style to distinguish it from other clauses, as shown in
+        the following figure.</p>
+        <figure id="fig-selected-clause">
+          <p><img height="346" src="../images/image08.png" width="394"></p>
+          <figcaption>Selected clause (Japanese)</figcaption>
+        </figure>
+        <p>When a converter converts two or more clauses, it chooses
+        candidates for the selected clause so it becomes grammatically consistent
+        with the surrounding clauses: e.g., Japanese converters usually output
+        &lsquo;&#21361;&#27231;&#19968;&#39658;&rsquo; (not
+        &lsquo;&#21361;&#27231;&#19968;&#30330;&rsquo;) for Japanese phonetic
+        characters &lsquo;&#12365;&#12365;&#12356;&#12387;&#12401;&#12388;&rsquo;
+        because &lsquo;&#21361;&#27231;&#19968;&#30330;&rsquo; is grammatically
+        incorrect.</p>
+      </section>
+    </section>
+  </body>
+</html>
