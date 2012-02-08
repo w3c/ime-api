@@ -124,33 +124,67 @@
     </section>
     <section id="use-cases">
       <h2>Use cases</h2>
-      <p>This section lists use cases for the
+      <p>This section lists some use cases for the
         <a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">IME API</a>.
     <section id="games">
-      <h2>Prevent system IMEs from interfering with games.</h2>
-      <p class=note>Similar to pointer lock, etc. When you want to move a
-      character in a game, you want to make sure that if you press a key,
-      you don’t want the IME to interfere. BUT if you also want to be able
-      to enable Japanese text input in the game, should be able to do that also.</p>
+      <h2>[games] Prevent system IME from interfering with games</h2>
+      <p>A user who is playing a Web-based game might
+      inadvertently press a key combination that would suddenly cause an
+      <a href="#system-ime">system IME</a>
+      to be invoked and then also possibly cause an IME
+      <a href="#candidate-window">system IME</a>
+      to appear in the midst of that game. That wouldn’t be what the user
+      would expect.
+      <p><b>Requirement</b>: Developers of Web-based game should have a way
+      prevent the system IME from being invoked during a game.
+      <p>This use case in similar to the use case for providing the
+      proposed 
+      <a href="http://lists.w3.org/Archives/Public/public-webapps/2012JanMar/0402.html">Screen Orientation Lock</a>
+      API, or even the
+      <a href="http://dvcs.w3.org/hg/pointerlock/raw-file/default/index.html">Pointer Lock</a> API,
+      in that game developer should have a way to “lock” (out) the system
+      IME behavior while the user is playing the game.
      </section>
     <section id="suggest">
-      <h2>Prevent auto-complete suggestions in search engines, etc., from
-      overlapping with a <code>candidate window</code> created by an IME.</h2>
-      <p class=note>You go to a search engine, you start typing in
-      Japanese, and the search engine starts giving you suggestions,
-      and at the same time, your system IME starts giving you other suggestions,
-      in window that overlaps the suggestion window from the search engine.</p>
+      <h2>[suggest] Prevent system IME from interfering with “suggest” features</h2>
+      <p>A user goes to a Web-based search engine and starts typing in
+      Japanese, and with each keypress, the search engine starts giving a
+      drop-down list of auto-completion suggestions. At the same time, the user’s
+      <a href="#system-ime">system IME</a>
+      has been invoked (by the user, in order for the user to type in
+      Japanese) and also starts providing completion candidates for what
+      the user has typed in—shown in a separate
+      <a href="#candidate-window">candidate window</a>. But that candidate
+      window appears <i>over</i> (in terms of Z-index) the drop-down list
+      of auto-completion suggestions the Web-based search engine is displaying,
+      making it impossible for the user to actually select any of the
+      suggestions provided by the search engine.
+      <p><b>Requirement</b>: Web developers should have a way to prevent a system
+      IME from interfering with text input in their Web applications and
+      from obscuring parts of their Web applications from which users are
+      intended to make selections from suggestions based on what they type.
      </section>
-    <section id="custom-ime">
-      <h2>Enable a Web application to provide its own IME.</h2>
-      <p class=note>There are cases where the Web application knows best
-      how to render an application-appropriate IME. Render text consistent with
-      its UI, optimized for the application.  You don’t want the system UI
-      showing up in the middle of your game.</p>
-    </section>
-    <section id="detect-ime">
-      <h2>“You can determine whether an IME is installed, whether or not the
-      IME is currently enabled, and which IME is enabled.” </h2>
+    <section id="ime-interaction">
+      <h2>[ime-interact] Get information back and forth from installed IMEs</h2>
+      <p>Native applications running on devices are able to interact with the
+      <a href="#system-ime">system IME</a>
+      in useful ways, and to be able to get information back and forth from them.
+      Other third-party runtime environments such also provide the
+      APIs for applications to interact with a system IME and user agent in
+      useful ways. For example, ActionScript® 3.0 for the Adobe® Flash® Platform
+      provides a
+      <a href="http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/system/IME.html">flash.system.IME</a>
+      which “lets you directly manipulate the operating system’s input
+      method editor (IME) in the Flash runtime application that is running on a
+      client computer. You can determine whether an IME is installed, whether or
+      not the IME is currently enabled, and which IME is enabled. You can disable
+      or enable the IME in the application, and you can perform other limited
+      functions, depending on the operating system.”
+      <p><b>Requirement</b>: Web applications should be able to get
+      information back and forth from system IMEs and to other interact
+      with system IMEs—in a similar way to the ways in which native
+      applications and third-party runtime applications can interact with
+      system IMEs, including capabilities such as the following:
       <ul>
         <li>indicate to the user whether the Web application renders
         composition text by itself, or needs to ask user agents to render it</li>
@@ -161,41 +195,26 @@
         <li>determine the place where user agents render
         <a href="#candidate-window">candidate windows</a></li>
       </ul>
-
-      <p class=note>
-       <a href="http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/system/IME.html">flash.system.IME</a>;
-       feature parity with Flash
     </section>
-    <section id="ime-interaction">
-      <h2>Send IME string to be converted, get back the results</h2>
-      <p class=note>FIXME</p>
-    </section>
-    <section id="disable-system-ime">
-      <h2>Enabling/disabling system IMEs and TIPs (text input processors)
-      on Windows, e.g. virtual keyboards, handwriting recognizers, voice
-      recognizers, etc.</h2>
-      <p class=note>FIXME</p>
-    </section>
-    <section id="render-text">
-      <h2>Rendering IME text on a SVG path</h2>
-      <p class=note>FIXME</p>
-    </section>
-    <section id="switch-keyboard-layouts">
-      <h2>Switching keyboard layouts</h2>
-      <p class=note>Mac and Linux cannot distinguish keyboard from IME.
-      Windows lets you have any keyboard you like with any IME you like.
-      Gives flexibility to Web application developer to allow user to choose
-      any combination of IME and keyboard.</p>
-    </section>
-    <section id="a11y">
-      <h2>Accessibility issues?</h2>
-      <p class=note>Being able to voice what the IME is actually showing;
-       for instance, this particular kanji, this particular kanji.</p>
-     </section>
-    <section id="caret-position">
-      <h2>Retrieving a caret position in a &lt;textarea> element or an
-      &lt;input> so we can show a window under the caret.</h2>
-      <p class=note>FIXME</p>
+    <section id="custom-ime">
+      <h2>[custom-ime] Enable a Web application to provide its own IME</h2>
+      <p>Users of Web applications optimally want to have a user experience
+      that is consistent within the application; for example, with text rendering
+      and with text input displayed in a way that consistent with the rest of
+      the application’s UI, optimized for that specific application. The
+      sudden appearance of a
+      <a href="#system-ime">system IME</a> over an otherwise consistent,
+      application-specific UI is jarring and to the user experience, and
+      detrimental to the overall integrity of the application.
+      <p><b>Requirement</b>: For Web applications that require text input,
+      Web developers should have the option to build and/or re-use
+      (e.g., from a JS library) in-application
+      IMEs—built with JavaScript, HTML, and CSS—that enable the
+      developers to control the look and feel of the IME in a way
+      consistent with the UI theming of their applications, and to provide those
+      IMEs as an integrated part of their application, and not just be left to
+      rely on whatever system IME might or might not be installed in the user’s
+      system.
     </section>
     </section>
 
