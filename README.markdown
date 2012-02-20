@@ -3,5 +3,5 @@ as the sources for the document [Use cases: Input Method Editor API][2].
 
    [1]: http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html
 
-   [2]: Use cases: Input Method Editor API
+   [2]: http://dvcs.w3.org/hg/ime-api/raw-file/default/use-cases/Overview.html
 
