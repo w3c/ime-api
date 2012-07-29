@@ -7,5 +7,5 @@ as the sources for the document [Use cases: Input Method Editor API][2].
 
 ![A smiling raindrop character][3]
 
-   [3]: raw-file/default/images/raindrop.png
+   [3]: http://dvcs.w3.org/hg/ime-api/raw-file/default/images/raindrop.png
 
