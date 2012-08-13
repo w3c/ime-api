@@ -517,11 +517,11 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         retrieve detailed data from an in-progress IME
         <a href="#ime-composition">composition</a>,
         and to update that data.</li>
-       <li>A <a href="#idl-def-Composition" class="idlType"><code>Composition</code></a> interface, which represents read-only attributes
+       <li>A <a href="#idl-def-Composition" class="idlType"><code>Composition</code></a> dictionary, which represents read-only attributes
         about the current
         <a href="#ime-composition">composition</a>,
         such as the actual text being input, its length, and its target
-        <a href="#clause">clause</a>.
+        <a href="#ime-clause">clause</a>.
         <p class="issue">need to define what a <i>clause</i> is</p></li>
       </ul>
       <p>This API is designed to be used in conjunction with DOM events and
@@ -535,7 +535,7 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         implementors, with a goal of potential cross-browser implementation
         and standardization.
       </p>
-    <p>This document was published by the <a href="http://www.w3.org/2008/webapps/">Web Applications Working Group</a> as a First Public Working Draft. This document is intended to become a W3C Recommendation. If you wish to make comments regarding this document, please send them to <a href="mailto:public-webapps@w3.org">public-webapps@w3.org</a> (<a href="mailto:public-webapps-request@w3.org?subject=subscribe">subscribe</a>, <a href="http://lists.w3.org/Archives/Public/public-webapps/">archives</a>). All feedback is welcome.</p><p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p><p>This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>. W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/42538/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>.</p></div><div id="toc" class="section"><h2 class="introductory">Table of Contents</h2><ul class="toc"><li class="tocline"><a href="#introduction" class="tocxref"><span class="secno">1. </span>Introduction</a></li><li class="tocline"><a href="#background" class="tocxref"><span class="secno">2. </span>Background: What’s an Input Method Editor?</a><ul class="toc"><li class="tocline"><a href="#composer-section" class="tocxref"><span class="secno">2.1 </span>Composer</a><ul class="toc"><li class="tocline"><a href="#phonetic-composer-section" class="tocxref"><span class="secno">2.1.1 </span>Phonetic composer</a></li><li class="tocline"><a href="#radical-composer-section" class="tocxref"><span class="secno">2.1.2 </span>Radical composer</a></li></ul></li><li class="tocline"><a href="#converter-section" class="tocxref"><span class="secno">2.2 </span>Converter</a></li></ul></li><li class="tocline"><a href="#conformance" class="tocxref"><span class="secno">3. </span>Conformance</a></li><li class="tocline"><a href="#terminology" class="tocxref"><span class="secno">4. </span>Terminology and algorithms</a></li><li class="tocline"><a href="#the-getinputcontext---method" class="tocxref"><span class="secno">5. </span>The getInputContext() method</a><ul class="toc"><li class="tocline"></li></ul></li><li class="tocline"><a href="#composition-interface" class="tocxref"><span class="secno">6. </span>The Composition Interface</a><ul class="toc"><li class="tocline"></li></ul></li><li class="tocline"><a href="#compositioncaret-interface" class="tocxref"><span class="secno">7. </span>The CompositionCaret Interface</a><ul class="toc"><li class="tocline"></li></ul></li><li class="tocline"><a href="#compositionclause-interface" class="tocxref"><span class="secno">8. </span>The CompositionClause Interface</a><ul class="toc"><li class="tocline"></li></ul></li><li class="tocline"><a href="#compositionclauselist-sequence" class="tocxref"><span class="secno">9. </span>The CompositionClauseList sequence</a></li><li class="tocline"><a href="#inputmethodcontext-interface" class="tocxref"><span class="secno">10. </span>The InputMethodContext Interface</a><ul class="toc"><li class="tocline"></li><li class="tocline"></li></ul></li><li class="tocline"><a href="#best-practices" class="tocxref"><span class="secno">11. </span>Best practices</a><ul class="toc"><li class="tocline"><a href="#javascript-imes" class="tocxref"><span class="secno">11.1 </span>JavaScript IMEs</a><ul class="toc"><li class="tocline"><a href="#composing-text" class="tocxref"><span class="secno">11.1.1 </span>Composing text</a></li><li class="tocline"><a href="#consuming-events" class="tocxref"><span class="secno">11.1.2 </span>Consuming events</a></li><li class="tocline"><a href="#enabling-disabling-js-imes" class="tocxref"><span class="secno">11.1.3 </span>Enabling or Disabling JavaScript IMEs</a></li><li class="tocline"><a href="#candidate-window-section" class="tocxref"><span class="secno">11.1.4 </span>Candidate window</a></li></ul></li><li class="tocline"><a href="#ime-aware-webapps" class="tocxref"><span class="secno">11.2 </span>IME-aware Web applications</a><ul class="toc"><li class="tocline"><a href="#using-js-imes" class="tocxref"><span class="secno">11.2.1 </span>Using JavaScript IMEs</a></li><li class="tocline"><a href="#using-system-imes" class="tocxref"><span class="secno">11.2.2 </span>Using system IMEs</a></li><li class="tocline"><a href="#does-not-use-imes" class="tocxref"><span class="secno">11.2.3 </span>Does not use IMEs</a></li></ul></li></ul></li><li class="tocline"><a href="#references" class="tocxref"><span class="secno">A. </span>References</a><ul class="toc"><li class="tocline"><a href="#normative-references" class="tocxref"><span class="secno">A.1 </span>Normative references</a></li><li class="tocline"><a href="#informative-references" class="tocxref"><span class="secno">A.2 </span>Informative references</a></li></ul></li></ul></div>
+    <p>This document was published by the <a href="http://www.w3.org/2008/webapps/">Web Applications Working Group</a> as a First Public Working Draft. This document is intended to become a W3C Recommendation. If you wish to make comments regarding this document, please send them to <a href="mailto:public-webapps@w3.org">public-webapps@w3.org</a> (<a href="mailto:public-webapps-request@w3.org?subject=subscribe">subscribe</a>, <a href="http://lists.w3.org/Archives/Public/public-webapps/">archives</a>). All feedback is welcome.</p><p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p><p>This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>. W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/42538/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>.</p></div><div id="toc" class="section"><h2 class="introductory">Table of Contents</h2><ul class="toc"><li class="tocline"><a href="#introduction" class="tocxref"><span class="secno">1. </span>Introduction</a></li><li class="tocline"><a href="#background" class="tocxref"><span class="secno">2. </span>Background: What’s an Input Method Editor?</a><ul class="toc"><li class="tocline"><a href="#composer-section" class="tocxref"><span class="secno">2.1 </span>Composer</a><ul class="toc"><li class="tocline"><a href="#phonetic-composer-section" class="tocxref"><span class="secno">2.1.1 </span>Phonetic composer</a></li><li class="tocline"><a href="#radical-composer-section" class="tocxref"><span class="secno">2.1.2 </span>Radical composer</a></li></ul></li><li class="tocline"><a href="#converter-section" class="tocxref"><span class="secno">2.2 </span>Converter</a></li></ul></li><li class="tocline"><a href="#conformance" class="tocxref"><span class="secno">3. </span>Conformance</a></li><li class="tocline"><a href="#terminology" class="tocxref"><span class="secno">4. </span>Terminology and algorithms</a></li><li class="tocline"><a href="#the-getinputcontext---method" class="tocxref"><span class="secno">5. </span>The getInputContext() method</a><ul class="toc"><li class="tocline"></li></ul></li><li class="tocline"><a href="#composition-dictionary" class="tocxref"><span class="secno">6. </span>The Composition Dictionary</a><ul class="toc"><li class="tocline"></li></ul></li><li class="tocline"><a href="#inputmethodcontext-interface" class="tocxref"><span class="secno">7. </span>The InputMethodContext Interface</a><ul class="toc"><li class="tocline"></li><li class="tocline"></li></ul></li><li class="tocline"><a href="#best-practices" class="tocxref"><span class="secno">8. </span>Best practices</a><ul class="toc"><li class="tocline"><a href="#javascript-imes" class="tocxref"><span class="secno">8.1 </span>JavaScript IMEs</a><ul class="toc"><li class="tocline"><a href="#composing-text" class="tocxref"><span class="secno">8.1.1 </span>Composing text</a></li><li class="tocline"><a href="#consuming-events" class="tocxref"><span class="secno">8.1.2 </span>Consuming events</a></li><li class="tocline"><a href="#enabling-disabling-js-imes" class="tocxref"><span class="secno">8.1.3 </span>Enabling or Disabling JavaScript IMEs</a></li><li class="tocline"><a href="#candidate-window-section" class="tocxref"><span class="secno">8.1.4 </span>Candidate window</a></li></ul></li><li class="tocline"><a href="#ime-aware-webapps" class="tocxref"><span class="secno">8.2 </span>IME-aware Web applications</a><ul class="toc"><li class="tocline"><a href="#using-js-imes" class="tocxref"><span class="secno">8.2.1 </span>Using JavaScript IMEs</a></li><li class="tocline"><a href="#using-system-imes" class="tocxref"><span class="secno">8.2.2 </span>Using system IMEs</a></li><li class="tocline"><a href="#does-not-use-imes" class="tocxref"><span class="secno">8.2.3 </span>Does not use IMEs</a></li></ul></li></ul></li><li class="tocline"><a href="#references" class="tocxref"><span class="secno">A. </span>References</a><ul class="toc"><li class="tocline"><a href="#normative-references" class="tocxref"><span class="secno">A.1 </span>Normative references</a></li><li class="tocline"><a href="#informative-references" class="tocxref"><span class="secno">A.2 </span>Informative references</a></li></ul></li></ul></div>
     
     <div class="informative section" id="introduction">
       <!--OddPage--><h2><span class="secno">1. </span>Introduction</h2><p><em>This section is non-normative.</em></p>
@@ -772,8 +772,10 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
       <p>A <dfn id="converter">converter</dfn> is a context-sensitive parser that looks up a
       dictionary to convert phonetic characters to a set of ideographic
       characters.</p>
-      <p>A <dfn id="ime-composition">IME composition</dfn>
-      is a instance of text produced in an IME.</p>
+      <p>An <dfn id="ime-clause">IME clause</dfn> is a grammatical word produced in an IME.</p>
+      <p>An <dfn id="ime-selected-clause">IME selected clause</dfn> is an <a href="ime-clause">IME clause</a> being composed by an IME.</p>
+      <p>An <dfn id="ime-composition">IME composition</dfn>
+      is an instance of text produced in an IME. For IMEs that can produce multiple words, an IME composition consists of multiple IME clauses. For IMEs that produce only one word, an IME composition is equal to an IME clause.</p>
 
       <p>When an IME receives keystrokes, it sends the keystrokes to a
       composer and receives phonetic characters matching to the keystrokes. When
@@ -796,7 +798,11 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         character from its ASCII representation.</p>
 
         <p>A <dfn id="radical-composer">radical composer</dfn> composes a
-        phonetic character from phonetic radicals.</p>
+        phonetic character from <a href="#phonetic-radical">phonetic radicals</a>.</p>
+
+        <p>A <dfn id="phonetic-radical">phonetic radical</dfn> is a character component of a Latin character, a Chinese character, or a Korean character. A Latin character consists of an ASCII character and accent marks, e.g. a character '&aacute;' consists of an ASCII character 'a' and an accent mark '&acute;'. A Chinese character consists of Chinese character components that refer to its semantic origins, e.g. a Chinese character '&#x7565;' consists of two components '&#x7530;' and '&#x5404;'. A Korean character consists of Korean character components that represent consonants or vowels, e.g. a Korean character '&#xac00;' consists of a consonant '&#x3131;' and a vowel '&#x314f;'.</p>
+
+        <p>A <dfn id="composition-window">composition window</dfn> is a window that shows ASCII characters being composed by <a href="#phonetic-composer">phonetic composers</a> or <a href="#phonetic-radical">phonetic radicals</a> being composed by <a href="#radical-composer">radical composers</a>.</p>
 
         <p>An IME usually shows the text
         being composed by a composer with its own style to distinguish it from the
@@ -984,89 +990,39 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
           calling the getInputContext() method of the HTMLElement interface.
           <div><em>No parameters.</em></div><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>InputMethodContext</a></code></div></dd></dl></div>
     </div>
-    <div id="composition-interface" class="section">
+    <div id="composition-dictionary" class="section">
       <!--OddPage--><h2><span class="secno">6. </span>The Composition Dictionary</h2>
       <p>This dictionary represents an ongoing IME composition. It provides
       an attribute representing the text being composed by an IME. It also
       provides a method to retrieve attributes of the specified character in the
       composition text.</p>
       <pre class="idl"><span class="idlInterface" id="idl-def-Composition">dictionary <span class="idlInterfaceID">Composition</span> {
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-Composition-text">text</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a href="#idl-def-CompositionCaret" class="idlType"><code>CompositionCaret</code></a></span>      <span class="idlAttrName"><a href="#widl-Composition-caret">caret</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>CompositionClauseList</a></span> <span class="idlAttrName"><a href="#widl-Composition-clauses">clauses</a></span>;</span>
-};</span>
-</pre><div id="attributes" class="section"><h3><span class="secno">6.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-Composition-caret"><code>caret</code> of type <span class="idlAttrType"><a href="#idl-def-CompositionCaret" class="idlType"><code>CompositionCaret</code></a></span>, readonly</dt><dd>Represents the caret in this composition text.<div><em>No exceptions.</em></div></dd><dt id="widl-Composition-clauses"><code>clauses</code> of type <span class="idlAttrType"><a>CompositionClauseList</a></span>, readonly</dt><dd>Returns the clauses in the composition text.<div><em>No exceptions.</em></div></dd><dt id="widl-Composition-text"><code>text</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>Represents the text being composed by an IME. This string is
-            equal to the text attribute of a compositionupdate event.<div><em>No exceptions.</em></div></dd></dl></div>
-    </div>
-    <div id="compositioncaret-interface" class="section">
-      <!--OddPage--><h2><span class="secno">7. </span>The CompositionCaret Dictionary</h2>
-      <p>This dictionary represents the caret in the composition text. When
-      the value of its ”length”&nbsp;attribute is <code>0</code>, an IME uses a
-      vertical bar as an its cursor. Otherwise, an IME uses a block cursor as its
-      cursor. When an IME does not show a caret, both values <em class="rfc2119" title="must">must</em> be <code>-1</code>.</p>
-      <pre class="idl"><span class="idlInterface" id="idl-def-CompositionCaret">dictionary <span class="idlInterfaceID">CompositionCaret</span> {
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>long</a></span> <span class="idlAttrName"><a href="#widl-CompositionCaret-start">start</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>long</a></span> <span class="idlAttrName"><a href="#widl-CompositionCaret-length">length</a></span>;</span>
-};</span>
-</pre><div id="attributes-1" class="section"><h3><span class="secno">7.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-CompositionCaret-length"><code>length</code> of type <span class="idlAttrType"><a>long</a></span>, readonly</dt><dd>Represents the length of the caret, in characters. The default
-          value is <code>-1</code>.<div><em>No exceptions.</em></div></dd><dt id="widl-CompositionCaret-start"><code>start</code> of type <span class="idlAttrType"><a>long</a></span>, readonly</dt><dd>Represents the beginning of the caret, in characters. This
-          value is less than the length of the composition text, or
-          <code>-1</code> if an IME does not show a caret. The default value
-          is <code>-1</code>.<div><em>No exceptions.</em></div></dd></dl></div>
-    </div>
-    <div id="compositionclause-interface" class="section">
-      <!--OddPage--><h2><span class="secno">8. </span>The CompositionClause Dictionary</h2>
-      <p>This dictionary represents a clause of the composition text. This
-      dictionary also represents attributes of the clause retrieved from a user
-      agent so Web applications can render the clauses as a user agent does.</p>
-      <p class="note">Retrieving attributes is not supported by all
-      operating systems or all IMEs.</p>
-      <p>When a user agent cannot retrieve attributes from an
-      operating system, it sets default values for them.</p>
-      <pre class="idl"><span class="idlInterface" id="idl-def-CompositionClause">dictionary <span class="idlInterfaceID">CompositionClause</span> {
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-CompositionClause-text">text</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>long</a></span>      <span class="idlAttrName"><a href="#widl-CompositionClause-start">start</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>boolean</a></span>   <span class="idlAttrName"><a href="#widl-CompositionClause-selected">selected</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-CompositionClause-textColor">textColor</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-CompositionClause-backgroundColor">backgroundColor</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-CompositionClause-lineStyle">lineStyle</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-CompositionClause-lineColor">lineColor</a></span>;</span>
-};</span>
-</pre><div id="attributes-2" class="section"><h3><span class="secno">8.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-CompositionClause-backgroundColor"><code>backgroundColor</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>Represents the background color used by a user agent to render
-          this clause. This string <em class="rfc2119" title="must">must</em> be parsed as a CSS color value. The
-          default value is "<code>transparent</code>".<div><em>No exceptions.</em></div></dd><dt id="widl-CompositionClause-lineColor"><code>lineColor</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>Represents the color of an underline used by a user agent. If
-          lineStyle is ”none”, this value is undefined.
-          The default value is <code>currentColor</code>.<div><em>No exceptions.</em></div></dd><dt id="widl-CompositionClause-lineStyle"><code>lineStyle</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>Represents the style of an underline used by a user agent to
-          render under this clause. This value <em class="rfc2119" title="must">must</em> be one defined in the
-          ‘text-underline-style’ of CSS 3; i.e.,
-          "<code>none</code>", "<code>solid</code>", "<code>double</code>",
-          "<code>dotted</code>", "<code>dashed</code>", and
-          "<code>wave</code>". The default value is "<code>solid</code>".<div><em>No exceptions.</em></div></dd><dt id="widl-CompositionClause-selected"><code>selected</code> of type <span class="idlAttrType"><a>boolean</a></span>, readonly</dt><dd>Represents whether this clause is a selected clause.<div><em>No exceptions.</em></div></dd><dt id="widl-CompositionClause-start"><code>start</code> of type <span class="idlAttrType"><a>long</a></span>, readonly</dt><dd>Represents the offset of this clause from the beginning of the
-          composition text, in characters.<div><em>No exceptions.</em></div></dd><dt id="widl-CompositionClause-text"><code>text</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>Represents the text of this clause.<div><em>No exceptions.</em></div></dd><dt id="widl-CompositionClause-textColor"><code>textColor</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>Represents the text color used by a user agent to render this
-        clause. This string <em class="rfc2119" title="must">must</em> be parsed as a CSS color value.
-        The default value is <code>currentColor</code>.<div><em>No exceptions.</em></div></dd></dl></div>
-    </div>
-    <div id="compositionclauselist-sequence" class="section">
-      <!--OddPage--><h2><span class="secno">9. </span>The CompositionClauseList sequence</h2>
-      <pre class="idl"><span class="idlTypedef" id="idl-def-CompositionClauseList">typedef <span class="idlTypedefType">sequence&lt;<a href="#idl-def-CompositionClause" class="idlType"><code>CompositionClause</code></a>&gt;</span> <span class="idlTypedefID">CompositionClauseList</span>;</span></pre><div class="idlTypedefDesc">Throughout this specification, the identifier <span class="idlTypedefID">CompositionClauseList</span> is used to refer to the <span class="idlTypedefType">sequence&lt;<a href="#idl-def-CompositionClause" class="idlType"><code>CompositionClause</code></a>&gt;</span> type.</div>
+<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>Node</a></span>  <span class="idlAttrName"><a href="#widl-Composition-text">text</a></span>;</span>
+<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>Range</a></span> <span class="idlAttrName"><a href="#widl-Composition-caret">caret</a></span>;</span>
+</pre>
+<div id="attributes" class="section"><h3><span class="secno">6.1 </span>Attributes</h3>
+<dl class="attributes">
+<dt id="widl-Composition-text"><code>text</code> of type <span class="idlAttrType"><a>Node</a></span>, readonly</dt><dd>Represents the styled text being composed by an IME. This node may have child nodes, e.g. when an <a href="#ime-composition">IME composition</a> consists of multiple <a href="#ime-clause">IME clauses</a>, this node has child nodes and each child node represents an <a href="#ime-clause">IME clause</a>. The text attribute of this node is equal to the text attribute of a compositionupdate event.<div><em>No exceptions.</em></div></dd>
+<dt id="widl-Composition-caret"><code>caret</code> of type <span class="idlAttrType"><a>Range</a></span>, readonly</dt><dd>Represents the caret in this composition text. The commonAncestorContainer attribute of this range should be <span class="idlAttrName"><a href="#widl-Composition-text">text</a></span>.<div><em>No exceptions.</em></div></dd>
+</dl>
+</div>
     </div>
     <div id="inputmethodcontext-interface" class="section">
-      <!--OddPage--><h2><span class="secno">10. </span>The InputMethodContext Interface</h2>
+      <!--OddPage--><h2><span class="secno">7. </span>The InputMethodContext Interface</h2>
       <pre class="idl"><span class="idlInterface" id="idl-def-InputMethodContext">interface <span class="idlInterfaceID">InputMethodContext</span> {
 <span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>DOMString</a></span>   <span class="idlAttrName"><a href="#widl-InputMethodContext-source">source</a></span>;</span>
 <span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a href="#idl-def-Composition" class="idlType"><code>Composition</code></a></span> <span class="idlAttrName"><a href="#widl-InputMethodContext-composition">composition</a></span>;</span>
 <span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-setEnabled-boolean-boolean-enabled">setEnabled</a></span> (<span class="idlParam"><span class="idlParamType"><a>boolean</a></span> <span class="idlParamName">enabled</span></span>);</span>
 <span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-isEnabled-boolean">isEnabled</a></span> ();</span>
-<span class="idlMethod">    <span class="idlMethType"><a>bool</a></span>    <span class="idlMethName"><a href="#widl-InputMethodContext-setInputMode-bool-DOMString-script-DOMString-modifier">setInputMode</a></span> (<span class="idlParam"><span class="idlParamType"><a>DOMString</a></span> <span class="idlParamName">script</span></span>, <span class="idlParam"><span class="idlParamType"><a>DOMString</a></span> <span class="idlParamName">modifier</span></span>);</span>
 <span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-hasComposition-boolean">hasComposition</a></span> ();</span>
 <span class="idlMethod">    <span class="idlMethType"><a>void</a></span>    <span class="idlMethName"><a href="#widl-InputMethodContext-setComposition-void-Composition-composition">setComposition</a></span> (<span class="idlParam"><span class="idlParamType"><a href="#idl-def-Composition" class="idlType"><code>Composition</code></a></span> <span class="idlParamName">composition</span></span>);</span>
 <span class="idlMethod">    <span class="idlMethType"><a>void</a></span>    <span class="idlMethName"><a href="#widl-InputMethodContext-confirmComposition-void">confirmComposition</a></span> ();</span>
 <span class="idlMethod">    <span class="idlMethType"><a>void</a></span>    <span class="idlMethName"><a href="#widl-InputMethodContext-setCaretRectangle-void-long-x-long-y-long-w-long-h">setCaretRectangle</a></span> (<span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">x</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">y</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">w</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">h</span></span>);</span>
 <span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-setOpenState-boolean-boolean-open">setOpenState</a></span> (<span class="idlParam"><span class="idlParamType"><a>boolean</a></span> <span class="idlParamName">open</span></span>);</span>
 };</span>
-</pre><div id="attributes-3" class="section"><h3><span class="secno">10.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-InputMethodContext-composition"><code>composition</code> of type <span class="idlAttrType"><a href="#idl-def-Composition" class="idlType"><code>Composition</code></a></span>, readonly</dt><dd>Represents the detailed information of the ongoing IME
+</pre><div id="attributes-3" class="section"><h3><span class="secno">7.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-InputMethodContext-composition"><code>composition</code> of type <span class="idlAttrType"><a href="#idl-def-Composition" class="idlType"><code>Composition</code></a></span>, readonly</dt><dd>Represents the detailed information of the ongoing IME
           composition. When an IME is not composing text, this value <em class="rfc2119" title="must">must</em> be
-          null.<div><em>No exceptions.</em></div></dd><dt id="widl-InputMethodContext-source"><code>source</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>Represents the name of the IME associated with this context.<div><em>No exceptions.</em></div></dd></dl></div><div id="methods-1" class="section"><h3><span class="secno">10.2 </span>Methods</h3><dl class="methods"><dt id="widl-InputMethodContext-confirmComposition-void"><code>confirmComposition</code></dt><dd>
+          null.<div><em>No exceptions.</em></div></dd><dt id="widl-InputMethodContext-source"><code>source</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>Represents the name of the IME associated with this context.<div><em>No exceptions.</em></div></dd></dl></div><div id="methods-1" class="section"><h3><span class="secno">7.2 </span>Methods</h3><dl class="methods"><dt id="widl-InputMethodContext-confirmComposition-void"><code>confirmComposition</code></dt><dd>
           <p>Finishes the ongoing composition of the hosting user agent.</p>
           <p>When a Web application calls this function, a user agent sends a
           compositionend event and a textInput event as a user types an
@@ -1122,21 +1078,7 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
               focus and sends composition events to the given node even though the node
               is not an editable one, such as a <code>&lt;canvas&gt;</code> element.</li>
             </ul>
-          <div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>boolean</a></code></div></dd><dt id="widl-InputMethodContext-setInputMode-bool-DOMString-script-DOMString-modifier"><code>setInputMode</code></dt><dd>
-          <p>Provides a hint to the user agent so it can select the
-          appropriate input mode of its associated IME. This function returns <code>true</code>
-          when a user agent can change the input mode of its associated IME.
-          Otherwise it returns <code>false</code>.</p>
-          <p class="note">The parameters for this function are copied from
-          <a href="http://www.w3.org/TR/xforms/#mode">Annex E of the “XForms 1.0” specification</a>
-          [<cite><a class="bibref" rel="biblioentry" href="#bib-XFORMS10">XFORMS10</a></cite>], for consistency with that specification.</p>
-          <ul>
-            <li>The <var>script</var> parameter represents a Unicode script name.</li>
-            <li>The <var>modifier</var> parameter represents a string added
-            to the script name in order to more closely specify the kind of characters:
-            e.g., "<code>digits</code>", "<code>halfWidth</code>", "<code>kotei</code>", etc.</li>
-          </ul>
-          <div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>bool</a></code></div></dd><dt id="widl-InputMethodContext-setOpenState-boolean-boolean-open"><code>setOpenState</code></dt><dd>
+          <div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>boolean</a></code></div></dd><dt id="widl-InputMethodContext-setOpenState-boolean-boolean-open"><code>setOpenState</code></dt><dd>
           <p>Controls the state of the IME currently associated with the hosting
           user agent. This function returns <code>true</code> if a user agent can activate or
           deactivate its associated IME.</p>
@@ -1150,7 +1092,7 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
     </div>
 
     <div class="informative section" id="best-practices">
-      <!--OddPage--><h2><span class="secno">11. </span>Best practices</h2><p><em>This section is non-normative.</em></p>
+      <!--OddPage--><h2><span class="secno">8. </span>Best practices</h2><p><em>This section is non-normative.</em></p>
     <p>This specification provides two types of interfaces:</p>
     <ol>
       <li>Interfaces for developing IMEs in JavaScript (JavaScript IMEs)</li>
@@ -1163,10 +1105,10 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
     JavaScript IMEs or IME-aware Web applications. This section describes
     practices for some use-cases.</p>
     <div id="javascript-imes" class="section">
-      <h3><span class="secno">11.1 </span>JavaScript IMEs</h3>
+      <h3><span class="secno">8.1 </span>JavaScript IMEs</h3>
       <p><i>more into to come later…</i></p>
       <div id="composing-text" class="section">
-        <h4><span class="secno">11.1.1 </span>Composing text</h4>
+        <h4><span class="secno">8.1.1 </span>Composing text</h4>
         <p>Existing JavaScript IMEs use DOM events (e.g., "keydown",
         "keyup", "focus", "blur", etc.) to compose text. To avoid forcing
         developers to change their JavaScript IMEs too much, this API does not
@@ -1186,13 +1128,13 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         </figure>
       </div>
       <div id="consuming-events" class="section">
-        <h4><span class="secno">11.1.2 </span>Consuming events</h4>
+        <h4><span class="secno">8.1.2 </span>Consuming events</h4>
         <p>When a JavaScript IME calls setComposition(), it <em class="rfc2119" title="must">must</em> call
         preventDefault()&nbsp;to prevent user agents from inserting this character
         to an element.</p>
       </div>
       <div id="enabling-disabling-js-imes" class="section">
-        <h4><span class="secno">11.1.3 </span>Enabling or Disabling JavaScript IMEs</h4>
+        <h4><span class="secno">8.1.3 </span>Enabling or Disabling JavaScript IMEs</h4>
         <p>A JavaScript IME should not consume keyboard events when hosting
         Web applications disable it. The JavaScript IME should call
         getInputContext().isEnabled() when it receives a keyboard event and
@@ -1203,7 +1145,7 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         </figure>
       </div>
       <div id="candidate-window-section" class="section">
-        <h4><span class="secno">11.1.4 </span>Candidate window</h4>
+        <h4><span class="secno">8.1.4 </span>Candidate window</h4>
         <p>Existing JavaScript IMEs usually use so-called CSS layers to
         render their <a href="#candidate-window">candidate window</a>.
         Nevertheless, some JavaScript IMEs use
@@ -1221,13 +1163,13 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
       </div>
     </div>
     <div id="ime-aware-webapps" class="section">
-      <h3><span class="secno">11.2 </span>IME-aware Web applications</h3>
+      <h3><span class="secno">8.2 </span>IME-aware Web applications</h3>
       <p>When developers develop an IME-aware Web application, they need to
       decide which IME to use in their Web application: JavaScript IMEs, system
       IMEs, or none. The following sections describe practices of these three
       cases.</p>
       <div id="using-js-imes" class="section">
-        <h4><span class="secno">11.2.1 </span>Using JavaScript IMEs</h4>A Web application that uses only JavaScript IMEs <em class="rfc2119" title="must">must</em> disable
+        <h4><span class="secno">8.2.1 </span>Using JavaScript IMEs</h4>A Web application that uses only JavaScript IMEs <em class="rfc2119" title="must">must</em> disable
         the system IMEs associated with the hosting user agent to prevent keyboard
         events from being consumed by system IMEs. To disable the system IMEs
         associated with a user agent, the Web application <em class="rfc2119" title="must">must</em> call
@@ -1244,7 +1186,7 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         IMEs.</p>
       </div>
       <div id="using-system-imes" class="section">
-        <h4><span class="secno">11.2.2 </span>Using system IMEs</h4>
+        <h4><span class="secno">8.2.2 </span>Using system IMEs</h4>
         <p>On the other hand, a Web application that uses the system IME
         <em class="rfc2119" title="must">must</em> enable the system IME when it becomes active as well as it disables
         the JavaScript IMEs. JavaScript IMEs <em class="rfc2119" title="may">may</em> consume keyboard events even
@@ -1257,7 +1199,7 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         </figure>
       </div>
       <div id="does-not-use-imes" class="section">
-        <h4><span class="secno">11.2.3 </span>Does not use IMEs</h4>
+        <h4><span class="secno">8.2.3 </span>Does not use IMEs</h4>
         <p>When a Web application does not use any IMEs, it…</p>
         <figure id="no-imes">
           <p><img height="305" src="images/image00.png" width="657"></p>
