@@ -505,11 +505,11 @@ pre.sh_sourceCode .sh_paren { color: red; }
 pre.sh_sourceCode .sh_attribute { color: #006400; }
 
 </style><link href="http://www.w3.org/StyleSheets/TR/W3C-WD" rel="stylesheet" type="text/css" charset="utf-8"></head>
-  <body style="display: inherit; "><div class="head"><p><a href="http://www.w3.org/"><img width="72" height="48" src="http://www.w3.org/Icons/w3c_home" alt="W3C"></a></p><h1 class="title" id="title">Input Method Editor API</h1><h2 id="w3c-working-draft-24-may-2012">W3C Working Draft 24 May 2012</h2><dl><dt>This version:</dt><dd><a href="http://www.w3.org/TR/2012/WD-ime-api-20120524/">http://www.w3.org/TR/2012/WD-ime-api-20120524/</a></dd><dt>Latest published version:</dt><dd><a href="http://www.w3.org/TR/ime-api/">http://www.w3.org/TR/ime-api/</a></dd><dt>Latest editor's draft:</dt><dd><a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html</a></dd><dt>Editors:</dt><dd><span>Hironori Bono (坊野 博典)</span>, Google <span class="ed_mailto"><a href="mailto:hbono@google.com">hbono@google.com</a></span> </dd>
+  <body style="display: inherit; "><div class="head"><p><a href="http://www.w3.org/"><img width="72" height="48" src="http://www.w3.org/Icons/w3c_home" alt="W3C"></a></p><h1 class="title" id="title">Input Method Editor API</h1><h2 id="w3c-working-draft-24-may-2012">W3C Working Draft 24 May 2012</h2><dl><dt>This version:</dt><dd><a href="http://www.w3.org/TR/2012/WD-ime-api-20120524/">http://www.w3.org/TR/2012/WD-ime-api-20120524/</a></dd><dt>Latest published version:</dt><dd><a href="http://www.w3.org/TR/ime-api/">http://www.w3.org/TR/ime-api/</a></dd><dt>Latest editor's draft:</dt><dd><a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html</a></dd><dt>Editors:</dt><dd><span>Hironori Bono (&#x574A;&#x91CE; &#x535A;&#x5178;)</span>, Google <span class="ed_mailto"><a href="mailto:hbono@google.com">hbono@google.com</a></span> </dd>
 <dd><span>Kenji Baheux</span>, Google <span class="ed_mailto"><a href="mailto:kenjibaheux@google.com">kenjibaheux@google.com</a></span> </dd>
-</dl><p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2012 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.eu/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p><hr></div>
+</dl><p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> &copy; 2012 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>&reg;</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.eu/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p><hr></div>
     <div id="abstract" class="introductory section"><h2>Abstract</h2>
-      <p>This specification defines an “IME API” that provides Web applications
+      <p>This specification defines an "IME API" that provides Web applications
       with scripted access to an IME (<a href="#IME">input-method editor</a>)
       associated with a hosting user agent. This IME API includes:</p>
       <ul>
@@ -822,9 +822,9 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
           Chinese and Japanese, but also used for typing non-ASCII characters (such
           as mathematical symbols, Yi, Amharic, etc.) with a US-101 keyboard. Each of
           these languages has a mapping table from its character to a sequence of
-          ASCII characters representing its pronunciation: e.g.,
-          ‘か’ to ‘ka’ in Japanese, and;
-          ‘卡’ to ‘ka’ in Simplified Chinese. This
+          ASCII characters representing its pronunciation: e.g., 
+          '&#x304B;' to 'ka' in Japanese, and;
+          '&#x5361;' to 'ka' in Simplified Chinese. This
           mapping table is called as Romaji for Japanese and Pinyin for Simplified
           Chinese, respectively. A phonetic composer uses these mapping tables to
           compose a phonetic character from a sequence of ASCII characters produced
@@ -854,14 +854,14 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
           <h4><span class="secno">2.1.2 </span>Radical composer</h4>
           <p>Radical composers are mainly used for typing Traditional
           Chinese and Korean with phonetic keyboards. Each phonetic keyboard of these
-          languages can produce phonetic radicals: e.g., typing ‘r’
-          produces ‘ㄱ’ on a Korean keyboard; typing
-          ‘o’ produces ‘人’ on a Traditional-Chinese
+          languages can produce phonetic radicals: e.g., typing 'r'
+          produces '&#x3131;' on a Korean keyboard; typing
+          'o' produces '&#x4EBA;' on a Traditional-Chinese
           (or Bopomofo) keyboard, etc. A radical composer composes a phonetic
           character from phonetic radicals given by these keyboards: e.g., typing
-          'ㄱ' (r) and 'ㅏ' (k) produces '가' on a Korean keyboard;
-          typing ‘人’ (o), ‘弓’ (n), and
-          ‘火’ (f) produces ‘你’ on a
+          '&#x3131;' (r) and '&#x314F;' (k) produces '&#xAC00;' on a Korean keyboard;
+          typing '&#x4EBA;' (o), '&#x5F13;' (n), and
+          '&#x706B;' (f) produces '&#x4F60;' on a
           Traditional-Chinese keyboard, etc.</p>
           <p>A radical composer for Korean outputs the phonetic radicals as
           its composition text.</p>
@@ -879,8 +879,8 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
           </figure>
           <p>Some platforms (such as Mac and Linux) use radical composers
           for typing accented characters used in European countries. For example,
-          typing ‘ ̈ ’ (option+u) and ‘a’ (a) produces
-          ‘ä’ on US keyboards of Mac.</p>
+          typing ' &uml; ' (option+u) and 'a' (a) produces
+          '&auml;' on US keyboards of Mac.</p>
           <figure id="fig-radical-composer-mac">
             <p><img height="177" src="images/image01.png" width="479"></p>
             <figcaption>Radical composer (Mac)</figcaption>
@@ -896,14 +896,14 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
 
         <p>Because Chinese, Japanese, and Korean have many homonyms, each sequence of phonetic
         characters usually matches many ideographic characters: e.g., a Japanese
-        phonetic character 'か' matches Japanese ideographic characters
-        ‘化’, ‘科’, ‘課’,
-        etc.; Pinyin characters ‘ka’ matches Simplified-Chinese
-        ideographic characters ‘卡', ‘喀’,
-        ‘咯’, etc.; Bopomofo characters
-        ‘人弓’ matches Traditional-Chinese ideographic
-        characters ‘乞’, ‘亿’,
-        ‘亇’, etc.</p>
+        phonetic character '&#x304B;' matches Japanese ideographic characters
+        '&#x5316;', '&#x79D1;', '&#x8Ab2;',
+        etc.; Pinyin characters 'ka' matches Simplified-Chinese
+        ideographic characters '&#x5361;', '&#x5580;',
+        '&#x54AF;', etc.; Bopomofo characters
+        '&#x4EBA;&#x5F13;' matches Traditional-Chinese ideographic
+        characters '&#x4E5E;', '&#x4EBF;',
+        '&#x4E87;', etc.</p>
         <p>A converter looks up a dictionary and shows a
         list of candidates of possible ideographic characters so a user can choose
         one. This list is known as a <dfn id="candidate-list">candidate list</dfn>.
@@ -937,9 +937,9 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         sometimes integrates a grammar parser. A converter that integrates a
         grammar parser splits the given phonetic characters into grammatical
         clauses and converts only one clause at once. When a sequence of phonetic
-        characters consists of n clauses and the i-th clause has m_i candidates,
-        the total number of the candidates for the input characters become (m_1 *
-        m_2 * … * m_n). To reduce the number of candidates owned by a
+        characters consists of n clauses and the i-th clause has m<subi</sub> candidates,
+        the total number of the candidates for the input characters become (m<sub>1</sub> &times;
+        m<sub>2</sub> &times; &hellip; &times; m<sub>n</sub>). To reduce the number of candidates owned by a
         converter, a converter usually processes one clause at once. This clause is
         called as a <dfn id="selected-clause">selected clause</dfn>.</p>
 
@@ -953,10 +953,10 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         <p>When a converter converts two or more clauses, it chooses
         candidates for the selected clause so it becomes grammatically consistent
         with the surrounding clauses: e.g., Japanese converters usually output
-        ‘危機一髪’ (not
-        ‘危機一発’) for Japanese phonetic
-        characters ‘ききいっぱつ’
-        because ‘危機一発’ is grammatically
+        '&#x5371;&#x6A5F;&#x4E00;&#x9AEA;' (not
+        '&#x5371;&#x6A5F;&#x4E00;&#x767A;') for Japanese phonetic
+        characters '&#x304D;&#x304D;&#x3044;&#x3063;&#x3071;&#x3064;'
+        because '&#x5371;&#x6A5F;&#x4E00;&#x767A;' is grammatically
         incorrect.</p>
       </div>
     </div>
