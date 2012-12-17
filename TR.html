@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" dir="ltr"><head>
+<html>
+  <head>
     <!-- foo -->
     <meta charset="UTF-8">
     <title>Input Method Editor API</title>
@@ -36,509 +37,92 @@
         counter-increment: example;
       }
     </style>
-    
-    
-    
-    
-  <style type="text/css">
-/*****************************************************************
- * ReSpec CSS
- * Robin Berjon (robin at berjon dot com)
- * v0.05 - 2009-07-31
- *****************************************************************/
-
-
-/* --- INLINES --- */
-em.rfc2119 { 
-    text-transform:     lowercase;
-    font-variant:       small-caps;
-    font-style:         normal;
-    color:              #900;
-}
-
-h1 acronym, h2 acronym, h3 acronym, h4 acronym, h5 acronym, h6 acronym, a acronym,
-h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
-    border: none;
-}
-
-dfn {
-    font-weight:    bold;
-}
-
-a.internalDFN {
-    color:  inherit;
-    border-bottom:  1px solid #99c;
-    text-decoration:    none;
-}
-
-a.externalDFN {
-    color:  inherit;
-    border-bottom:  1px dotted #ccc;
-    text-decoration:    none;
-}
-
-a.bibref {
-    text-decoration:    none;
-}
-
-code {
-    color:  #ff4500;
-}
-
-
-/* --- WEB IDL --- */
-pre.idl {
-    border-top: 1px solid #90b8de;
-    border-bottom: 1px solid #90b8de;
-    padding:    1em;
-    line-height:    120%;
-}
-
-pre.idl::before {
-    content:    "WebIDL";
-    display:    block;
-    width:      150px;
-    background: #90b8de;
-    color:  #fff;
-    font-family:    initial;
-    padding:    3px;
-    font-weight:    bold;
-    margin: -1em 0 1em -1em;
-}
-
-.idlType {
-    color:  #ff4500;
-    font-weight:    bold;
-    text-decoration:    none;
-}
-
-/*.idlModule*/
-/*.idlModuleID*/
-/*.idlInterface*/
-.idlInterfaceID {
-    font-weight:    bold;
-    color:  #005a9c;
-}
-
-.idlSuperclass {
-    font-style: italic;
-    color:  #005a9c;
-}
-
-/*.idlAttribute*/
-.idlAttrType, .idlFieldType {
-    color:  #005a9c;
-}
-.idlAttrName, .idlFieldName {
-    color:  #ff4500;
-}
-.idlAttrName a, .idlFieldName a {
-    color:  #ff4500;
-    border-bottom:  1px dotted #ff4500;
-    text-decoration: none;
-}
-
-/*.idlMethod*/
-.idlMethType {
-    color:  #005a9c;
-}
-.idlMethName {
-    color:  #ff4500;
-}
-.idlMethName a {
-    color:  #ff4500;
-    border-bottom:  1px dotted #ff4500;
-    text-decoration: none;
-}
-
-/*.idlParam*/
-.idlParamType {
-    color:  #005a9c;
-}
-.idlParamName {
-    font-style: italic;
-}
-
-.extAttr {
-    color:  #666;
-}
-
-/*.idlConst*/
-.idlConstType {
-    color:  #005a9c;
-}
-.idlConstName {
-    color:  #ff4500;
-}
-.idlConstName a {
-    color:  #ff4500;
-    border-bottom:  1px dotted #ff4500;
-    text-decoration: none;
-}
-
-/*.idlException*/
-.idlExceptionID {
-    font-weight:    bold;
-    color:  #c00;
-}
-
-.idlTypedefID, .idlTypedefType {
-    color:  #005a9c;
-}
-
-.idlRaises, .idlRaises a.idlType, .idlRaises a.idlType code, .excName a, .excName a code {
-    color:  #c00;
-    font-weight:    normal;
-}
-
-.excName a {
-    font-family:    monospace;
-}
-
-.idlRaises a.idlType, .excName a.idlType {
-    border-bottom:  1px dotted #c00;
-}
-
-.excGetSetTrue, .excGetSetFalse, .prmNullTrue, .prmNullFalse, .prmOptTrue, .prmOptFalse {
-    width:  45px;
-    text-align: center;
-}
-.excGetSetTrue, .prmNullTrue, .prmOptTrue { color:  #0c0; }
-.excGetSetFalse, .prmNullFalse, .prmOptFalse { color:  #c00; }
-
-.idlImplements a {
-    font-weight:    bold;
-}
-
-dl.attributes, dl.methods, dl.constants, dl.fields {
-    margin-left:    2em;
-}
-
-.attributes dt, .methods dt, .constants dt, .fields dt {
-    font-weight:    normal;
-}
-
-.attributes dt code, .methods dt code, .constants dt code, .fields dt code {
-    font-weight:    bold;
-    color:  #000;
-    font-family:    monospace;
-}
-
-.attributes dt code, .fields dt code {
-    background:  #ffffd2;
-}
-
-.attributes dt .idlAttrType code, .fields dt .idlFieldType code {
-    color:  #005a9c;
-    background:  transparent;
-    font-family:    inherit;
-    font-weight:    normal;
-    font-style: italic;
-}
-
-.methods dt code {
-    background:  #d9e6f8;
-}
-
-.constants dt code {
-    background:  #ddffd2;
-}
-
-.attributes dd, .methods dd, .constants dd, .fields dd {
-    margin-bottom:  1em;
-}
-
-table.parameters, table.exceptions {
-    border-spacing: 0;
-    border-collapse:    collapse;
-    margin: 0.5em 0;
-    width:  100%;
-}
-table.parameters { border-bottom:  1px solid #90b8de; }
-table.exceptions { border-bottom:  1px solid #deb890; }
-
-.parameters th, .exceptions th {
-    color:  #fff;
-    padding:    3px 5px;
-    text-align: left;
-    font-family:    initial;
-    font-weight:    normal;
-    text-shadow:    #666 1px 1px 0;
-}
-.parameters th { background: #90b8de; }
-.exceptions th { background: #deb890; }
-
-.parameters td, .exceptions td {
-    padding:    3px 10px;
-    border-top: 1px solid #ddd;
-    vertical-align: top;
-}
-
-.parameters tr:first-child td, .exceptions tr:first-child td {
-    border-top: none;
-}
-
-.parameters td.prmName, .exceptions td.excName, .exceptions td.excCodeName {
-    width:  100px;
-}
-
-.parameters td.prmType {
-    width:  120px;
-}
-
-table.exceptions table {
-    border-spacing: 0;
-    border-collapse:    collapse;
-    width:  100%;
-}
-
-/* --- TOC --- */
-.toc a {
-    text-decoration:    none;
-}
-
-a .secno {
-    color:  #000;
-}
-
-/* --- TABLE --- */
-table.simple {
-    border-spacing: 0;
-    border-collapse:    collapse;
-    border-bottom:  3px solid #005a9c;
-}
-
-.simple th {
-    background: #005a9c;
-    color:  #fff;
-    padding:    3px 5px;
-    text-align: left;
-}
-
-.simple th[scope="row"] {
-    background: inherit;
-    color:  inherit;
-    border-top: 1px solid #ddd;
-}
-
-.simple td {
-    padding:    3px 10px;
-    border-top: 1px solid #ddd;
-}
-
-.simple tr:nth-child(even) {
-    background: #f0f6ff;
-}
-
-/* --- DL --- */
-.section dd > p:first-child {
-    margin-top: 0;
-}
-
-.section dd > p:last-child {
-    margin-bottom: 0;
-}
-
-.section dd {
-    margin-bottom:  1em;
-}
-
-.section dl.attrs dd, .section dl.eldef dd {
-    margin-bottom:  0;
-}
-
-/* --- EXAMPLES --- */
-pre.example {
-    border-top: 1px solid #ff4500;
-    border-bottom: 1px solid #ff4500;
-    padding:    1em;
-    margin-top: 1em;
-}
-
-pre.example::before {
-    content:    "Example";
-    display:    block;
-    width:      150px;
-    background: #ff4500;
-    color:  #fff;
-    font-family:    initial;
-    padding:    3px;
-    font-weight:    bold;
-    margin: -1em 0 1em -1em;
-}
-
-/* --- EDITORIAL NOTES --- */
-.issue {
-    padding:    1em;
-    margin: 1em 0em 0em;
-    border: 1px solid #f00;
-    background: #ffc;
-}
-
-.issue::before {
-    content:    "Issue";
-    display:    block;
-    width:  150px;
-    margin: -1.5em 0 0.5em 0;
-    font-weight:    bold;
-    border: 1px solid #f00;
-    background: #fff;
-    padding:    3px 1em;
-}
-
-.note {
-    margin: 1em 0em 0em;
-    padding:    1em;
-    border: 2px solid #cff6d9;
-    background: #e2fff0;
-}
-
-.note::before {
-    content:    "Note";
-    display:    block;
-    width:  150px;
-    margin: -1.5em 0 0.5em 0;
-    font-weight:    bold;
-    border: 1px solid #cff6d9;
-    background: #fff;
-    padding:    3px 1em;
-}
-
-/* --- Best Practices --- */
-div.practice {
-    border: solid #bebebe 1px;
-    margin: 2em 1em 1em 2em;
-}
-
-span.practicelab {
-    margin: 1.5em 0.5em 1em 1em;
-    font-weight: bold;
-    font-style: italic;
-}
-
-span.practicelab   { background: #dfffff; }
-
-span.practicelab {
-    position: relative;
-    padding: 0 0.5em;
-    top: -1.5em;
-}
-
-p.practicedesc {
-    margin: 1.5em 0.5em 1em 1em;
-}
-
-@media screen {
-    p.practicedesc {
-        position: relative;
-        top: -2em;
-        padding: 0;
-        margin: 1.5em 0.5em -1em 1em;
-}
-
-/* --- SYNTAX HIGHLIGHTING --- */
-pre.sh_sourceCode {
-  background-color: white;
-  color: black;
-  font-style: normal;
-  font-weight: normal;
-}
-
-pre.sh_sourceCode .sh_keyword { color: #005a9c; font-weight: bold; }           /* language keywords */
-pre.sh_sourceCode .sh_type { color: #666; }                            /* basic types */
-pre.sh_sourceCode .sh_usertype { color: teal; }                             /* user defined types */
-pre.sh_sourceCode .sh_string { color: red; font-family: monospace; }        /* strings and chars */
-pre.sh_sourceCode .sh_regexp { color: orange; font-family: monospace; }     /* regular expressions */
-pre.sh_sourceCode .sh_specialchar { color: 	#ffc0cb; font-family: monospace; }  /* e.g., \n, \t, \\ */
-pre.sh_sourceCode .sh_comment { color: #A52A2A; font-style: italic; }         /* comments */
-pre.sh_sourceCode .sh_number { color: purple; }                             /* literal numbers */
-pre.sh_sourceCode .sh_preproc { color: #00008B; font-weight: bold; }       /* e.g., #include, import */
-pre.sh_sourceCode .sh_symbol { color: blue; }                            /* e.g., *, + */
-pre.sh_sourceCode .sh_function { color: black; font-weight: bold; }         /* function calls and declarations */
-pre.sh_sourceCode .sh_cbracket { color: red; }                              /* block brackets (e.g., {, }) */
-pre.sh_sourceCode .sh_todo { font-weight: bold; background-color: #00FFFF; }   /* TODO and FIXME */
-
-/* Predefined variables and functions (for instance glsl) */
-pre.sh_sourceCode .sh_predef_var { color: #00008B; }
-pre.sh_sourceCode .sh_predef_func { color: #00008B; font-weight: bold; }
-
-/* for OOP */
-pre.sh_sourceCode .sh_classname { color: teal; }
-
-/* line numbers (not yet implemented) */
-pre.sh_sourceCode .sh_linenum { display: none; }
-
-/* Internet related */
-pre.sh_sourceCode .sh_url { color: blue; text-decoration: underline; font-family: monospace; }
-
-/* for ChangeLog and Log files */
-pre.sh_sourceCode .sh_date { color: blue; font-weight: bold; }
-pre.sh_sourceCode .sh_time, pre.sh_sourceCode .sh_file { color: #00008B; font-weight: bold; }
-pre.sh_sourceCode .sh_ip, pre.sh_sourceCode .sh_name { color: #006400; }
-
-/* for Prolog, Perl... */
-pre.sh_sourceCode .sh_variable { color: #006400; }
-
-/* for LaTeX */
-pre.sh_sourceCode .sh_italics { color: #006400; font-style: italic; }
-pre.sh_sourceCode .sh_bold { color: #006400; font-weight: bold; }
-pre.sh_sourceCode .sh_underline { color: #006400; text-decoration: underline; }
-pre.sh_sourceCode .sh_fixed { color: green; font-family: monospace; }
-pre.sh_sourceCode .sh_argument { color: #006400; }
-pre.sh_sourceCode .sh_optionalargument { color: purple; }
-pre.sh_sourceCode .sh_math { color: orange; }
-pre.sh_sourceCode .sh_bibtex { color: blue; }
-
-/* for diffs */
-pre.sh_sourceCode .sh_oldfile { color: orange; }
-pre.sh_sourceCode .sh_newfile { color: #006400; }
-pre.sh_sourceCode .sh_difflines { color: blue; }
-
-/* for css */
-pre.sh_sourceCode .sh_selector { color: purple; }
-pre.sh_sourceCode .sh_property { color: blue; }
-pre.sh_sourceCode .sh_value { color: #006400; font-style: italic; }
-
-/* other */
-pre.sh_sourceCode .sh_section { color: black; font-weight: bold; }
-pre.sh_sourceCode .sh_paren { color: red; }
-pre.sh_sourceCode .sh_attribute { color: #006400; }
-
-</style><link href="http://www.w3.org/StyleSheets/TR/W3C-WD" rel="stylesheet" type="text/css" charset="utf-8"></head>
-  <body style="display: inherit; "><div class="head"><p><a href="http://www.w3.org/"><img width="72" height="48" src="http://www.w3.org/Icons/w3c_home" alt="W3C"></a></p><h1 class="title" id="title">Input Method Editor API</h1><h2 id="w3c-working-draft-24-may-2012">W3C Working Draft 24 May 2012</h2><dl><dt>This version:</dt><dd><a href="http://www.w3.org/TR/2012/WD-ime-api-20120524/">http://www.w3.org/TR/2012/WD-ime-api-20120524/</a></dd><dt>Latest published version:</dt><dd><a href="http://www.w3.org/TR/ime-api/">http://www.w3.org/TR/ime-api/</a></dd><dt>Latest editor's draft:</dt><dd><a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html</a></dd><dt>Editors:</dt><dd><span>Hironori Bono (&#x574A;&#x91CE; &#x535A;&#x5178;)</span>, Google <span class="ed_mailto"><a href="mailto:hbono@google.com">hbono@google.com</a></span> </dd>
-<dd><span>Kenji Baheux</span>, Google <span class="ed_mailto"><a href="mailto:kenjibaheux@google.com">kenjibaheux@google.com</a></span> </dd>
-</dl><p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> &copy; 2012 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>&reg;</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.eu/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p><hr></div>
-    <div id="abstract" class="introductory section"><h2>Abstract</h2>
-      <p>This specification defines an "IME API" that provides Web applications
+    <script class='remove'>
+      function addEllipsis(id) {
+        document.getElementById(id).childNodes.item(2).textContent = "\n    …\n";
+      }
+      function removeNodes(nodesToRemove) {
+        var i, j;
+        for (i = 0; i < nodesToRemove.length; ++i) {
+          for (j = 0; j < nodesToRemove[i].length; ++j) {
+            nodesToRemove[i][j].parentNode.removeChild(nodesToRemove[i][j]);
+          }
+        }
+      }
+    </script>
+    <script class='remove'>
+      function getLastModifiedDate() {
+        var d = new Date(document.lastModified);
+        return d.toISOString().substring(0,10);
+      }
+    </script>
+    <script type="text/javascript" src='ReSpec.js/js/respec.js' class='remove'></script>
+    <script type="text/javascript" class='remove'>
+    var respecConfig = 
+      {
+          specStatus: "FPWD",
+          shortName:  "ime-api",
+          edDraftURI: "http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html",
+          editors: [
+                {   name:       "Hironori Bono (坊野 博典)",
+                    company:    "Google",
+                    mailto:     "hbono@google.com"
+                },
+                {   name:       "Kenji Baheux",
+                    company:    "Google",
+                    mailto:     "kenjibaheux@google.com"
+                },
+          ],
+          wgURI:        "http://www.w3.org/2008/webapps/",
+          wg:           "Web Applications Working Group",
+          wgPublicList: "public-webapps",
+          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/42538/status",
+          publishDate:  "2012-05-24",
+          extraCSS: ["ReSpec.js/css/respec.css"],
+          after: function () {
+            var nodesToRemove = [
+              document.querySelectorAll("table.parameters"),
+              document.querySelectorAll("li.tocline > a[href^='#attributes']"),
+              document.querySelectorAll("li.tocline > a[href^='#methods']"),
+             ]
+            addEllipsis('idl-def-HTMLElement');
+            removeNodes(nodesToRemove);
+          }
+      }
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>This specification defines an “IME API” that provides Web applications
       with scripted access to an IME (<a href="#IME">input-method editor</a>)
       associated with a hosting user agent. This IME API includes:</p>
       <ul>
-       <li>An <a href="#idl-def-InputMethodContext" class="idlType"><code>InputMethodContext</code></a> interface, which provides methods to
+       <li>An <a>InputMethodContext</a> interface, which provides methods to
         retrieve detailed data from an in-progress IME
         <a href="#ime-composition">composition</a>,
         and to update that data.</li>
-       <li>A <a href="#idl-def-Composition" class="idlType"><code>Composition</code></a> dictionary, which represents read-only attributes
+       <li>A <a>Composition</a> interface, which represents read-only attributes
         about the current
         <a href="#ime-composition">composition</a>,
         such as the actual text being input, its length, and its target
-        <a href="#ime-clause">clause</a>.
+        <a href="#clause">clause</a>.
         <p class="issue">need to define what a <i>clause</i> is</p></li>
       </ul>
       <p>This API is designed to be used in conjunction with DOM events and
       elements on the Web platform, notably: composition events and the
       <a href="http://dev.w3.org/html5/2dcontext/">Canvas 2D Context API</a>
-      [<cite><a class="bibref" rel="biblioentry" href="#bib-CANVAS-2D">CANVAS-2D</a></cite>].</p>
-    </div><div id="sotd" class="introductory section"><h2>Status of This Document</h2><p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+      [[CANVAS-2D]].</p>
+    </section>
+    <section id='sotd'>
       <p>
         This document is a proposal that is being made available for public
         review in order to solicit feedback, particularly from
         implementors, with a goal of potential cross-browser implementation
         and standardization.
       </p>
-    <p>This document was published by the <a href="http://www.w3.org/2008/webapps/">Web Applications Working Group</a> as a First Public Working Draft. This document is intended to become a W3C Recommendation. If you wish to make comments regarding this document, please send them to <a href="mailto:public-webapps@w3.org">public-webapps@w3.org</a> (<a href="mailto:public-webapps-request@w3.org?subject=subscribe">subscribe</a>, <a href="http://lists.w3.org/Archives/Public/public-webapps/">archives</a>). All feedback is welcome.</p><p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p><p>This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>. W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/42538/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>.</p></div><div id="toc" class="section"><h2 class="introductory">Table of Contents</h2><ul class="toc"><li class="tocline"><a href="#introduction" class="tocxref"><span class="secno">1. </span>Introduction</a></li><li class="tocline"><a href="#background" class="tocxref"><span class="secno">2. </span>Background: What’s an Input Method Editor?</a><ul class="toc"><li class="tocline"><a href="#composer-section" class="tocxref"><span class="secno">2.1 </span>Composer</a><ul class="toc"><li class="tocline"><a href="#phonetic-composer-section" class="tocxref"><span class="secno">2.1.1 </span>Phonetic composer</a></li><li class="tocline"><a href="#radical-composer-section" class="tocxref"><span class="secno">2.1.2 </span>Radical composer</a></li></ul></li><li class="tocline"><a href="#converter-section" class="tocxref"><span class="secno">2.2 </span>Converter</a></li></ul></li><li class="tocline"><a href="#conformance" class="tocxref"><span class="secno">3. </span>Conformance</a></li><li class="tocline"><a href="#terminology" class="tocxref"><span class="secno">4. </span>Terminology and algorithms</a></li><li class="tocline"><a href="#the-getinputcontext---method" class="tocxref"><span class="secno">5. </span>The getInputContext() method</a><ul class="toc"><li class="tocline"></li></ul></li><li class="tocline"><a href="#composition-dictionary" class="tocxref"><span class="secno">6. </span>The Composition Dictionary</a><ul class="toc"><li class="tocline"></li></ul></li><li class="tocline"><a href="#inputmethodcontext-interface" class="tocxref"><span class="secno">7. </span>The InputMethodContext Interface</a><ul class="toc"><li class="tocline"></li><li class="tocline"></li></ul></li><li class="tocline"><a href="#best-practices" class="tocxref"><span class="secno">8. </span>Best practices</a><ul class="toc"><li class="tocline"><a href="#javascript-imes" class="tocxref"><span class="secno">8.1 </span>JavaScript IMEs</a><ul class="toc"><li class="tocline"><a href="#composing-text" class="tocxref"><span class="secno">8.1.1 </span>Composing text</a></li><li class="tocline"><a href="#consuming-events" class="tocxref"><span class="secno">8.1.2 </span>Consuming events</a></li><li class="tocline"><a href="#enabling-disabling-js-imes" class="tocxref"><span class="secno">8.1.3 </span>Enabling or Disabling JavaScript IMEs</a></li><li class="tocline"><a href="#candidate-window-section" class="tocxref"><span class="secno">8.1.4 </span>Candidate window</a></li></ul></li><li class="tocline"><a href="#ime-aware-webapps" class="tocxref"><span class="secno">8.2 </span>IME-aware Web applications</a><ul class="toc"><li class="tocline"><a href="#using-js-imes" class="tocxref"><span class="secno">8.2.1 </span>Using JavaScript IMEs</a></li><li class="tocline"><a href="#using-system-imes" class="tocxref"><span class="secno">8.2.2 </span>Using system IMEs</a></li><li class="tocline"><a href="#does-not-use-imes" class="tocxref"><span class="secno">8.2.3 </span>Does not use IMEs</a></li></ul></li></ul></li><li class="tocline"><a href="#references" class="tocxref"><span class="secno">A. </span>References</a><ul class="toc"><li class="tocline"><a href="#normative-references" class="tocxref"><span class="secno">A.1 </span>Normative references</a></li><li class="tocline"><a href="#informative-references" class="tocxref"><span class="secno">A.2 </span>Informative references</a></li></ul></li></ul></div>
-    
-    <div class="informative section" id="introduction">
-      <!--OddPage--><h2><span class="secno">1. </span>Introduction</h2><p><em>This section is non-normative.</em></p>
+    </section>
+    <section class='informative' id="introduction">
+      <h2>Introduction</h2>
       <p>Even though existing Web-platform APIs allow developers to implement very
       complicated Web applications, such as visual chat applications, using
       technologies such as SVG or the <code>&lt;canvas&gt;</code> element and API,
@@ -548,7 +132,7 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
       <a href="#ime-composition">composition text</a>
       being composed in an associated IME,
       <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html">the DOM Level 3 Events specification</a>
-      [<cite><a class="bibref" rel="biblioentry" href="#bib-DOM-LEVEL-3-EVENTS">DOM-LEVEL-3-EVENTS</a></cite>]
+      [[DOM-LEVEL-3-EVENTS]]
       introduces <i>composition events</i>. Using composition events, Web
       applications can retrieve
       <a href="#ime-composition">composition text</a>
@@ -586,7 +170,7 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
       interfaces for
       <a href="#ime-composition">compositions</a>,
       so Web applications can read detailed composition
-      data and update it. A <a href="#idl-def-Composition" class="idlType"><code>Composition</code></a> object provides a reference
+      data and update it. A <a>Composition</a> object provides a reference
       to an ongoing IME
       <a href="#ime-composition">composition</a>,
       so Web applications can retrieve the composition text and attributes.</p>
@@ -601,161 +185,165 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
       and uses the
       <a href="#candidate-window">candidate window</a>
       provided by an IME.</p>
-<pre class="example sh_javascript sh_sourceCode" id="ex-candidate-window"><span class="sh_symbol">&lt;!</span>DOCTYPE html<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>html<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>head<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>script language<span class="sh_symbol">=</span><span class="sh_string">"javascript"</span> type<span class="sh_symbol">=</span><span class="sh_string">"text/javascript"</span><span class="sh_symbol">&gt;</span>
-<span class="sh_keyword">function</span> <span class="sh_function">init</span><span class="sh_symbol">()</span> <span class="sh_cbracket">{</span>
-    window<span class="sh_symbol">.</span>inputmethodmanager<span class="sh_symbol">.</span><span class="sh_function">setOpenState</span><span class="sh_symbol">(</span><span class="sh_keyword">true</span><span class="sh_symbol">);</span>
-    <span class="sh_keyword">var</span> node <span class="sh_symbol">=</span> document<span class="sh_symbol">.</span><span class="sh_function">getElementById</span><span class="sh_symbol">(</span><span class="sh_string">'canvas0'</span><span class="sh_symbol">);</span>
-    node<span class="sh_symbol">.</span><span class="sh_function">getInputContext</span><span class="sh_symbol">().</span><span class="sh_function">setEnable</span><span class="sh_symbol">(</span><span class="sh_keyword">true</span><span class="sh_symbol">);</span>
-    node<span class="sh_symbol">.</span><span class="sh_function">addEventListener</span><span class="sh_symbol">(</span><span class="sh_string">'compositionstart'</span><span class="sh_symbol">,</span> onCompositionStart<span class="sh_symbol">,</span> <span class="sh_keyword">false</span><span class="sh_symbol">);</span>
-    node<span class="sh_symbol">.</span><span class="sh_function">addEventListener</span><span class="sh_symbol">(</span><span class="sh_string">'compositionupdate'</span><span class="sh_symbol">,</span> onCompositionUpdate<span class="sh_symbol">,</span> <span class="sh_keyword">false</span><span class="sh_symbol">);</span>
-    node<span class="sh_symbol">.</span><span class="sh_function">addEventListener</span><span class="sh_symbol">(</span><span class="sh_string">'compositionend'</span><span class="sh_symbol">,</span> onCompositionEnd<span class="sh_symbol">,</span> <span class="sh_keyword">false</span><span class="sh_symbol">);</span>
-<span class="sh_cbracket">}</span>
+<pre class="example sh_javascript" id="ex-candidate-window">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;script language="javascript" type="text/javascript"&gt;
+function init() {
+    window.inputmethodmanager.setOpenState(true);
+    var node = document.getElementById('canvas0');
+    node.getInputContext().setEnable(true);
+    node.addEventListener('compositionstart', onCompositionStart, false);
+    node.addEventListener('compositionupdate', onCompositionUpdate, false);
+    node.addEventListener('compositionend', onCompositionEnd, false);
+}
 
-<span class="sh_keyword">function</span> <span class="sh_function">onCompositionStart</span><span class="sh_symbol">(</span>event<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-<span class="sh_cbracket">}</span>
+function onCompositionStart(event) {
+}
 
-<span class="sh_keyword">function</span> <span class="sh_function">onCompositionUpdate</span><span class="sh_symbol">(</span>event<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-    <span class="sh_keyword">var</span> x <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span>
-    <span class="sh_keyword">var</span> y <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span>
-    <span class="sh_keyword">var</span> canvas <span class="sh_symbol">=</span> document<span class="sh_symbol">.</span><span class="sh_function">getElementById</span><span class="sh_symbol">(</span><span class="sh_string">'canvas0'</span><span class="sh_symbol">);</span>
-    <span class="sh_keyword">var</span> context <span class="sh_symbol">=</span> canvas<span class="sh_symbol">.</span><span class="sh_function">getContext</span><span class="sh_symbol">(</span><span class="sh_string">'2d'</span><span class="sh_symbol">);</span>
-    <span class="sh_keyword">var</span> inputContext <span class="sh_symbol">=</span> canvas<span class="sh_symbol">.</span><span class="sh_function">getInputContext</span><span class="sh_symbol">();</span>
-    <span class="sh_keyword">var</span> composition <span class="sh_symbol">=</span> inputContext<span class="sh_symbol">.</span>composition<span class="sh_symbol">;</span>
+function onCompositionUpdate(event) {
+    var x = 0;
+    var y = 0;
+    var canvas = document.getElementById('canvas0');
+    var context = canvas.getContext('2d');
+    var inputContext = canvas.getInputContext();
+    var composition = inputContext.composition;
 
-    <span class="sh_comment">// Render a caret.</span>
-    <span class="sh_comment">// NOTE: this just renders a caret rectangle in black for</span>
-    <span class="sh_comment">// simplicity.</span>
-    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>composition<span class="sh_symbol">.</span>caret<span class="sh_symbol">.</span>start <span class="sh_symbol">&gt;=</span> <span class="sh_number">0</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-        <span class="sh_keyword">var</span> start <span class="sh_symbol">=</span> context<span class="sh_symbol">.</span><span class="sh_function">measureText</span><span class="sh_symbol">(</span>
-                composition<span class="sh_symbol">.</span>text<span class="sh_symbol">.</span><span class="sh_function">substring</span><span class="sh_symbol">(</span><span class="sh_number">0</span><span class="sh_symbol">,</span> composition<span class="sh_symbol">.</span>caret<span class="sh_symbol">.</span>start<span class="sh_symbol">));</span>
-        <span class="sh_keyword">var</span> end <span class="sh_symbol">=</span> context<span class="sh_symbol">.</span><span class="sh_function">measureText</span><span class="sh_symbol">(</span>
-                composition<span class="sh_symbol">.</span>text<span class="sh_symbol">.</span><span class="sh_function">substring</span><span class="sh_symbol">(</span><span class="sh_number">0</span><span class="sh_symbol">,</span> composition<span class="sh_symbol">.</span>caret<span class="sh_symbol">.</span>end<span class="sh_symbol">));</span>
-        context<span class="sh_symbol">.</span>fillStyle <span class="sh_symbol">=</span> ’black’<span class="sh_symbol">;</span>
-        context<span class="sh_symbol">.</span><span class="sh_function">fillRect</span><span class="sh_symbol">(</span>start<span class="sh_symbol">.</span>width<span class="sh_symbol">,</span> y<span class="sh_symbol">,</span> end<span class="sh_symbol">.</span>width<span class="sh_symbol">,</span> y <span class="sh_symbol">+</span> <span class="sh_number">10</span><span class="sh_symbol">);</span>
-    <span class="sh_cbracket">}</span>
+    // Render a caret.
+    // NOTE: this just renders a caret rectangle in black for
+    // simplicity.
+    if (composition.caret.start &gt;= 0) {
+        var start = context.measureText(
+                composition.text.substring(0, composition.caret.start));
+        var end = context.measureText(
+                composition.text.substring(0, composition.caret.end));
+        context.fillStyle = &rsquo;black&rsquo;;
+        context.fillRect(start.width, y, end.width, y + 10);
+    }
 
-    <span class="sh_comment">// Render the clauses in the composition.</span>
-    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span><span class="sh_keyword">var</span> i <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span> i <span class="sh_symbol">&lt;</span> composition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">.</span>length<span class="sh_symbol">;</span> <span class="sh_symbol">++</span>i<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-        <span class="sh_keyword">var</span> text <span class="sh_symbol">=</span> composition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span>i<span class="sh_symbol">].</span>text<span class="sh_symbol">;</span>
-        <span class="sh_keyword">var</span> metrics <span class="sh_symbol">=</span> context<span class="sh_symbol">.</span><span class="sh_function">measureText</span><span class="sh_symbol">(</span>text<span class="sh_symbol">);</span>
-        <span class="sh_comment">// Draw the text of this clause.</span>
-        context<span class="sh_symbol">.</span>fillStyle <span class="sh_symbol">=</span> composition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span>i<span class="sh_symbol">].</span>textColor<span class="sh_symbol">;</span>
-        context<span class="sh_symbol">.</span><span class="sh_function">fillText</span><span class="sh_symbol">(</span>text<span class="sh_symbol">,</span> x<span class="sh_symbol">,</span> y<span class="sh_symbol">);</span>
-        <span class="sh_comment">// Draw an underline under the text. For simplicity, this code</span>
-        <span class="sh_comment">// draws a bold underline for selected clauses or a thin</span>
-        <span class="sh_comment">// underline for non-selected ones.</span>
-        <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>composition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span>i<span class="sh_symbol">].</span>selected<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-            context<span class="sh_symbol">.</span><span class="sh_function">fillRect</span><span class="sh_symbol">(</span>x<span class="sh_symbol">,</span> y<span class="sh_symbol">,</span> x <span class="sh_symbol">+</span> metrics<span class="sh_symbol">.</span>width<span class="sh_symbol">,</span> y <span class="sh_symbol">+</span> <span class="sh_number">2</span><span class="sh_symbol">);</span>
-        <span class="sh_cbracket">}</span> <span class="sh_keyword">else</span> <span class="sh_cbracket">{</span>
-            context<span class="sh_symbol">.</span><span class="sh_function">fillRect</span><span class="sh_symbol">(</span>x<span class="sh_symbol">,</span> y<span class="sh_symbol">,</span> x <span class="sh_symbol">+</span> metrics<span class="sh_symbol">.</span>width<span class="sh_symbol">,</span> y <span class="sh_symbol">+</span> <span class="sh_number">1</span><span class="sh_symbol">);</span>
-        <span class="sh_cbracket">}</span>
-        x <span class="sh_symbol">+=</span> metrics<span class="sh_symbol">.</span>width<span class="sh_symbol">;</span>
-    <span class="sh_cbracket">}</span>
+    // Render the clauses in the composition.
+    for (var i = 0; i &lt; composition.clauses.length; ++i) {
+        var text = composition.clauses[i].text;
+        var metrics = context.measureText(text);
+        // Draw the text of this clause.
+        context.fillStyle = composition.clauses[i].textColor;
+        context.fillText(text, x, y);
+        // Draw an underline under the text. For simplicity, this code
+        // draws a bold underline for selected clauses or a thin
+        // underline for non-selected ones.
+        if (composition.clauses[i].selected) {
+            context.fillRect(x, y, x + metrics.width, y + 2);
+        } else {
+            context.fillRect(x, y, x + metrics.width, y + 1);
+        }
+        x += metrics.width;
+    }
 
-    <span class="sh_comment">// Move the candidate window outside of the composition text.</span>
-    window<span class="sh_symbol">.</span>inputmethodmanager<span class="sh_symbol">.</span><span class="sh_function">moveCandidateWindow</span><span class="sh_symbol">(</span><span class="sh_number">0</span><span class="sh_symbol">,</span> y<span class="sh_symbol">,</span> x<span class="sh_symbol">,</span> y <span class="sh_symbol">+</span> <span class="sh_number">10</span><span class="sh_symbol">);</span>
-<span class="sh_cbracket">}</span>
+    // Move the candidate window outside of the composition text.
+    window.inputmethodmanager.moveCandidateWindow(0, y, x, y + 10);
+}
 
-<span class="sh_keyword">function</span> <span class="sh_function">onCompositionEnd</span><span class="sh_symbol">(</span>event<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-<span class="sh_cbracket">}</span>
-<span class="sh_symbol">&lt;/</span>script<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;/</span>head<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>body<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>canvas id<span class="sh_symbol">=</span>”canvas0” width<span class="sh_symbol">=</span>”<span class="sh_number">640</span>” height<span class="sh_symbol">=</span>”<span class="sh_number">480</span>”<span class="sh_symbol">&gt;&lt;/</span>canvas<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;/</span>body<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;/</span>html<span class="sh_symbol">&gt;</span></pre>
+function onCompositionEnd(event) {
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;canvas id=&rdquo;canvas0&rdquo; width=&rdquo;640&rdquo; height=&rdquo;480&rdquo;&gt;&lt;/canvas&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
     <p>The next example shows the source for a simple IME that composes
     Japanese Hiragana characters from key strokes.</p>
     <p class="note">This is just a sample and not suitable for real use.</p>
-<pre class="example sh_javascript sh_sourceCode" id="ex-hiragana-keystrokes"><span class="sh_symbol">&lt;!</span>DOCTYPE html<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>html<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>head<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>title<span class="sh_symbol">&gt;&lt;/</span>title<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>script language<span class="sh_symbol">=</span><span class="sh_string">"javascript"</span> type<span class="sh_symbol">=</span><span class="sh_string">"text/javascript"</span><span class="sh_symbol">&gt;</span>
-<span class="sh_keyword">var</span> imeActivated <span class="sh_symbol">=</span> <span class="sh_keyword">false</span><span class="sh_symbol">;</span>
-<span class="sh_keyword">var</span> imeRomajiInput <span class="sh_symbol">=</span> <span class="sh_string">''</span><span class="sh_symbol">;</span>
-<span class="sh_keyword">var</span> imeRomajiTable <span class="sh_symbol">=</span> <span class="sh_cbracket">{</span>
-    <span class="sh_string">'A'</span><span class="sh_symbol">:</span> <span class="sh_string">'</span><span class="sh_specialchar">\u</span><span class="sh_string">3042'</span><span class="sh_symbol">,</span> <span class="sh_string">'I'</span><span class="sh_symbol">:</span> <span class="sh_string">'</span><span class="sh_specialchar">\u</span><span class="sh_string">3044'</span><span class="sh_symbol">,</span> <span class="sh_string">'U'</span><span class="sh_symbol">:</span> <span class="sh_string">'</span><span class="sh_specialchar">\u</span><span class="sh_string">3046'</span><span class="sh_symbol">,</span> <span class="sh_string">'E'</span><span class="sh_symbol">:</span> <span class="sh_string">'</span><span class="sh_specialchar">\u</span><span class="sh_string">3048'</span><span class="sh_symbol">,</span> <span class="sh_string">'O'</span><span class="sh_symbol">:</span> <span class="sh_string">'</span><span class="sh_specialchar">\u</span><span class="sh_string">304A'</span><span class="sh_symbol">,</span>
-    <span class="sh_comment">/* suppressed */</span>
-<span class="sh_cbracket">}</span><span class="sh_symbol">;</span>
+<pre class="example sh_javascript" id="ex-hiragana-keystrokes">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;script language="javascript" type="text/javascript"&gt;
+var imeActivated = false;
+var imeRomajiInput = '';
+var imeRomajiTable = {
+    'A': '\u3042', 'I': '\u3044', 'U': '\u3046', 'E': '\u3048', 'O': '\u304A',
+    /* suppressed */
+};
 
-<span class="sh_keyword">function</span> <span class="sh_function">init</span><span class="sh_symbol">()</span> <span class="sh_cbracket">{</span>
-    <span class="sh_comment">// Disable the system IME associated with this window.</span>
-    window<span class="sh_symbol">.</span>inputmethodmanager<span class="sh_symbol">.</span><span class="sh_function">setOpenState</span><span class="sh_symbol">(</span><span class="sh_keyword">false</span><span class="sh_symbol">);</span>
+function init() {
+    // Disable the system IME associated with this window.
+    window.inputmethodmanager.setOpenState(false);
 
-    <span class="sh_comment">// Listens the keyboard events.</span>
-    <span class="sh_keyword">var</span> node <span class="sh_symbol">=</span> document<span class="sh_symbol">.</span><span class="sh_function">getElementById</span><span class="sh_symbol">(</span><span class="sh_string">'input0'</span><span class="sh_symbol">);</span>
-    node<span class="sh_symbol">.</span><span class="sh_function">addEventListener</span><span class="sh_symbol">(</span><span class="sh_string">'keydown'</span><span class="sh_symbol">,</span> onKeyDown<span class="sh_symbol">,</span> <span class="sh_keyword">false</span><span class="sh_symbol">);</span>
-    node<span class="sh_symbol">.</span><span class="sh_function">addEventListener</span><span class="sh_symbol">(</span><span class="sh_string">'keyup'</span><span class="sh_symbol">,</span> onKeyUp<span class="sh_symbol">,</span> <span class="sh_keyword">false</span><span class="sh_symbol">);</span>
-<span class="sh_cbracket">}</span>
+    // Listens the keyboard events.
+    var node = document.getElementById('input0');
+    node.addEventListener('keydown', onKeyDown, false);
+    node.addEventListener('keyup', onKeyUp, false);
+}
 
-<span class="sh_keyword">function</span> <span class="sh_function">onKeyDown</span><span class="sh_symbol">(</span>event<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-    <span class="sh_comment">// Toggle the input mode when pressing a shift key.</span>
-    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>event<span class="sh_symbol">.</span>key <span class="sh_symbol">==</span> <span class="sh_string">'Shift'</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-        imeActivated <span class="sh_symbol">=</span> <span class="sh_symbol">!</span>imeActivated<span class="sh_symbol">;</span>
-        imeRomajiInput <span class="sh_symbol">=</span> <span class="sh_string">''</span><span class="sh_symbol">;</span>
-    <span class="sh_cbracket">}</span>
+function onKeyDown(event) {
+    // Toggle the input mode when pressing a shift key.
+    if (event.key == 'Shift') {
+        imeActivated = !imeActivated;
+        imeRomajiInput = '';
+    }
 
-    <span class="sh_comment">// Exit if this IME is not activated.</span>
-    <span class="sh_keyword">if</span> <span class="sh_symbol">(!</span>imeActivated<span class="sh_symbol">)</span>
-        <span class="sh_keyword">return</span> <span class="sh_keyword">true</span><span class="sh_symbol">;</span>
+    // Exit if this IME is not activated.
+    if (!imeActivated)
+        return true;
 
-    <span class="sh_keyword">var</span> imeComposition <span class="sh_symbol">=</span> <span class="sh_keyword">new</span> Composition<span class="sh_symbol">;</span>
-    <span class="sh_keyword">var</span> imeConfirm <span class="sh_symbol">=</span> <span class="sh_keyword">false</span><span class="sh_symbol">;</span>
+    var imeComposition = new Composition;
+    var imeConfirm = false;
 
-    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>event<span class="sh_symbol">.</span>keyCode <span class="sh_symbol">&lt;</span> <span class="sh_number">0x20</span><span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-        event<span class="sh_symbol">.</span><span class="sh_function">preventDefault</span><span class="sh_symbol">();</span>
-        <span class="sh_keyword">return</span> <span class="sh_keyword">true</span><span class="sh_symbol">;</span>
-    <span class="sh_cbracket">}</span>
+    if (event.keyCode &lt; 0x20) {
+        event.preventDefault();
+        return true;
+    }
 
-    <span class="sh_comment">// Convert the input key strokes to a Japanese character.</span>
-    imeRomajiInput <span class="sh_symbol">+=</span> <span class="sh_predef_func">String</span><span class="sh_symbol">.</span><span class="sh_function">fromCharCode</span><span class="sh_symbol">(</span>event<span class="sh_symbol">.</span>keyCode<span class="sh_symbol">);</span>
-    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>imeRomajiTable<span class="sh_symbol">[</span>imeRomajiInput<span class="sh_symbol">])</span> <span class="sh_cbracket">{</span>
-        imeComposition<span class="sh_symbol">.</span>text <span class="sh_symbol">=</span> imeRomajiTable<span class="sh_symbol">[</span>imeRomajiInput<span class="sh_symbol">];</span>
-        imeConfirm <span class="sh_symbol">=</span> <span class="sh_keyword">true</span><span class="sh_symbol">;</span>
-        imeRomajiInput <span class="sh_symbol">=</span> <span class="sh_string">''</span><span class="sh_symbol">;</span>
-    <span class="sh_cbracket">}</span> <span class="sh_keyword">else</span> <span class="sh_cbracket">{</span>
-        imeComposition<span class="sh_symbol">.</span>text <span class="sh_symbol">=</span> imeRomajiInput<span class="sh_symbol">;</span>
-    <span class="sh_cbracket">}</span>
+    // Convert the input key strokes to a Japanese character.
+    imeRomajiInput += String.fromCharCode(event.keyCode);
+    if (imeRomajiTable[imeRomajiInput]) {
+        imeComposition.text = imeRomajiTable[imeRomajiInput];
+        imeConfirm = true;
+        imeRomajiInput = '';
+    } else {
+        imeComposition.text = imeRomajiInput;
+    }
 
-    <span class="sh_comment">// Fill the Composition object.</span>
-    imeComposition<span class="sh_symbol">.</span>caret<span class="sh_symbol">.</span>start <span class="sh_symbol">=</span> imeComposition<span class="sh_symbol">.</span>text<span class="sh_symbol">.</span>length<span class="sh_symbol">;</span>
-    imeComposition<span class="sh_symbol">.</span>caret<span class="sh_symbol">.</span>length <span class="sh_symbol">=</span> <span class="sh_number">1</span><span class="sh_symbol">;</span>
-    imeComposition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span><span class="sh_number">0</span><span class="sh_symbol">]</span> <span class="sh_symbol">=</span> <span class="sh_keyword">new</span> CompositionClause<span class="sh_symbol">;</span>
-    imeComposition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span><span class="sh_number">0</span><span class="sh_symbol">].</span>text <span class="sh_symbol">=</span> imeComposition<span class="sh_symbol">.</span>text<span class="sh_symbol">;</span>
-    imeComposition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span><span class="sh_number">0</span><span class="sh_symbol">].</span>start <span class="sh_symbol">=</span> <span class="sh_number">0</span><span class="sh_symbol">;</span>
-    imeComposition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span><span class="sh_number">0</span><span class="sh_symbol">].</span>selected <span class="sh_symbol">=</span> <span class="sh_keyword">true</span><span class="sh_symbol">;</span>
-    imeComposition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span><span class="sh_number">0</span><span class="sh_symbol">].</span>textColor <span class="sh_symbol">=</span> <span class="sh_string">'currentColor'</span><span class="sh_symbol">;</span>
-    imeComposition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span><span class="sh_number">0</span><span class="sh_symbol">].</span>backgroundColor <span class="sh_symbol">=</span> <span class="sh_string">'transparent'</span><span class="sh_symbol">;</span>
-    imeComposition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span><span class="sh_number">0</span><span class="sh_symbol">].</span>lineStyle <span class="sh_symbol">=</span> <span class="sh_string">'solid'</span><span class="sh_symbol">;</span>
-    imeComposition<span class="sh_symbol">.</span>clauses<span class="sh_symbol">[</span><span class="sh_number">0</span><span class="sh_symbol">].</span>lineColor <span class="sh_symbol">=</span> <span class="sh_string">'black'</span><span class="sh_symbol">;</span>
+    // Fill the Composition object.
+    imeComposition.caret.start = imeComposition.text.length;
+    imeComposition.caret.length = 1;
+    imeComposition.clauses[0] = new CompositionClause;
+    imeComposition.clauses[0].text = imeComposition.text;
+    imeComposition.clauses[0].start = 0;
+    imeComposition.clauses[0].selected = true;
+    imeComposition.clauses[0].textColor = 'currentColor';
+    imeComposition.clauses[0].backgroundColor = 'transparent';
+    imeComposition.clauses[0].lineStyle = 'solid';
+    imeComposition.clauses[0].lineColor = 'black';
 
-    <span class="sh_comment">// Send the Composition object to the user agent.</span>
-    <span class="sh_keyword">var</span> context <span class="sh_symbol">=</span> event<span class="sh_symbol">.</span>target<span class="sh_symbol">.</span><span class="sh_function">getInputContext</span><span class="sh_symbol">();</span>
-    context<span class="sh_symbol">.</span><span class="sh_function">setComposition</span><span class="sh_symbol">(</span>imeComposition<span class="sh_symbol">);</span>
-    <span class="sh_keyword">if</span> <span class="sh_symbol">(</span>imeConfirm<span class="sh_symbol">)</span>
-        context<span class="sh_symbol">.</span><span class="sh_function">confirmComposition</span><span class="sh_symbol">();</span>
+    // Send the Composition object to the user agent.
+    var context = event.target.getInputContext();
+    context.setComposition(imeComposition);
+    if (imeConfirm)
+        context.confirmComposition();
 
-    <span class="sh_comment">// Disable the default action to prevent this key from being</span>
-    <span class="sh_comment">// inserted.</span>
-    event<span class="sh_symbol">.</span><span class="sh_function">preventDefault</span><span class="sh_symbol">();</span>
-    <span class="sh_keyword">return</span> <span class="sh_keyword">false</span><span class="sh_symbol">;</span>
-<span class="sh_cbracket">}</span>
+    // Disable the default action to prevent this key from being
+    // inserted.
+    event.preventDefault();
+    return false;
+}
 
-<span class="sh_keyword">function</span> <span class="sh_function">onKeyUp</span><span class="sh_symbol">(</span>event<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
-<span class="sh_cbracket">}</span>
-<span class="sh_symbol">&lt;/</span>script<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;/</span>head<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>body onload<span class="sh_symbol">=</span><span class="sh_string">"init();"</span><span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;</span>textarea id<span class="sh_symbol">=</span><span class="sh_string">"input0"</span> cols<span class="sh_symbol">=</span><span class="sh_string">"80"</span> rows<span class="sh_symbol">=</span><span class="sh_string">"10"</span><span class="sh_symbol">&gt;&lt;/</span>textarea<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;/</span>body<span class="sh_symbol">&gt;</span>
-<span class="sh_symbol">&lt;/</span>html<span class="sh_symbol">&gt;</span></pre>
-    </div>
-    <div class="informative section" id="background">
-      <!--OddPage--><h2><span class="secno">2. </span>Background: What’s an Input Method Editor?</h2><p><em>This section is non-normative.</em></p>
+function onKeyUp(event) {
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="init();"&gt;
+&lt;textarea id="input0" cols="80" rows="10"&gt;&lt;/textarea&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+    </section>
+    <section class='informative' id="background">
+      <h1>Background: What’s an Input Method Editor?</h1>
       <p>An <dfn id="IME">IME</dfn> (input-method editor) is an application
       that allows a standard keyboard (such as a US-101 keyboard) to be used to
       type characters and symbols that are not directly represented on the
@@ -772,10 +360,8 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
       <p>A <dfn id="converter">converter</dfn> is a context-sensitive parser that looks up a
       dictionary to convert phonetic characters to a set of ideographic
       characters.</p>
-      <p>An <dfn id="ime-clause">IME clause</dfn> is a grammatical word produced in an IME.</p>
-      <p>An <dfn id="ime-selected-clause">IME selected clause</dfn> is an <a href="ime-clause">IME clause</a> being composed by an IME.</p>
-      <p>An <dfn id="ime-composition">IME composition</dfn>
-      is an instance of text produced in an IME. For IMEs that can produce multiple words, an IME composition consists of multiple IME clauses. For IMEs that produce only one word, an IME composition is equal to an IME clause.</p>
+      <p>A <dfn id="ime-composition">IME composition</dfn>
+      is a instance of text produced in an IME.</p>
 
       <p>When an IME receives keystrokes, it sends the keystrokes to a
       composer and receives phonetic characters matching to the keystrokes. When
@@ -787,8 +373,8 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         <p><img height="199" src="images/image10.png" width="615"></p>
         <figcaption>Basic structure of an IME</figcaption>
       </figure>
-      <div id="composer-section" class="section">
-        <h3><span class="secno">2.1 </span>Composer</h3>
+      <section id="composer-section">
+        <h1>Composer</h1>
         <p>A composer consists of two types of composers: a
         <a href="#phonetic-composer">phonetic composer</a>
         and a
@@ -798,11 +384,7 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         character from its ASCII representation.</p>
 
         <p>A <dfn id="radical-composer">radical composer</dfn> composes a
-        phonetic character from <a href="#phonetic-radical">phonetic radicals</a>.</p>
-
-        <p>A <dfn id="phonetic-radical">phonetic radical</dfn> is a character component of a Latin character, a Chinese character, or a Korean character. A Latin character consists of an ASCII character and accent marks, e.g. a character '&aacute;' consists of an ASCII character 'a' and an accent mark '&acute;'. A Chinese character consists of Chinese character components that refer to its semantic origins, e.g. a Chinese character '&#x7565;' consists of two components '&#x7530;' and '&#x5404;'. A Korean character consists of Korean character components that represent consonants or vowels, e.g. a Korean character '&#xac00;' consists of a consonant '&#x3131;' and a vowel '&#x314f;'.</p>
-
-        <p>A <dfn id="composition-window">composition window</dfn> is a window that shows ASCII characters being composed by <a href="#phonetic-composer">phonetic composers</a> or <a href="#phonetic-radical">phonetic radicals</a> being composed by <a href="#radical-composer">radical composers</a>.</p>
+        phonetic character from phonetic radicals.</p>
 
         <p>An IME usually shows the text
         being composed by a composer with its own style to distinguish it from the
@@ -816,15 +398,15 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
 
         <p class="issue">probably should define <i>clause</i> here too</p>
 
-        <div id="phonetic-composer-section" class="section">
-          <h4><span class="secno">2.1.1 </span>Phonetic composer</h4>
+        <section id="phonetic-composer-section">
+          <h3>Phonetic composer</h3>
           <p>Phonetic composers are not only used for typing Simplified
           Chinese and Japanese, but also used for typing non-ASCII characters (such
           as mathematical symbols, Yi, Amharic, etc.) with a US-101 keyboard. Each of
           these languages has a mapping table from its character to a sequence of
-          ASCII characters representing its pronunciation: e.g., 
-          '&#x304B;' to 'ka' in Japanese, and;
-          '&#x5361;' to 'ka' in Simplified Chinese. This
+          ASCII characters representing its pronunciation: e.g.,
+          &lsquo;&#12363;&rsquo; to &lsquo;ka&rsquo; in Japanese, and;
+          &lsquo;&#21345;&rsquo; to &lsquo;ka&rsquo; in Simplified Chinese. This
           mapping table is called as Romaji for Japanese and Pinyin for Simplified
           Chinese, respectively. A phonetic composer uses these mapping tables to
           compose a phonetic character from a sequence of ASCII characters produced
@@ -849,19 +431,19 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
             <p><img height="214" src="images/image14.png" width="435"></p>
             <figcaption>Composition text (Latex input)</figcaption>
           </figure>
-        </div>
-        <div id="radical-composer-section" class="section">
-          <h4><span class="secno">2.1.2 </span>Radical composer</h4>
+        </section>
+        <section id="radical-composer-section">
+          <h3>Radical composer</h3>
           <p>Radical composers are mainly used for typing Traditional
           Chinese and Korean with phonetic keyboards. Each phonetic keyboard of these
-          languages can produce phonetic radicals: e.g., typing 'r'
-          produces '&#x3131;' on a Korean keyboard; typing
-          'o' produces '&#x4EBA;' on a Traditional-Chinese
+          languages can produce phonetic radicals: e.g., typing &lsquo;r&rsquo;
+          produces &lsquo;&#12593;&rsquo; on a Korean keyboard; typing
+          &lsquo;o&rsquo; produces &lsquo;&#20154;&rsquo; on a Traditional-Chinese
           (or Bopomofo) keyboard, etc. A radical composer composes a phonetic
           character from phonetic radicals given by these keyboards: e.g., typing
-          '&#x3131;' (r) and '&#x314F;' (k) produces '&#xAC00;' on a Korean keyboard;
-          typing '&#x4EBA;' (o), '&#x5F13;' (n), and
-          '&#x706B;' (f) produces '&#x4F60;' on a
+          '&#12593;' (r) and '&#12623;' (k) produces '&#44032;' on a Korean keyboard;
+          typing &lsquo;&#20154;&rsquo; (o), &lsquo;&#24339;&rsquo; (n), and
+          &lsquo;&#28779;&rsquo; (f) produces &lsquo;&#20320;&rsquo; on a
           Traditional-Chinese keyboard, etc.</p>
           <p>A radical composer for Korean outputs the phonetic radicals as
           its composition text.</p>
@@ -879,16 +461,16 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
           </figure>
           <p>Some platforms (such as Mac and Linux) use radical composers
           for typing accented characters used in European countries. For example,
-          typing ' &uml; ' (option+u) and 'a' (a) produces
-          '&auml;' on US keyboards of Mac.</p>
+          typing &lsquo; &#776; &rsquo; (option+u) and &lsquo;a&rsquo; (a) produces
+          &lsquo;&auml;&rsquo; on US keyboards of Mac.</p>
           <figure id="fig-radical-composer-mac">
             <p><img height="177" src="images/image01.png" width="479"></p>
             <figcaption>Radical composer (Mac)</figcaption>
           </figure>
-        </div>
-      </div>
-      <div id="converter-section" class="section">
-        <h3><span class="secno">2.2 </span>Converter</h3>
+        </section>
+      </section>
+      <section id="converter-section">
+        <h2>Converter</h2>
         <p>A converter is a context-sensitive parser used for replacing
         the outputs of a composer to ideographic characters on Chinese, Japanese,
         and Korean.</p>
@@ -896,14 +478,14 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
 
         <p>Because Chinese, Japanese, and Korean have many homonyms, each sequence of phonetic
         characters usually matches many ideographic characters: e.g., a Japanese
-        phonetic character '&#x304B;' matches Japanese ideographic characters
-        '&#x5316;', '&#x79D1;', '&#x8Ab2;',
-        etc.; Pinyin characters 'ka' matches Simplified-Chinese
-        ideographic characters '&#x5361;', '&#x5580;',
-        '&#x54AF;', etc.; Bopomofo characters
-        '&#x4EBA;&#x5F13;' matches Traditional-Chinese ideographic
-        characters '&#x4E5E;', '&#x4EBF;',
-        '&#x4E87;', etc.</p>
+        phonetic character '&#12363;' matches Japanese ideographic characters
+        &lsquo;&#21270;&rsquo;, &lsquo;&#31185;&rsquo;, &lsquo;&#35506;&rsquo;,
+        etc.; Pinyin characters &lsquo;ka&rsquo; matches Simplified-Chinese
+        ideographic characters &lsquo;&#21345;', &lsquo;&#21888;&rsquo;,
+        &lsquo;&#21679;&rsquo;, etc.; Bopomofo characters
+        &lsquo;&#20154;&#24339;&rsquo; matches Traditional-Chinese ideographic
+        characters &lsquo;&#20062;&rsquo;, &lsquo;&#20159;&rsquo;,
+        &lsquo;&#20103;&rsquo;, etc.</p>
         <p>A converter looks up a dictionary and shows a
         list of candidates of possible ideographic characters so a user can choose
         one. This list is known as a <dfn id="candidate-list">candidate list</dfn>.
@@ -937,9 +519,9 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         sometimes integrates a grammar parser. A converter that integrates a
         grammar parser splits the given phonetic characters into grammatical
         clauses and converts only one clause at once. When a sequence of phonetic
-        characters consists of n clauses and the i-th clause has m<subi</sub> candidates,
-        the total number of the candidates for the input characters become (m<sub>1</sub> &times;
-        m<sub>2</sub> &times; &hellip; &times; m<sub>n</sub>). To reduce the number of candidates owned by a
+        characters consists of n clauses and the i-th clause has m_i candidates,
+        the total number of the candidates for the input characters become (m_1 *
+        m_2 * &hellip; * m_n). To reduce the number of candidates owned by a
         converter, a converter usually processes one clause at once. This clause is
         called as a <dfn id="selected-clause">selected clause</dfn>.</p>
 
@@ -953,90 +535,191 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         <p>When a converter converts two or more clauses, it chooses
         candidates for the selected clause so it becomes grammatically consistent
         with the surrounding clauses: e.g., Japanese converters usually output
-        '&#x5371;&#x6A5F;&#x4E00;&#x9AEA;' (not
-        '&#x5371;&#x6A5F;&#x4E00;&#x767A;') for Japanese phonetic
-        characters '&#x304D;&#x304D;&#x3044;&#x3063;&#x3071;&#x3064;'
-        because '&#x5371;&#x6A5F;&#x4E00;&#x767A;' is grammatically
+        &lsquo;&#21361;&#27231;&#19968;&#39658;&rsquo; (not
+        &lsquo;&#21361;&#27231;&#19968;&#30330;&rsquo;) for Japanese phonetic
+        characters &lsquo;&#12365;&#12365;&#12356;&#12387;&#12401;&#12388;&rsquo;
+        because &lsquo;&#21361;&#27231;&#19968;&#30330;&rsquo; is grammatically
         incorrect.</p>
-      </div>
-    </div>
-    <div id="conformance" class="section"><!--OddPage--><h2><span class="secno">3. </span>Conformance</h2><p>As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.</p>
-<p>The key words <em class="rfc2119" title="must">must</em>, <em class="rfc2119" title="must not">must not</em>, <em class="rfc2119" title="required">required</em>, <em class="rfc2119" title="should">should</em>, <em class="rfc2119" title="should not">should not</em>, <em class="rfc2119" title="recommended">recommended</em>, <em class="rfc2119" title="may">may</em>, and <em class="rfc2119" title="optional">optional</em> in this specification are to be interpreted as described in [<cite><a class="bibref" rel="biblioentry" href="#bib-RFC2119">RFC2119</a></cite>].</p>
-
+      </section>
+    </section>
+    <section id="conformance">
       <p><i>More to be written.</i></p>
-    </div>
-    <div id="terminology" class="section">
-      <!--OddPage--><h2><span class="secno">4. </span>Terminology and algorithms</h2>
+    </section>
+    <section id="terminology">
+      <h1>Terminology and algorithms</h1>
       <p><i>To be written.</i></p>
-    </div>
+    </section>
 
-    <div id="the-getinputcontext---method" class="section">
-      <!--OddPage--><h2><span class="secno">5. </span>The getInputContext() method</h2>
+    <section>
+      <h1>The getInputContext() method</h1>
       <p>For each element, a user agent can choose an IME for the element.
       To control the IME attached to an element, it is a good idea to add a
       method to the HTMLElement interface.</p>
       <p class="issue">If the
       <code>getInputContext()</code>
       method cannot be added to the HTMLElement
-      interface, it should be moved to the <a href="#idl-def-InputMethodContext" class="idlType"><code>InputMethodContext</code></a> interface.</p>
+      interface, it should be moved to the <a>InputMethodContext</a> interface.</p>
 
-      <pre class="idl"><span class="idlInterface" id="idl-def-HTMLElement">partial interface <span class="idlInterfaceID">HTMLElement</span>
-<span class="idlMethod">    <span class="idlMethType"><a>InputMethodContext</a></span> <span class="idlMethName"><a href="#widl-HTMLElement-getInputContext-Object">getInputContext</a></span> ();</span>
-};</span>
-</pre><div id="methods" class="section"><h3><span class="secno">5.1 </span>Methods</h3><dl class="methods"><dt id="widl-HTMLElement-getInputContext-Object"><code>getInputContext</code></dt><dd>Returns an InputMethodContext interface associated with this element. By
+      <dl title='interface HTMLElement' class='idl'>
+        <dt>Object getInputContext()</dt>
+          <dd>Returns an InputMethodContext interface associated with this element. By
           default, a user agent returns an InputMethodContext interface representing
           the system IME. To change the behavior of the IME associated with an
           element, authors must first obtain an InputMethodContext interface by
           calling the getInputContext() method of the HTMLElement interface.
-          <div><em>No parameters.</em></div><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>InputMethodContext</a></code></div></dd></dl></div>
-    </div>
-    <div id="composition-dictionary" class="section">
-      <!--OddPage--><h2><span class="secno">6. </span>The Composition Dictionary</h2>
-      <p>This dictionary represents an ongoing IME composition. It provides
+          </dd>
+      </dl>
+    </section>
+    <section id="composition-interface">
+      <h1>The Composition Interface</h1>
+      <p>This interface represents an ongoing IME composition. It provides
       an attribute representing the text being composed by an IME. It also
       provides a method to retrieve attributes of the specified character in the
       composition text.</p>
-      <pre class="idl"><span class="idlInterface" id="idl-def-Composition">dictionary <span class="idlInterfaceID">Composition</span> {
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>Node</a></span>  <span class="idlAttrName"><a href="#widl-Composition-text">text</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>Range</a></span> <span class="idlAttrName"><a href="#widl-Composition-caret">caret</a></span>;</span>
-};</span>
-</pre>
-<div id="attributes" class="section"><h3><span class="secno">6.1 </span>Attributes</h3>
-<dl class="attributes">
-<dt id="widl-Composition-text"><code>text</code> of type <span class="idlAttrType"><a>Node</a></span>, readonly</dt><dd>Represents the styled text being composed by an IME. This node may have child nodes, e.g. when an <a href="#ime-composition">IME composition</a> consists of multiple <a href="#ime-clause">IME clauses</a>, this node has child nodes and each child node represents an <a href="#ime-clause">IME clause</a>. The text attribute of this node is equal to the text attribute of a compositionupdate event.<div><em>No exceptions.</em></div></dd>
-<dt id="widl-Composition-caret"><code>caret</code> of type <span class="idlAttrType"><a>Range</a></span>, readonly</dt><dd>Represents the caret in this composition text. The commonAncestorContainer attribute of this range should be <span class="idlAttrName"><a href="#widl-Composition-text">text</a></span>.<div><em>No exceptions.</em></div></dd>
-</dl>
-</div>
-    </div>
-    <div id="inputmethodcontext-interface" class="section">
-      <!--OddPage--><h2><span class="secno">7. </span>The InputMethodContext Interface</h2>
-      <pre class="idl"><span class="idlInterface" id="idl-def-InputMethodContext">interface <span class="idlInterfaceID">InputMethodContext</span> {
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>DOMString</a></span>   <span class="idlAttrName"><a href="#widl-InputMethodContext-source">source</a></span>;</span>
-<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a href="#idl-def-Composition" class="idlType"><code>Composition</code></a></span> <span class="idlAttrName"><a href="#widl-InputMethodContext-composition">composition</a></span>;</span>
-<span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-setEnabled-boolean-boolean-enabled">setEnabled</a></span> (<span class="idlParam"><span class="idlParamType"><a>boolean</a></span> <span class="idlParamName">enabled</span></span>);</span>
-<span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-isEnabled-boolean">isEnabled</a></span> ();</span>
-<span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-hasComposition-boolean">hasComposition</a></span> ();</span>
-<span class="idlMethod">    <span class="idlMethType"><a>void</a></span>    <span class="idlMethName"><a href="#widl-InputMethodContext-setComposition-void-Composition-composition">setComposition</a></span> (<span class="idlParam"><span class="idlParamType"><a href="#idl-def-Composition" class="idlType"><code>Composition</code></a></span> <span class="idlParamName">composition</span></span>);</span>
-<span class="idlMethod">    <span class="idlMethType"><a>void</a></span>    <span class="idlMethName"><a href="#widl-InputMethodContext-confirmComposition-void">confirmComposition</a></span> ();</span>
-<span class="idlMethod">    <span class="idlMethType"><a>void</a></span>    <span class="idlMethName"><a href="#widl-InputMethodContext-setCaretRectangle-void-long-x-long-y-long-w-long-h">setCaretRectangle</a></span> (<span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">x</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">y</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">w</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">h</span></span>);</span>
-<span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-setOpenState-boolean-boolean-open">setOpenState</a></span> (<span class="idlParam"><span class="idlParamType"><a>boolean</a></span> <span class="idlParamName">open</span></span>);</span>
-};</span>
-</pre><div id="attributes-3" class="section"><h3><span class="secno">7.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-InputMethodContext-composition"><code>composition</code> of type <span class="idlAttrType"><a href="#idl-def-Composition" class="idlType"><code>Composition</code></a></span>, readonly</dt><dd>Represents the detailed information of the ongoing IME
-          composition. When an IME is not composing text, this value <em class="rfc2119" title="must">must</em> be
-          null.<div><em>No exceptions.</em></div></dd><dt id="widl-InputMethodContext-source"><code>source</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>Represents the name of the IME associated with this context.<div><em>No exceptions.</em></div></dd></dl></div><div id="methods-1" class="section"><h3><span class="secno">7.2 </span>Methods</h3><dl class="methods"><dt id="widl-InputMethodContext-confirmComposition-void"><code>confirmComposition</code></dt><dd>
-          <p>Finishes the ongoing composition of the hosting user agent.</p>
-          <p>When a Web application calls this function, a user agent sends a
-          compositionend event and a textInput event as a user types an
-          ‘Accept’ key as written in
-          <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
-          [<cite><a class="bibref" rel="biblioentry" href="#bib-DOM-LEVEL-3-EVENTS">DOM-LEVEL-3-EVENTS</a></cite>].</p>
-          <p class="note">This function is just copied from WebKit, to solicit opinions
-          from developers of JavaScript-based IMEs.</p>
-          <div><em>No parameters.</em></div><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>void</a></code></div></dd><dt id="widl-InputMethodContext-hasComposition-boolean"><code>hasComposition</code></dt><dd>
+      <dl title="interface Composition" class="idl">
+        <dt>readonly attribute DOMString text</dt>
+          <dd>Represents the text being composed by an IME. This string is
+            equal to the text attribute of a compositionupdate event.</dd>
+        <dt>readonly attribute CompositionCaret caret</dt>
+          <dd>Represents the caret in this composition text.</dd>
+        <dt>readonly attribute CompositionClauseList clauses</dt>
+          <dd>Returns the clauses in the composition text.</dd>
+      </dl>
+    </section>
+    <section id="compositioncaret-interface">
+      <h1>The CompositionCaret Interface</h1>
+      <p>This interface represents the caret in the composition text. When
+      the value of its &rdquo;length&rdquo;&nbsp;attribute is <code>0</code>, an IME uses a
+      vertical bar as an its cursor. Otherwise, an IME uses a block cursor as its
+      cursor. When an IME does not show a caret, both values MUST be <code>-1</code>.</p>
+      <dl title="interface CompositionCaret" class="idl">
+        <dt>readonly attribute int start</dt>
+          <dd>Represents the beginning of the caret, in characters. This
+          value is less than the length of the composition text, or
+          <code>-1</code> if an IME does not show a caret. The default value
+          is <code>-1</code>.</dd>
+        <dt>readonly attribute int length</dt>
+          <dd>Represents the length of the caret, in characters. The default
+          value is <code>-1</code>.</dd>
+      </dl>
+    </section>
+    <section id="compositionclause-interface">
+      <h1>The CompositionClause Interface</h1>
+      <p>This interface represents a clause of the composition text. This
+      interface also represents attributes of the clause retrieved from a user
+      agent so Web applications can render the clauses as a user agent does.</p>
+      <p class="note">Retrieving attributes is not supported by all
+      operating systems or all IMEs.</p>
+      <p>When a user agent cannot retrieve attributes from an
+      operating system, it sets default values for them.</p>
+      <dl title="interface CompositionClause" class="idl">
+        <dt>readonly attribute DOMString text</dt>
+          <dd>Represents the text of this clause.</dd>
+        <dt>readonly attribute int start</dt>
+          <dd>Represents the offset of this clause from the beginning of the
+          composition text, in characters.</dd>
+        <dt>readonly attribute boolean selected</dt>
+          <dd>Represents whether this clause is a selected clause.</dd>
+        <dt>readonly attribute DOMString textColor</dt>
+        <dd>Represents the text color used by a user agent to render this
+        clause. This string MUST be parsed as a CSS color value.
+        The default value is <code>currentColor</code>.</dd>
+        <dt>readonly attribute DOMString backgroundColor</dt>
+          <dd>Represents the background color used by a user agent to render
+          this clause. This string MUST be parsed as a CSS color value. The
+          default value is "<code>transparent</code>".</dd>
+        <dt>readonly attribute DOMString lineStyle</dt>
+          <dd>Represents the style of an underline used by a user agent to
+          render under this clause. This value MUST be one defined in the
+          ‘text-underline-style’ of CSS 3; i.e.,
+          "<code>none</code>", "<code>solid</code>", "<code>double</code>",
+          "<code>dotted</code>", "<code>dashed</code>", and
+          "<code>wave</code>". The default value is "<code>solid</code>".</dd>
+        <dt>readonly attribute DOMString lineColor</dt>
+          <dd>Represents the color of an underline used by a user agent. If
+          lineStyle is &rdquo;none&rdquo;, this value is undefined.
+          The default value is <code>currentColor</code>.</dd>
+      </dl>
+    </section>
+    <section id="compositionclauselist-sequence">
+      <h1>The CompositionClauseList sequence</h1>
+      <div title="typedef sequence&lt;CompositionClause> CompositionClauseList" class="idl"></div>
+    </section>
+    <section id="inputmethodcontext-interface">
+      <h1>The InputMethodContext Interface</h1>
+      <dl title="interface InputMethodContext" class="idl">
+        <dt>readonly attribute DOMString source</dt>
+          <dd>Represents the name of the IME associated with this context.</dd>
+        <dt>readonly attribute Composition composition</dt>
+          <dd>Represents the detailed information of the ongoing IME
+          composition. When an IME is not composing text, this value MUST be
+          null.</dd>
+        <dt>boolean setEnabled(in boolean enabled)</dt>
+          <dd>
+            <p>Controls the state of the IME associated with this context.</p>
+            <ul>
+              <li>The <var>enabled</var> parameter represents whether a user agent
+              activates this IME when the given node gains the input focus. When this
+              value is true, a user agent activates an IME when this node gains the input
+              focus and sends composition events to the given node even though the node
+              is not an editable one, such as a <code>&lt;canvas&gt;</code> element.</li>
+            </ul>
+          </dd>
+        <dt>boolean isEnabled()</dt>
+          <dd>Returns the state of the IME associated with this context.</dd>
+        <dt>bool setInputMode(DOMString script, DOMString modifier)</dt>
+          <dd>
+          <p>Provides a hint to the user agent so it can select the
+          appropriate input mode of its associated IME. This function returns <code>true</code>
+          when a user agent can change the input mode of its associated IME.
+          Otherwise it returns <code>false</code>.</p>
+          <p class="note">The parameters for this function are copied from
+          <a href="http://www.w3.org/TR/xforms/#mode">Annex E of the &ldquo;XForms 1.0&rdquo; specification</a>
+          [[XFORMS10]], for consistency with that specification.</p>
+          <ul>
+            <li>The <var>script</var> parameter represents a Unicode script name.</li>
+            <li>The <var>modifier</var> parameter represents a string added
+            to the script name in order to more closely specify the kind of characters:
+            e.g., "<code>digits</code>", "<code>halfWidth</code>", "<code>kotei</code>", etc.</li>
+          </ul>
+          </dd>
+        <dt>boolean hasComposition()</dt>
+          <dd>
             <p>Returns true when the hosting user agent is composing text.</p>
             <p class="note">This function is just copied from WebKit, to solicit opinions
             from developers of JavaScript-based IMEs.</p>
-          <div><em>No parameters.</em></div><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>boolean</a></code></div></dd><dt id="widl-InputMethodContext-isEnabled-boolean"><code>isEnabled</code></dt><dd>Returns the state of the IME associated with this context.<div><em>No parameters.</em></div><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>boolean</a></code></div></dd><dt id="widl-InputMethodContext-setCaretRectangle-void-long-x-long-y-long-w-long-h"><code>setCaretRectangle</code></dt><dd>
+          </dd>
+        <dt>void setComposition(in Composition composition)</dt>
+          <dd>
+          <p>Updates the composition information of the hosting user agent.</p>
+          <p>When a JavaScript-based IME starts a composition, it MUST call
+          this function with the appropriate composition information. When a
+          JavaScript-based IME cancels an ongoing composition, it MUST call this
+          function with a composition object whose text is empty. A user agent
+          sends a compositionstart event when this function is called while
+          hasComposition() returns <code>false</code>. On the other hand, a
+          user agent sends a compositionupdate event when a Web application calls
+          this function while hasComposition() returns <code>true</code>.</p>
+          <p class="note">This function is just copied from WebKit, to solicit opinions
+          from developers of JavaScript-based IMEs.</p>
+          <ul>
+          <li>The <var>composition</var> parameter represents the
+          information of the new composition.</li>
+          </ul>
+          </dd>
+        <dt>void confirmComposition()</dt>
+          <dd>
+          <p>Finishes the ongoing composition of the hosting user agent.</p>
+          <p>When a Web application calls this function, a user agent sends a
+          compositionend event and a textInput event as a user types an
+          &lsquo;Accept&rsquo; key as written in
+          <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
+          [[!DOM-LEVEL-3-EVENTS]].</p>
+          <p class="note">This function is just copied from WebKit, to solicit opinions
+          from developers of JavaScript-based IMEs.</p>
+          </dd>
+        <dt>void setCaretRectangle(in int x, in int y, in int w, in int h)</dt>
+          <dd>
             <p>Notifies the rectangle of composition text to a user agent. When
             a user agent renders a
             <a href="#candidate-window">candidate window</a>
@@ -1050,36 +733,13 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
             <ul>
               <li>The <var>x</var>, <var>y</var>, <var>w</var>, and <var>h</var>
               parameters represent the local coordinates of a
-              composition-text rectangle. A user agent <em class="rfc2119" title="may">may</em> need to convert these
+              composition-text rectangle. A user agent MAY need to convert these
               coordinates to the screen coordinates when it shows a
               <a href="#candidate-window">candidate window</a>.</li>
             </ul>
-          <div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>void</a></code></div></dd><dt id="widl-InputMethodContext-setComposition-void-Composition-composition"><code>setComposition</code></dt><dd>
-          <p>Updates the composition information of the hosting user agent.</p>
-          <p>When a JavaScript-based IME starts a composition, it <em class="rfc2119" title="must">must</em> call
-          this function with the appropriate composition information. When a
-          JavaScript-based IME cancels an ongoing composition, it <em class="rfc2119" title="must">must</em> call this
-          function with a composition object whose text is empty. A user agent
-          sends a compositionstart event when this function is called while
-          hasComposition() returns <code>false</code>. On the other hand, a
-          user agent sends a compositionupdate event when a Web application calls
-          this function while hasComposition() returns <code>true</code>.</p>
-          <p class="note">This function is just copied from WebKit, to solicit opinions
-          from developers of JavaScript-based IMEs.</p>
-          <ul>
-          <li>The <var>composition</var> parameter represents the
-          information of the new composition.</li>
-          </ul>
-          <div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>void</a></code></div></dd><dt id="widl-InputMethodContext-setEnabled-boolean-boolean-enabled"><code>setEnabled</code></dt><dd>
-            <p>Controls the state of the IME associated with this context.</p>
-            <ul>
-              <li>The <var>enabled</var> parameter represents whether a user agent
-              activates this IME when the given node gains the input focus. When this
-              value is true, a user agent activates an IME when this node gains the input
-              focus and sends composition events to the given node even though the node
-              is not an editable one, such as a <code>&lt;canvas&gt;</code> element.</li>
-            </ul>
-          <div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>boolean</a></code></div></dd><dt id="widl-InputMethodContext-setOpenState-boolean-boolean-open"><code>setOpenState</code></dt><dd>
+          </dd>
+        <dt>boolean setOpenState(in boolean open)</dt>
+          <dd>
           <p>Controls the state of the IME currently associated with the hosting
           user agent. This function returns <code>true</code> if a user agent can activate or
           deactivate its associated IME.</p>
@@ -1089,11 +749,12 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
           </ul>
           <p class="issue">Do we need to notice this event to JavaScript IMEs? If
           so, what is the best option?</p>
-          <div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>boolean</a></code></div></dd></dl></div>
-    </div>
+          </dd>
+      </dl>
+    </section>
 
-    <div class="informative section" id="best-practices">
-      <!--OddPage--><h2><span class="secno">8. </span>Best practices</h2><p><em>This section is non-normative.</em></p>
+    <section  class='informative' id="best-practices">
+      <h1>Best practices</h1>
     <p>This specification provides two types of interfaces:</p>
     <ol>
       <li>Interfaces for developing IMEs in JavaScript (JavaScript IMEs)</li>
@@ -1105,11 +766,11 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
     <p>These dependencies make developers harder to use this API in their
     JavaScript IMEs or IME-aware Web applications. This section describes
     practices for some use-cases.</p>
-    <div id="javascript-imes" class="section">
-      <h3><span class="secno">8.1 </span>JavaScript IMEs</h3>
+    <section id="javascript-imes">
+      <h1>JavaScript IMEs</h1>
       <p><i>more into to come later…</i></p>
-      <div id="composing-text" class="section">
-        <h4><span class="secno">8.1.1 </span>Composing text</h4>
+      <section id="composing-text">
+        <h1>Composing text</h1>
         <p>Existing JavaScript IMEs use DOM events (e.g., "keydown",
         "keyup", "focus", "blur", etc.) to compose text. To avoid forcing
         developers to change their JavaScript IMEs too much, this API does not
@@ -1122,20 +783,20 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         that composes text with a JavaScript IME which emulates the first example
         in the
         <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
-        [<cite><a class="bibref" rel="biblioentry" href="#bib-DOM-LEVEL-3-EVENTS">DOM-LEVEL-3-EVENTS</a></cite>].</p>
+        [[DOM-LEVEL-3-EVENTS]].</p>
         <figure id="fig-composing-with-js-ime">
           <p><img height="1285" src="images/image12.png" width="707"></p>
           <figcaption>Composing Text with JavaScript IME</figcaption>
         </figure>
-      </div>
-      <div id="consuming-events" class="section">
-        <h4><span class="secno">8.1.2 </span>Consuming events</h4>
-        <p>When a JavaScript IME calls setComposition(), it <em class="rfc2119" title="must">must</em> call
+      </section>
+      <section id="consuming-events">
+        <h1>Consuming events</h1>
+        <p>When a JavaScript IME calls setComposition(), it MUST call
         preventDefault()&nbsp;to prevent user agents from inserting this character
         to an element.</p>
-      </div>
-      <div id="enabling-disabling-js-imes" class="section">
-        <h4><span class="secno">8.1.3 </span>Enabling or Disabling JavaScript IMEs</h4>
+      </section>
+      <section id="enabling-disabling-js-imes">
+        <h3>Enabling or Disabling JavaScript IMEs</h3>
         <p>A JavaScript IME should not consume keyboard events when hosting
         Web applications disable it. The JavaScript IME should call
         getInputContext().isEnabled() when it receives a keyboard event and
@@ -1144,16 +805,16 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
           <p><img height="296" src="images/image03.png" width="699"></p>
           <figcaption>A JavaScript IME disabled by Web applications</figcaption>
         </figure>
-      </div>
-      <div id="candidate-window-section" class="section">
-        <h4><span class="secno">8.1.4 </span>Candidate window</h4>
+      </section>
+      <section id="candidate-window-section">
+        <h3>Candidate window</h3>
         <p>Existing JavaScript IMEs usually use so-called CSS layers to
         render their <a href="#candidate-window">candidate window</a>.
         Nevertheless, some JavaScript IMEs use
         absolute coordinates to render their candidate windows (i.e.,
-        <code>&lt;div style="position: absolute"&gt;…&lt;/div&gt;</code>),
+        <code>&lt;div style="position: absolute"&gt;&hellip;&lt;/div&gt;</code>),
         others use relative coordinates to render theirs (i.e.,
-        <code>&lt;div style="position: relative"&gt;…&lt;/div&gt;</code>).
+        <code>&lt;div style="position: relative"&gt;&hellip;&lt;/div&gt;</code>).
         To satisfy both requests, this API provides two methods that retrieve the
         caret rectangle. This API provides
         window.inputmethodmanager.getCaretRectangle() for JavaScript IMEs that
@@ -1161,36 +822,37 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
         composition text. On the other hand, this API provides
         getInputContext().getCaretRectange() for JavaScript IMEs that need its
         relative position.</p>
-      </div>
-    </div>
-    <div id="ime-aware-webapps" class="section">
-      <h3><span class="secno">8.2 </span>IME-aware Web applications</h3>
+      </section>
+    </section>
+    <section id="ime-aware-webapps">
+      <h1>IME-aware Web applications</h1>
       <p>When developers develop an IME-aware Web application, they need to
       decide which IME to use in their Web application: JavaScript IMEs, system
       IMEs, or none. The following sections describe practices of these three
       cases.</p>
-      <div id="using-js-imes" class="section">
-        <h4><span class="secno">8.2.1 </span>Using JavaScript IMEs</h4>A Web application that uses only JavaScript IMEs <em class="rfc2119" title="must">must</em> disable
+      <section id="using-js-imes">
+        <h1>Using JavaScript IMEs</h1
+        <p>A Web application that uses only JavaScript IMEs MUST disable
         the system IMEs associated with the hosting user agent to prevent keyboard
         events from being consumed by system IMEs. To disable the system IMEs
-        associated with a user agent, the Web application <em class="rfc2119" title="must">must</em> call
+        associated with a user agent, the Web application MUST call
         getInputContext().setEnabled(true) and
         window.inputmethodmanager.setOpenState(false) when initializing itself
-        and when it gains the focus.<p></p>
+        and when it gains the focus.</p>
         <figure id="disabling-system-ime">
           <p><img height="373" src="images/image07.png" width="657"></p>
           <figcaption>Disable the system IME and enable a JavaScript IME</figcaption>
         </figure>
-        <p>JavaScript IMEs <em class="rfc2119" title="may">may</em> not dispatch keyboard events consumed by them
+        <p>JavaScript IMEs MAY not dispatch keyboard events consumed by them
         to Web applications. Therefore, developers should not depend on such
         keyboard events to develop their Web applications when using JavaScript
         IMEs.</p>
-      </div>
-      <div id="using-system-imes" class="section">
-        <h4><span class="secno">8.2.2 </span>Using system IMEs</h4>
+      </section>
+      <section id="using-system-imes">
+        <h1>Using system IMEs</h1>
         <p>On the other hand, a Web application that uses the system IME
-        <em class="rfc2119" title="must">must</em> enable the system IME when it becomes active as well as it disables
-        the JavaScript IMEs. JavaScript IMEs <em class="rfc2119" title="may">may</em> consume keyboard events even
+        MUST enable the system IME when it becomes active as well as it disables
+        the JavaScript IMEs. JavaScript IMEs MAY consume keyboard events even
         though the Web application calls getInputContext().setEnabled(false). To
         prevent such JavaScript IMEs from consuming keyboard events, the Web
         application should add event handlers to keyboard events.</p>
@@ -1198,20 +860,15 @@ pre.sh_sourceCode .sh_attribute { color: #006400; }
           <p><img height="469" src="images/image09.png" width="657"></p>
           <figcaption>Enable the system IME and disable JavaScript IMEs</figcaption>
         </figure>
-      </div>
-      <div id="does-not-use-imes" class="section">
-        <h4><span class="secno">8.2.3 </span>Does not use IMEs</h4>
+      </section>
+      <section id="does-not-use-imes">
+        <h1>Does not use IMEs</h1>
         <p>When a Web application does not use any IMEs, it…</p>
         <figure id="no-imes">
           <p><img height="305" src="images/image00.png" width="657"></p>
           <figcaption>[to come]</figcaption>
         </figure>
-        </div>
-      </div>
-  
-
-</div><div id="references" class="appendix section"><!--OddPage--><h2><span class="secno">A. </span>References</h2><div id="normative-references" class="section"><h3><span class="secno">A.1 </span>Normative references</h3><dl class="bibliography"><dt id="bib-DOM-LEVEL-3-EVENTS">[DOM-LEVEL-3-EVENTS]</dt><dd>Björn Höhrmann; Tom Pixley; Philippe Le Hégaret. <a href="http://www.w3.org/TR/2011/WD-DOM-Level-3-Events-20110531/"><cite>Document Object Model (DOM) Level 3 Events Specification.</cite></a> 31 May 2011. W3C Working Draft. (Work in progress.) URL: <a href="http://www.w3.org/TR/2011/WD-DOM-Level-3-Events-20110531/">http://www.w3.org/TR/2011/WD-DOM-Level-3-Events-20110531/</a> 
-</dd><dt id="bib-RFC2119">[RFC2119]</dt><dd>S. Bradner. <a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key words for use in RFCs to Indicate Requirement Levels.</cite></a> March 1997. Internet RFC 2119.  URL: <a href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a> 
-</dd></dl></div><div id="informative-references" class="section"><h3><span class="secno">A.2 </span>Informative references</h3><dl class="bibliography"><dt id="bib-CANVAS-2D">[CANVAS-2D]</dt><dd>Ian Hickson. <a href="http://www.w3.org/TR/2dcontext/"><cite>HTML Canvas 2D Context.</cite></a> 25 May 2011. W3C Working Draft. (Work in progress.) URL: <a href="http://www.w3.org/TR/2dcontext/">http://www.w3.org/TR/2dcontext/</a> 
-</dd><dt id="bib-XFORMS10">[XFORMS10]</dt><dd>John M. Boyer. <a href="http://www.w3.org/TR/2007/REC-xforms-20071029"><cite>XForms 1.0 (Third Edition).</cite></a> 29 October 2007. W3C Recommendation. URL: <a href="http://www.w3.org/TR/2007/REC-xforms-20071029">http://www.w3.org/TR/2007/REC-xforms-20071029</a> 
-</dd></dl></div></div></body></html>
+        </section>
+      </section>
+  </body>
+</html>
