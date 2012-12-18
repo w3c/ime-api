@@ -77,7 +77,7 @@
           wg:           "Web Applications Working Group",
           wgPublicList: "public-webapps",
           wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/42538/status",
-          publishDate:  "2012-05-24",
+          publishDate:  "2012-12-18",
           extraCSS: ["ReSpec.js/css/respec.css"],
           after: function () {
             var nodesToRemove = [
@@ -360,8 +360,10 @@ function onKeyUp(event) {
       <p>A <dfn id="converter">converter</dfn> is a context-sensitive parser that looks up a
       dictionary to convert phonetic characters to a set of ideographic
       characters.</p>
-      <p>A <dfn id="ime-composition">IME composition</dfn>
-      is a instance of text produced in an IME.</p>
+      <p>An <dfn id="ime-clause">IME clause</dfn> is a grammatical word produced in an IME.</p>
+      <p>An <dfn id="ime-selected-clause">IME selected clause</dfn> is an <a href="ime-clause">IME clause</a> being composed by an IME.</p>
+      <p>An <dfn id="ime-composition">IME composition</dfn>
+      is an instance of text produced in an IME. For IMEs that can produce multiple words, an IME composition consists of multiple IME clauses. For IMEs that produce only one word, an IME composition is equal to an IME clause.</p>
 
       <p>When an IME receives keystrokes, it sends the keystrokes to a
       composer and receives phonetic characters matching to the keystrokes. When
@@ -384,7 +386,11 @@ function onKeyUp(event) {
         character from its ASCII representation.</p>
 
         <p>A <dfn id="radical-composer">radical composer</dfn> composes a
-        phonetic character from phonetic radicals.</p>
+        phonetic character from <a href="#phonetic-radical">phonetic radicals</a>.</p>
+
+        <p>A <dfn id="phonetic-radical">phonetic radical</dfn> is a character component of a Latin character, a Chinese character, or a Korean character. A Latin character consists of an ASCII character and accent marks, e.g. a character '&aacute;' consists of an ASCII character 'a' and an accent mark '&acute;'. A Chinese character consists of Chinese character components that refer to its semantic origins, e.g. a Chinese character '&#x7565;' consists of two components '&#x7530;' and '&#x5404;'. A Korean character consists of Korean character components that represent consonants or vowels, e.g. a Korean character '&#xac00;' consists of a consonant '&#x3131;' and a vowel '&#x314f;'.</p>
+
+        <p>A <dfn id="composition-window">composition window</dfn> is a window that shows ASCII characters being composed by <a href="#phonetic-composer">phonetic composers</a> or <a href="#phonetic-radical">phonetic radicals</a> being composed by <a href="#radical-composer">radical composers</a>.</p>
 
         <p>An IME usually shows the text
         being composed by a composer with its own style to distinguish it from the
@@ -561,7 +567,7 @@ function onKeyUp(event) {
       interface, it should be moved to the <a>InputMethodContext</a> interface.</p>
 
       <dl title='interface HTMLElement' class='idl'>
-        <dt>Object getInputContext()</dt>
+        <dt>InputMethodContext getInputContext()</dt>
           <dd>Returns an InputMethodContext interface associated with this element. By
           default, a user agent returns an InputMethodContext interface representing
           the system IME. To change the behavior of the IME associated with an
@@ -570,80 +576,27 @@ function onKeyUp(event) {
           </dd>
       </dl>
     </section>
-    <section id="composition-interface">
-      <h1>The Composition Interface</h1>
-      <p>This interface represents an ongoing IME composition. It provides
+    <section id="composition-dictionary">
+      <h1>The Composition Dictionary</h1>
+      <p>This dictionary represents an ongoing IME composition. It provides
       an attribute representing the text being composed by an IME. It also
       provides a method to retrieve attributes of the specified character in the
       composition text.</p>
       <dl title="interface Composition" class="idl">
-        <dt>readonly attribute DOMString text</dt>
+        <dt>readonly attribute Node text</dt>
+          <dd>Represents the styled text being composed by an IME. This node may
+          have child nodes, e.g. when an <a href="#ime-composition">IME
+          composition</a> consists of multiple <a href="#ime-clause">IME clauses</a>,
+          this node has child nodes and each child node represents an
+          <a href="#ime-clause">IME clause</a>. The text attribute of this node
+          is equal to the text
+          attribute of a compositionupdate event.
           <dd>Represents the text being composed by an IME. This string is
             equal to the text attribute of a compositionupdate event.</dd>
-        <dt>readonly attribute CompositionCaret caret</dt>
-          <dd>Represents the caret in this composition text.</dd>
-        <dt>readonly attribute CompositionClauseList clauses</dt>
-          <dd>Returns the clauses in the composition text.</dd>
+        <dt>readonly attribute Range caret</dt>
+          <dd>Represents the caret in this composition text. The
+            CommonAncestorContainer attribute of this range should be text</dd>
       </dl>
-    </section>
-    <section id="compositioncaret-interface">
-      <h1>The CompositionCaret Interface</h1>
-      <p>This interface represents the caret in the composition text. When
-      the value of its &rdquo;length&rdquo;&nbsp;attribute is <code>0</code>, an IME uses a
-      vertical bar as an its cursor. Otherwise, an IME uses a block cursor as its
-      cursor. When an IME does not show a caret, both values MUST be <code>-1</code>.</p>
-      <dl title="interface CompositionCaret" class="idl">
-        <dt>readonly attribute int start</dt>
-          <dd>Represents the beginning of the caret, in characters. This
-          value is less than the length of the composition text, or
-          <code>-1</code> if an IME does not show a caret. The default value
-          is <code>-1</code>.</dd>
-        <dt>readonly attribute int length</dt>
-          <dd>Represents the length of the caret, in characters. The default
-          value is <code>-1</code>.</dd>
-      </dl>
-    </section>
-    <section id="compositionclause-interface">
-      <h1>The CompositionClause Interface</h1>
-      <p>This interface represents a clause of the composition text. This
-      interface also represents attributes of the clause retrieved from a user
-      agent so Web applications can render the clauses as a user agent does.</p>
-      <p class="note">Retrieving attributes is not supported by all
-      operating systems or all IMEs.</p>
-      <p>When a user agent cannot retrieve attributes from an
-      operating system, it sets default values for them.</p>
-      <dl title="interface CompositionClause" class="idl">
-        <dt>readonly attribute DOMString text</dt>
-          <dd>Represents the text of this clause.</dd>
-        <dt>readonly attribute int start</dt>
-          <dd>Represents the offset of this clause from the beginning of the
-          composition text, in characters.</dd>
-        <dt>readonly attribute boolean selected</dt>
-          <dd>Represents whether this clause is a selected clause.</dd>
-        <dt>readonly attribute DOMString textColor</dt>
-        <dd>Represents the text color used by a user agent to render this
-        clause. This string MUST be parsed as a CSS color value.
-        The default value is <code>currentColor</code>.</dd>
-        <dt>readonly attribute DOMString backgroundColor</dt>
-          <dd>Represents the background color used by a user agent to render
-          this clause. This string MUST be parsed as a CSS color value. The
-          default value is "<code>transparent</code>".</dd>
-        <dt>readonly attribute DOMString lineStyle</dt>
-          <dd>Represents the style of an underline used by a user agent to
-          render under this clause. This value MUST be one defined in the
-          ‘text-underline-style’ of CSS 3; i.e.,
-          "<code>none</code>", "<code>solid</code>", "<code>double</code>",
-          "<code>dotted</code>", "<code>dashed</code>", and
-          "<code>wave</code>". The default value is "<code>solid</code>".</dd>
-        <dt>readonly attribute DOMString lineColor</dt>
-          <dd>Represents the color of an underline used by a user agent. If
-          lineStyle is &rdquo;none&rdquo;, this value is undefined.
-          The default value is <code>currentColor</code>.</dd>
-      </dl>
-    </section>
-    <section id="compositionclauselist-sequence">
-      <h1>The CompositionClauseList sequence</h1>
-      <div title="typedef sequence&lt;CompositionClause> CompositionClauseList" class="idl"></div>
     </section>
     <section id="inputmethodcontext-interface">
       <h1>The InputMethodContext Interface</h1>
@@ -667,29 +620,13 @@ function onKeyUp(event) {
           </dd>
         <dt>boolean isEnabled()</dt>
           <dd>Returns the state of the IME associated with this context.</dd>
-        <dt>bool setInputMode(DOMString script, DOMString modifier)</dt>
-          <dd>
-          <p>Provides a hint to the user agent so it can select the
-          appropriate input mode of its associated IME. This function returns <code>true</code>
-          when a user agent can change the input mode of its associated IME.
-          Otherwise it returns <code>false</code>.</p>
-          <p class="note">The parameters for this function are copied from
-          <a href="http://www.w3.org/TR/xforms/#mode">Annex E of the &ldquo;XForms 1.0&rdquo; specification</a>
-          [[XFORMS10]], for consistency with that specification.</p>
-          <ul>
-            <li>The <var>script</var> parameter represents a Unicode script name.</li>
-            <li>The <var>modifier</var> parameter represents a string added
-            to the script name in order to more closely specify the kind of characters:
-            e.g., "<code>digits</code>", "<code>halfWidth</code>", "<code>kotei</code>", etc.</li>
-          </ul>
-          </dd>
         <dt>boolean hasComposition()</dt>
           <dd>
             <p>Returns true when the hosting user agent is composing text.</p>
             <p class="note">This function is just copied from WebKit, to solicit opinions
             from developers of JavaScript-based IMEs.</p>
           </dd>
-        <dt>void setComposition(in Composition composition)</dt>
+        <dt>void setComposition(Composition composition)</dt>
           <dd>
           <p>Updates the composition information of the hosting user agent.</p>
           <p>When a JavaScript-based IME starts a composition, it MUST call
@@ -718,7 +655,7 @@ function onKeyUp(event) {
           <p class="note">This function is just copied from WebKit, to solicit opinions
           from developers of JavaScript-based IMEs.</p>
           </dd>
-        <dt>void setCaretRectangle(in int x, in int y, in int w, in int h)</dt>
+        <dt>void setCaretRectangle(int x, int y, int w, int h)</dt>
           <dd>
             <p>Notifies the rectangle of composition text to a user agent. When
             a user agent renders a
@@ -738,7 +675,7 @@ function onKeyUp(event) {
               <a href="#candidate-window">candidate window</a>.</li>
             </ul>
           </dd>
-        <dt>boolean setOpenState(in boolean open)</dt>
+        <dt>boolean setOpenState(boolean open)</dt>
           <dd>
           <p>Controls the state of the IME currently associated with the hosting
           user agent. This function returns <code>true</code> if a user agent can activate or
