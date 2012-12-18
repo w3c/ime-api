@@ -411,8 +411,8 @@ function onKeyUp(event) {
           as mathematical symbols, Yi, Amharic, etc.) with a US-101 keyboard. Each of
           these languages has a mapping table from its character to a sequence of
           ASCII characters representing its pronunciation: e.g.,
-          &lsquo;&#12363;&rsquo; to &lsquo;ka&rsquo; in Japanese, and;
-          &lsquo;&#21345;&rsquo; to &lsquo;ka&rsquo; in Simplified Chinese. This
+          &lsquo;&#x304B;&rsquo; to &lsquo;ka&rsquo; in Japanese, and;
+          &lsquo;&#x5361;&rsquo; to &lsquo;ka&rsquo; in Simplified Chinese. This
           mapping table is called as Romaji for Japanese and Pinyin for Simplified
           Chinese, respectively. A phonetic composer uses these mapping tables to
           compose a phonetic character from a sequence of ASCII characters produced
@@ -443,13 +443,13 @@ function onKeyUp(event) {
           <p>Radical composers are mainly used for typing Traditional
           Chinese and Korean with phonetic keyboards. Each phonetic keyboard of these
           languages can produce phonetic radicals: e.g., typing &lsquo;r&rsquo;
-          produces &lsquo;&#12593;&rsquo; on a Korean keyboard; typing
-          &lsquo;o&rsquo; produces &lsquo;&#20154;&rsquo; on a Traditional-Chinese
+          produces &lsquo;&#x3131;&rsquo; on a Korean keyboard; typing
+          &lsquo;o&rsquo; produces &lsquo;&#x4EBA;&rsquo; on a Traditional-Chinese
           (or Bopomofo) keyboard, etc. A radical composer composes a phonetic
           character from phonetic radicals given by these keyboards: e.g., typing
-          '&#12593;' (r) and '&#12623;' (k) produces '&#44032;' on a Korean keyboard;
-          typing &lsquo;&#20154;&rsquo; (o), &lsquo;&#24339;&rsquo; (n), and
-          &lsquo;&#28779;&rsquo; (f) produces &lsquo;&#20320;&rsquo; on a
+          '&#x3131;' (r) and '&#x314F;' (k) produces '&#xAC00;' on a Korean keyboard;
+          typing &lsquo;&#x4EBA;&rsquo; (o), &lsquo;&#x5F13;&rsquo; (n), and
+          &lsquo;&#x706B;&rsquo; (f) produces &lsquo;&#x4F60;&rsquo; on a
           Traditional-Chinese keyboard, etc.</p>
           <p>A radical composer for Korean outputs the phonetic radicals as
           its composition text.</p>
@@ -467,7 +467,7 @@ function onKeyUp(event) {
           </figure>
           <p>Some platforms (such as Mac and Linux) use radical composers
           for typing accented characters used in European countries. For example,
-          typing &lsquo; &#776; &rsquo; (option+u) and &lsquo;a&rsquo; (a) produces
+          typing &lsquo; &#x308; &rsquo; (option+u) and &lsquo;a&rsquo; (a) produces
           &lsquo;&auml;&rsquo; on US keyboards of Mac.</p>
           <figure id="fig-radical-composer-mac">
             <p><img height="177" src="images/image01.png" width="479"></p>
@@ -484,14 +484,14 @@ function onKeyUp(event) {
 
         <p>Because Chinese, Japanese, and Korean have many homonyms, each sequence of phonetic
         characters usually matches many ideographic characters: e.g., a Japanese
-        phonetic character '&#12363;' matches Japanese ideographic characters
-        &lsquo;&#21270;&rsquo;, &lsquo;&#31185;&rsquo;, &lsquo;&#35506;&rsquo;,
+        phonetic character '&#x304B;' matches Japanese ideographic characters
+        &lsquo;&#x5316;&rsquo;, &lsquo;&#x79D1;&rsquo;, &lsquo;&#x8AB2;&rsquo;,
         etc.; Pinyin characters &lsquo;ka&rsquo; matches Simplified-Chinese
-        ideographic characters &lsquo;&#21345;', &lsquo;&#21888;&rsquo;,
-        &lsquo;&#21679;&rsquo;, etc.; Bopomofo characters
-        &lsquo;&#20154;&#24339;&rsquo; matches Traditional-Chinese ideographic
-        characters &lsquo;&#20062;&rsquo;, &lsquo;&#20159;&rsquo;,
-        &lsquo;&#20103;&rsquo;, etc.</p>
+        ideographic characters &lsquo;&#x5361;', &lsquo;&#x5580;&rsquo;,
+        &lsquo;&#x54AF;&rsquo;, etc.; Bopomofo characters
+        &lsquo;&#x4EBA;&#x5F13;&rsquo; matches Traditional-Chinese ideographic
+        characters &lsquo;&#x4E5E;&rsquo;, &lsquo;&#x4EBF;&rsquo;,
+        &lsquo;&#x4E87;&rsquo;, etc.</p>
         <p>A converter looks up a dictionary and shows a
         list of candidates of possible ideographic characters so a user can choose
         one. This list is known as a <dfn id="candidate-list">candidate list</dfn>.
@@ -541,10 +541,10 @@ function onKeyUp(event) {
         <p>When a converter converts two or more clauses, it chooses
         candidates for the selected clause so it becomes grammatically consistent
         with the surrounding clauses: e.g., Japanese converters usually output
-        &lsquo;&#21361;&#27231;&#19968;&#39658;&rsquo; (not
-        &lsquo;&#21361;&#27231;&#19968;&#30330;&rsquo;) for Japanese phonetic
-        characters &lsquo;&#12365;&#12365;&#12356;&#12387;&#12401;&#12388;&rsquo;
-        because &lsquo;&#21361;&#27231;&#19968;&#30330;&rsquo; is grammatically
+        &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x9AEA;&rsquo; (not
+        &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x767A;&rsquo;) for Japanese phonetic
+        characters &lsquo;&#x304D;&#x304D;&#x3044;&#x3063;&#x3071;&#x3064;&rsquo;
+        because &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x767A;&rsquo; is grammatically
         incorrect.</p>
       </section>
     </section>
