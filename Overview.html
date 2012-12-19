@@ -582,7 +582,7 @@ function onKeyUp(event) {
       an attribute representing the text being composed by an IME. It also
       provides a method to retrieve attributes of the specified character in the
       composition text.</p>
-      <dl title="interface Composition" class="idl">
+      <dl title="dictionary Composition" class="idl">
         <dt>readonly attribute Node text</dt>
           <dd>Represents the styled text being composed by an IME. This node may
           have child nodes, e.g. when an <a href="#ime-composition">IME
@@ -595,7 +595,7 @@ function onKeyUp(event) {
             equal to the text attribute of a compositionupdate event.</dd>
         <dt>readonly attribute Range caret</dt>
           <dd>Represents the caret in this composition text. The
-            CommonAncestorContainer attribute of this range should be text</dd>
+          CommonAncestorContainer attribute of this range should be <code><a>text</a></code></dd>
       </dl>
     </section>
     <section id="inputmethodcontext-interface">
