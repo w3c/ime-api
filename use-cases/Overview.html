@@ -56,39 +56,38 @@
         return d.toISOString().substring(0,10);
       }
     </script>
-    <script type="text/javascript" src='../ReSpec.js/js/respec.js' class='remove'></script>
+    <script type="text/javascript" src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
     <script type="text/javascript" class='remove'>
-    var respecConfig = 
-      {
-          specStatus: "unofficial",
-          shortName:  "ime-api",
-          edDraftURI: "http://dvcs.w3.org/hg/ime-api/", // FIXME
-          editors: [
-                {   name:       "Hironori Bono (坊野 博典)",
-                    company:    "Google",
-                    mailto:     "hbono@google.com"
-                },
-                {   name:       "Kenji Baheux",
-                    company:    "Google",
-                    mailto:     "kenjibaheux@google.com"
-                },
-          ],
-          wgURI:        "[to come]",
-          wg:           "[to come]",
-          wgPublicList: "public-webapps",
-          wgPatentURI:  "[to come]",
-          additionalCopyrightHolders: "Hironori Bono, Kenji Baheux",
-          publishDate: getLastModifiedDate(),
-          extraCSS: ["../ReSpec.js/css/respec.css"],
-          after: function () {
-            var nodesToRemove = [
-              document.querySelectorAll("table.parameters"),
-              document.querySelectorAll("li.tocline > a[href^='#attributes']"),
-              document.querySelectorAll("li.tocline > a[href^='#methods']"),
-             ]
-            addEllipsis('idl-def-HTMLElement');
-            removeNodes(nodesToRemove);
-          }
+      var respecConfig = {
+        specStatus: "unofficial",
+        shortName:  "ime-api",
+        edDraftURI: "http://dvcs.w3.org/hg/ime-api/", // FIXME
+        editors: [
+              {   name:       "Hironori Bono (坊野 博典)",
+                  company:    "Google",
+                  mailto:     "hbono@google.com"
+              },
+              {   name:       "Kenji Baheux",
+                  company:    "Google",
+                  mailto:     "kenjibaheux@google.com"
+              },
+        ],
+        extraCSS: [ "http://dev.w3.org/2009/dap/ReSpec.js/css/respec.css" ],
+        wg:           "[to come]",
+        wgURI:        "[to come]",
+        wgPublicList: "public-webapps",
+        wgPatentURI:  "[to come]",
+        additionalCopyrightHolders: "Hironori Bono, Kenji Baheux",
+        publishDate: getLastModifiedDate(),
+        after: function () {
+          var nodesToRemove = [
+            document.querySelectorAll("table.parameters"),
+            document.querySelectorAll("li.tocline > a[href^='#attributes']"),
+            document.querySelectorAll("li.tocline > a[href^='#methods']"),
+           ];
+          addEllipsis('idl-def-HTMLElement');
+          removeNodes(nodesToRemove);
+        }
       }
     </script>
   </head>
