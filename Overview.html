@@ -58,8 +58,7 @@
     </script>
     <script type="text/javascript" src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
     <script type="text/javascript" class='remove'>
-    var respecConfig = 
-      {
+      var respecConfig = {
           specStatus: "ED",
           shortName:  "ime-api",
           edDraftURI: "http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html",
@@ -73,18 +72,18 @@
                     mailto:     "kenjibaheux@google.com"
                 },
           ],
-          wgURI:        "http://www.w3.org/2008/webapps/",
+          extraCSS: [ "http://dev.w3.org/2009/dap/ReSpec.js/css/respec.css" ],
           wg:           "Web Applications Working Group",
+          wgURI:        "http://www.w3.org/2008/webapps/",
           wgPublicList: "public-webapps",
           wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/42538/status",
           publishDate:  getLastModifiedDate(),
-          extraCSS: ["ReSpec.js/css/respec.css"],
           after: function () {
             var nodesToRemove = [
               document.querySelectorAll("table.parameters"),
               document.querySelectorAll("li.tocline > a[href^='#attributes']"),
               document.querySelectorAll("li.tocline > a[href^='#methods']"),
-             ]
+            ];
             addEllipsis('idl-def-HTMLElement');
             removeNodes(nodesToRemove);
           }
