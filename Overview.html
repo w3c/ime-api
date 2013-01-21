@@ -186,7 +186,7 @@
 &lt;head&gt;
 &lt;script language="javascript" type="text/javascript"&gt;
 function init() {
-    window.inputmethodmanager.setOpenState(true);
+    document.getInputContext().setOpenState(true);
     var node = document.getElementById('canvas0');
     node.getInputContext().setEnable(true);
     node.addEventListener('compositionstart', onCompositionStart, false);
