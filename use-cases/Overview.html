@@ -131,49 +131,29 @@
 
       <section id="editor">
         <h2>[editor] Give webapps developers power to build a DOM-based editor</h2>
-        <p>For simple editing, <input> or <textarea> works and contenteditable
-            attribute is also widely used for building a rich editor.
-            But when minute control than contenteditable provides is required,
-            a developer may go so far as to build a DOM-based editor without
-            using contenteditable. There are several projects such as
-            <a href="http://ace.ajax.org">ACE editor</a>
-            which is widely used for popular services like
-            <a href="https://c9.io">Cloud9</a>
-            or
-            <a href="https://gist.github.com">gist.github.com</a>,
-            and
-            <a href="http://codemirror.net">CodeMirror</a>,
-            which is also widely used. Pieces like key events, composition
-            events, and drawing arbitrary text are already there to build
-            such an editor, but once IME is involved, for example, a webapp
-            cannot draw composition text itself until the text is committed
-            and until then a user agent draws the composition text.
-            It would be nice if webapps had an ability to draw composition
-            text as native applications do as on-the-spot conversion.</p>
+        <p>For simple editing, &lt;input&gt; or &lt;textarea&gt; works, and
+          contenteditable attribute is also widely used for building a rich
+          editor.
+          But when minute control than contenteditable provides is required,
+          a developer may go so far as to build a DOM-based editor without
+          using contenteditable. There are several projects such as
+          <a href="http://ace.ajax.org">ACE editor</a>
+          which is widely used for popular services like
+          <a href="https://c9.io">Cloud9</a>
+          or
+          <a href="https://gist.github.com">gist.github.com</a>,
+          and
+          <a href="http://codemirror.net">CodeMirror</a>,
+          which is also widely used. Most building blocks for building such an
+          editor like key events, composition events, and drawing arbitrary
+          text are provided. But once IME is involved, for example, a webapp
+          cannot draw composition text itself or control how composition text
+          is drawn by the hosting user agent until the text is committed.
+          It would be nice if webapps had an ability to draw composition
+          text as native applications do as on-the-spot conversion.</p>
         <p><b>Requirement:</b> Developers of DOM-based editor should have a
-          way interact with and control the system IME to prevent a user agent
-          from drawing composition text and so on.</p>
-      </section>
-
-      <section id="games">
-        <h2>[games] Prevent system IME from interfering with games</h2>
-        <p>A user who is playing a Web-based game might inadvertently press a
-          key combination that would suddenly cause an
-          <a href="../Overview.html#system-ime">system IME</a>
-          to be invoked and then also possibly cause an IME
-          <a href="../Overview.html#candidate-window">candidate window</a>
-          to appear in the midst of that game. That wouldn’t be what the user
-          would expect.
-        </p>
-        <p><b>Requirement</b>: Developers of Web-based game should have a way
-          prevent the system IME from being invoked during a game.</p>
-        <p>This use case in similar to the use case for providing the
-          proposed
-          <a href="http://lists.w3.org/Archives/Public/public-webapps/2012JanMar/0402.html">Screen Orientation Lock</a>
-          API, or even the
-          <a href="http://dvcs.w3.org/hg/pointerlock/raw-file/default/index.html">Pointer Lock</a> API,
-          in that game developer should have a way to “lock” (out) the system
-          IME behavior while the user is playing the game.</p>
+          way to interact with and control the system IME to prevent a user
+          agent from drawing composition text.</p>
       </section>
 
       <section id="suggest">
@@ -197,6 +177,27 @@
           applications and from obscuring parts of their Web applications from
           which users are intended to make selections from suggestions based
           on what they type.</p>
+      </section>
+
+      <section id="games">
+        <h2>[games] Prevent system IME from interfering with games</h2>
+        <p>A user who is playing a Web-based game might inadvertently press a
+          key combination that would suddenly cause an
+          <a href="../Overview.html#system-ime">system IME</a>
+          to be invoked and then also possibly cause an IME
+          <a href="../Overview.html#candidate-window">candidate window</a>
+          to appear in the midst of that game. That wouldn’t be what the user
+          would expect.
+        </p>
+        <p><b>Requirement</b>: Developers of Web-based game should have a way
+          prevent the system IME from being invoked during a game.</p>
+        <p>This use case in similar to the use case for providing the
+          proposed
+          <a href="http://lists.w3.org/Archives/Public/public-webapps/2012JanMar/0402.html">Screen Orientation Lock</a>
+          API, or even the
+          <a href="http://dvcs.w3.org/hg/pointerlock/raw-file/default/index.html">Pointer Lock</a> API,
+          in that game developer should have a way to “lock” (out) the system
+          IME behavior while the user is playing the game.</p>
       </section>
 
       <section id="ime-interaction">
