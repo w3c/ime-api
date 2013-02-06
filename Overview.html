@@ -499,49 +499,29 @@ function onCompositionEnd(event) {
     <section id="inputmethodcontext-interface">
       <h1>The InputMethodContext Interface</h1>
       <dl title="interface InputMethodContext" class="idl">
-        <dt>readonly attribute DOMString source</dt>
-          <dd>Represents the name of the IME associated with this context.</dd>
-        <dt>readonly attribute Composition composition</dt>
-          <dd>Represents the detailed information of the ongoing IME
+        <dt>attribute Composition composition</dt>
+          <dd><p>Represents the detailed information of the ongoing IME
           composition. When an IME is not composing text, this value MUST be
-          null.</dd>
-        <dt>boolean setEnabled(in boolean enabled)</dt>
+          null.</p>
+          <p>When assigned, updates the composition information of the
+            hosting user agent.</p>
+          </dd>
+        <dt>attribute boolean enable</dt>
           <dd>
             <p>Controls the state of the IME associated with this context.</p>
-            <ul>
-              <li>The <var>enabled</var> parameter represents whether a user agent
-              activates this IME when the given node gains the input focus. When this
-              value is true, a user agent activates an IME when this node gains the input
-              focus and sends composition events to the given node even though the node
-              is not an editable one, such as a <code>&lt;canvas&gt;</code> element.</li>
-            </ul>
+            <p>The value represents whether a user agent
+              activates this IME when the given node gains the input focus.</p>
+            <p>When this attribute is set to be <code>true</code>,
+              a user agent activates this IME when the given node gains the
+              input focus and sends composition events to the given node even
+              though the node is not an editable one, such as a
+              <code>&lt;canvas&gt;</code> element.
           </dd>
-        <dt>boolean isEnabled()</dt>
-          <dd>Returns the state of the IME associated with this context.</dd>
-        <dt>boolean hasComposition()</dt>
-          <dd>
-            <p>Returns true when the hosting user agent is composing text.</p>
-            <p class="note">This function is just copied from WebKit, to solicit opinions
-            from developers of JavaScript-based IMEs.</p>
-          </dd>
-        <dt>void setComposition(Composition composition)</dt>
-          <dd>
-          <p>Updates the composition information of the hosting user agent.</p>
-          <p>When a JavaScript-based IME starts a composition, it MUST call
-          this function with the appropriate composition information. When a
-          JavaScript-based IME cancels an ongoing composition, it MUST call this
-          function with a composition object whose text is empty. A user agent
-          sends a compositionstart event when this function is called while
-          hasComposition() returns <code>false</code>. On the other hand, a
-          user agent sends a compositionupdate event when a Web application calls
-          this function while hasComposition() returns <code>true</code>.</p>
-          <p class="note">This function is just copied from WebKit, to solicit opinions
-          from developers of JavaScript-based IMEs.</p>
-          <ul>
-          <li>The <var>composition</var> parameter represents the
-          information of the new composition.</li>
-          </ul>
-          </dd>
+        <dt>readonly attribute DOMString locale</dt>
+          <dd>Represents the locale of the current input method as
+            a BCP-47 tag (e.g. "en-US").
+            The locale may be the empty string when
+            inapplicable or unknown.</dd>
         <dt>void confirmComposition()</dt>
           <dd>
           <p>Finishes the ongoing composition of the hosting user agent.</p>
@@ -571,6 +551,24 @@ function onCompositionEnd(event) {
               composition-text rectangle. A user agent MAY need to convert these
               coordinates to the screen coordinates when it shows a
               <a href="#candidate-window">candidate window</a>.</li>
+            </ul>
+          </dd>
+        <dt>void setExclusionRectangle(long x, long y, long w, long h)</dt>
+          <dd>
+            <p>Gives a hint for a user agent to avoid showing any input
+              related UI elements (e.g. on-screen keyboard, a candidate window)
+              on the given rectangle, for an application to show some
+              input-related UI elements (such as search suggestions) in that
+              area, which may overlap.</p>
+            <p>A user agent may use this hint to explicitly control the
+              position for a candidate window, or determine zoom level
+              and view port when on-screen keyboard comes in.</p>
+            <ul>
+              <li>The <var>x</var>, <var>y</var>, <var>w</var>, and <var>h</var>
+              parameters represent the local coordinates of a
+              rectangle that an associated input methods should avoid for
+              showing any UI. A user agent MAY need to convert these
+              coordinates to the screen coordinates.</li>
             </ul>
           </dd>
         <dt>boolean setOpenState(boolean open)</dt>
