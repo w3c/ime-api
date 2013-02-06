@@ -19,7 +19,7 @@
       }
       var {
         font-weight: bold;
-        color: green; 
+        color: green;
         padding-left: 2px;
         padding-right: 4px;
       }
@@ -149,16 +149,6 @@
         <a href="#candidate-window">candidate windows</a></li>
       </ul>
 
-      <p>The Web platform has a number of existing APIs useful for
-      implementing a custom IME in JavaScript. For example, the Web Storage
-      API can store an IME dictionary, and the WebSocket and XMLHttpRequest APIs
-      allow sending a server request that performs a lookup in an IME dictionary,
-      and so on. In fact, Web-application developers are already developing and
-      deploying JavaScript-based IMEs that use these APIs. However, it is
-      currently difficult to make those JavaScript-based IMEs work on all user
-      agents, because they often rely on APIs specific to the hosting user agent,
-      such as browser extension APIs.</p>
-
       <p>To solve these IME-related problems, this specification introduces
       an IME API that allows Web applications to read and write composition
       data made available by user agents. Moreover, this specification introduces
@@ -170,7 +160,8 @@
       <a href="#ime-composition">composition</a>,
       so Web applications can retrieve the composition text and attributes.</p>
 
-      <p>The use of those APIs allows Web applications the ability to set the
+      <p>The use of those APIs allows Web applications the ability to
+        give a hint where to set the
       position of a <a href="#composition-window">composition window</a>
       and to retrieve the text and attributes of the ongoing
       <a href="#ime-composition">composition</a>.</p>
@@ -245,94 +236,6 @@ function onCompositionEnd(event) {
 &lt;/head&gt;
 &lt;body&gt;
 &lt;canvas id=&rdquo;canvas0&rdquo; width=&rdquo;640&rdquo; height=&rdquo;480&rdquo;&gt;&lt;/canvas&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-    <p>The next example shows the source for a simple IME that composes
-    Japanese Hiragana characters from key strokes.</p>
-    <p class="note">This is just a sample and not suitable for real use.</p>
-<pre class="example sh_javascript" id="ex-hiragana-keystrokes">
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;&lt;/title&gt;
-&lt;script language="javascript" type="text/javascript"&gt;
-var imeActivated = false;
-var imeRomajiInput = '';
-var imeRomajiTable = {
-    'A': '\u3042', 'I': '\u3044', 'U': '\u3046', 'E': '\u3048', 'O': '\u304A',
-    /* suppressed */
-};
-
-function init() {
-    // Disable the system IME associated with this window.
-    window.inputmethodmanager.setOpenState(false);
-
-    // Listens the keyboard events.
-    var node = document.getElementById('input0');
-    node.addEventListener('keydown', onKeyDown, false);
-    node.addEventListener('keyup', onKeyUp, false);
-}
-
-function onKeyDown(event) {
-    // Toggle the input mode when pressing a shift key.
-    if (event.key == 'Shift') {
-        imeActivated = !imeActivated;
-        imeRomajiInput = '';
-    }
-
-    // Exit if this IME is not activated.
-    if (!imeActivated)
-        return true;
-
-    var imeComposition = new Composition;
-    var imeConfirm = false;
-
-    if (event.keyCode &lt; 0x20) {
-        event.preventDefault();
-        return true;
-    }
-
-    // Convert the input key strokes to a Japanese character.
-    imeRomajiInput += String.fromCharCode(event.keyCode);
-    if (imeRomajiTable[imeRomajiInput]) {
-        imeComposition.text = imeRomajiTable[imeRomajiInput];
-        imeConfirm = true;
-        imeRomajiInput = '';
-    } else {
-        imeComposition.text = imeRomajiInput;
-    }
-
-    // Fill the Composition object.
-    imeComposition.caret.start = imeComposition.text.length;
-    imeComposition.caret.length = 1;
-    imeComposition.clauses[0] = new CompositionClause;
-    imeComposition.clauses[0].text = imeComposition.text;
-    imeComposition.clauses[0].start = 0;
-    imeComposition.clauses[0].selected = true;
-    imeComposition.clauses[0].textColor = 'currentColor';
-    imeComposition.clauses[0].backgroundColor = 'transparent';
-    imeComposition.clauses[0].lineStyle = 'solid';
-    imeComposition.clauses[0].lineColor = 'black';
-
-    // Send the Composition object to the user agent.
-    var context = event.target.getInputContext();
-    context.setComposition(imeComposition);
-    if (imeConfirm)
-        context.confirmComposition();
-
-    // Disable the default action to prevent this key from being
-    // inserted.
-    event.preventDefault();
-    return false;
-}
-
-function onKeyUp(event) {
-}
-&lt;/script&gt;
-&lt;/head&gt;
-&lt;body onload="init();"&gt;
-&lt;textarea id="input0" cols="80" rows="10"&gt;&lt;/textarea&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -679,119 +582,28 @@ function onKeyUp(event) {
             <li>The <var>open</var> parameter represents whether a user agent
             enables the IME and disables it.</li>
           </ul>
-          <p class="issue">Do we need to notice this event to JavaScript IMEs? If
-          so, what is the best option?</p>
           </dd>
       </dl>
     </section>
 
     <section  class='informative' id="best-practices">
       <h1>Best practices</h1>
-    <p>This specification provides two types of interfaces:</p>
-    <ol>
-      <li>Interfaces for developing IMEs in JavaScript (JavaScript IMEs)</li>
-      <li>Interfaces for developing Web applications that are aware of IMEs
-      (IME-aware Web applications).</li>
-    </ol>
-    <p>Moreover, this API depends on several existing specifications to
-    minimize the change for existing JavaScript IMEs.</p>
-    <p>These dependencies make developers harder to use this API in their
-    JavaScript IMEs or IME-aware Web applications. This section describes
-    practices for some use-cases.</p>
-    <section id="javascript-imes">
-      <h1>JavaScript IMEs</h1>
-      <p><i>more into to come later…</i></p>
-      <section id="composing-text">
-        <h1>Composing text</h1>
-        <p>Existing JavaScript IMEs use DOM events (e.g., "keydown",
-        "keyup", "focus", "blur", etc.) to compose text. To avoid forcing
-        developers to change their JavaScript IMEs too much, this API does not
-        provide any callbacks; i.e., this API allows them to use their existing
-        handlers for DOM events. On the other hand, when a JavaScript IME updates
-        its composition text, it needs to call setComposition() instead of
-        inserting text by itself. When a JavaScript IME calls setComposition(), a
-        user agent sends a composition event and renders the composition text as it
-        does for system IMEs. The following figure  illustrates a sequence
-        that composes text with a JavaScript IME which emulates the first example
-        in the
-        <a href="http://www.w3.org/TR/DOM-Level-3-Events/#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
-        [[DOM-LEVEL-3-EVENTS]].</p>
-        <figure id="fig-composing-with-js-ime">
-          <p><img height="1285" src="images/image12.png" width="707"></p>
-          <figcaption>Composing Text with JavaScript IME</figcaption>
-        </figure>
-      </section>
-      <section id="consuming-events">
-        <h1>Consuming events</h1>
-        <p>When a JavaScript IME calls setComposition(), it MUST call
-        preventDefault()&nbsp;to prevent user agents from inserting this character
-        to an element.</p>
-      </section>
-      <section id="enabling-disabling-js-imes">
-        <h3>Enabling or Disabling JavaScript IMEs</h3>
-        <p>A JavaScript IME should not consume keyboard events when hosting
-        Web applications disable it. The JavaScript IME should call
-        getInputContext().isEnabled() when it receives a keyboard event and
-        does not consume it only when it returns false.</p>
-        <figure id="fig-disabled-js-ime">
-          <p><img height="296" src="images/image03.png" width="699"></p>
-          <figcaption>A JavaScript IME disabled by Web applications</figcaption>
-        </figure>
-      </section>
-      <section id="candidate-window-section">
-        <h3>Candidate window</h3>
-        <p>Existing JavaScript IMEs usually use so-called CSS layers to
-        render their <a href="#candidate-window">candidate window</a>.
-        Nevertheless, some JavaScript IMEs use
-        absolute coordinates to render their candidate windows (i.e.,
-        <code>&lt;div style="position: absolute"&gt;&hellip;&lt;/div&gt;</code>),
-        others use relative coordinates to render theirs (i.e.,
-        <code>&lt;div style="position: relative"&gt;&hellip;&lt;/div&gt;</code>).
-        To satisfy both requests, this API provides two methods that retrieve the
-        caret rectangle. This API provides
-        window.inputmethodmanager.getCaretRectangle() for JavaScript IMEs that
-        need the absolute position of the caret rectangle of the ongoing
-        composition text. On the other hand, this API provides
-        getInputContext().getCaretRectange() for JavaScript IMEs that need its
-        relative position.</p>
-      </section>
-    </section>
+    <p>This specification provides an interface for developing Web
+      applications that are aware of IMEs (IME-aware Web applications).</p>
+    <p>This section describes practices for some use-cases.</p>
     <section id="ime-aware-webapps">
       <h1>IME-aware Web applications</h1>
       <p>When developers develop an IME-aware Web application, they need to
-      decide which IME to use in their Web application: JavaScript IMEs, system
-      IMEs, or none. The following sections describe practices of these three
-      cases.</p>
-      <section id="using-js-imes">
-        <h1>Using JavaScript IMEs</h1
-        <p>A Web application that uses only JavaScript IMEs MUST disable
-        the system IMEs associated with the hosting user agent to prevent keyboard
-        events from being consumed by system IMEs. To disable the system IMEs
-        associated with a user agent, the Web application MUST call
-        getInputContext().setEnabled(true) and
-        window.inputmethodmanager.setOpenState(false) when initializing itself
-        and when it gains the focus.</p>
-        <figure id="disabling-system-ime">
-          <p><img height="373" src="images/image07.png" width="657"></p>
-          <figcaption>Disable the system IME and enable a JavaScript IME</figcaption>
-        </figure>
-        <p>JavaScript IMEs MAY not dispatch keyboard events consumed by them
-        to Web applications. Therefore, developers should not depend on such
-        keyboard events to develop their Web applications when using JavaScript
-        IMEs.</p>
-      </section>
+        decide whether they want to use IME or not.
+        The following sections describe practices of these usages.</p>
       <section id="using-system-imes">
-        <h1>Using system IMEs</h1>
-        <p>On the other hand, a Web application that uses the system IME
-        MUST enable the system IME when it becomes active as well as it disables
-        the JavaScript IMEs. JavaScript IMEs MAY consume keyboard events even
-        though the Web application calls getInputContext().setEnabled(false). To
-        prevent such JavaScript IMEs from consuming keyboard events, the Web
-        application should add event handlers to keyboard events.</p>
+        <p>A Web application that uses the system IME
+          MUST enable the system IME when it becomes active.
         <figure id="enabling-system-ime">
           <p><img height="469" src="images/image09.png" width="657"></p>
           <figcaption>Enable the system IME and disable JavaScript IMEs</figcaption>
         </figure>
+        <p class="note">This diagram should be updated to the spec.</p>
       </section>
       <section id="does-not-use-imes">
         <h1>Does not use IMEs</h1>
@@ -800,6 +612,7 @@ function onKeyUp(event) {
           <p><img height="305" src="images/image00.png" width="657"></p>
           <figcaption>[to come]</figcaption>
         </figure>
+        <p class="note">To be written.</p>
         </section>
       </section>
   </body>
