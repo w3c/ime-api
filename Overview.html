@@ -170,76 +170,161 @@
       and to retrieve the text and attributes of the ongoing
       <a href="#ime-composition">composition</a>.</p>
 
-      <p>Consider the following examples. The first example shows the
-      source for a Web application that renders composition text by itself
-      and uses the
-      <a href="#candidate-window">candidate window</a>
-      provided by an IME.</p>
-<pre class="example sh_javascript" id="ex-candidate-window">
+      <p>Consider the following examples.
+        The first example shows the source for a Web application that renders
+        composition text by itself on canvas</p>
+<pre class="example sh_javascript" id="ex-ime-on-canvas">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;script language="javascript" type="text/javascript"&gt;
 function init() {
-    document.getInputContext().setOpenState(true);
-    var node = document.getElementById('canvas0');
+    var node = document.getElementById(&rsquo;canvas0&rsquo;);
+    // Associates an IME with this node.
     node.getInputContext().setEnable(true);
-    node.addEventListener('compositionstart', onCompositionStart, false);
-    node.addEventListener('compositionupdate', onCompositionUpdate, false);
-    node.addEventListener('compositionend', onCompositionEnd, false);
+    node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
 }
 
-function onCompositionStart(event) {
+function getStartAndLengthFromComposition(composition) {
+    var start = 0;
+    var length = 0;
+    // Some code to convert Range object to (start, length) for text here.
+    return { start: start, length: length };
 }
 
 function onCompositionUpdate(event) {
-    var x = 0;
-    var y = 0;
-    var canvas = document.getElementById('canvas0');
-    var context = canvas.getContext('2d');
+    var canvas = document.getElementById(&rsquo;canvas0&rsquo;);
+    var context = canvas.getContext(&rsquo;2d&rsquo;);
     var inputContext = canvas.getInputContext();
     var composition = inputContext.composition;
+    var text = composition.text.textContent;
 
-    // Render a caret.
-    // NOTE: this just renders a caret rectangle in black for
-    // simplicity.
-    if (composition.caret.start &gt;= 0) {
-        var start = context.measureText(
-                composition.text.substring(0, composition.caret.start));
-        var end = context.measureText(
-                composition.text.substring(0, composition.caret.end));
-        context.fillStyle = &rsquo;black&rsquo;;
-        context.fillRect(start.width, y, end.width, y + 10);
-    }
+    // Position of drawing text.  Assuming font height is 16px.
+    var x = 0;
+    var y = 16;
+
+    // Erase background including 5px underline area.
+    var width = context.measureText(text).width;
+    context.fillStyle = &rsquo;white&rsquo;;
+    context.fillRect(0, 0, width, 16 + 5);
+
+    // Use { start, length } for simplicity.
+    var range = getStartAndLengthFromComposition(composition);
 
     // Render the clauses in the composition.
-    for (var i = 0; i &lt; composition.clauses.length; ++i) {
-        var text = composition.clauses[i].text;
-        var metrics = context.measureText(text);
-        // Draw the text of this clause.
-        context.fillStyle = composition.clauses[i].textColor;
-        context.fillText(text, x, y);
-        // Draw an underline under the text. For simplicity, this code
-        // draws a bold underline for selected clauses or a thin
-        // underline for non-selected ones.
-        if (composition.clauses[i].selected) {
-            context.fillRect(x, y, x + metrics.width, y + 2);
-        } else {
-            context.fillRect(x, y, x + metrics.width, y + 1);
-        }
-        x += metrics.width;
+    // This code assumes LTR text.
+    var texts = [ text.substring(0, range.start);
+                  text.substring(range.start, range.length);
+                  text.substring(range.start + range.length,
+                                 text.length - (range.start + range.length)) ];
+
+    // Setting font drawing style.
+    context.font = &rdquo;16px sans-serif&rdquo;;
+    context.fillStyle = &rsquo;black&rsquo;;
+
+    for (var i = 0; i &lt; texts.length; i++) {
+      var metrics = context.measureText(texts[i]);
+      // Draw the text of this clause.
+      context.fillText(texts[i], x, y);
+      // Draw an underline under the text. For simplicity, this code
+      // draws a bold underline for selected clauses, or a thin
+      // underline for non-selected ones.
+      if (i == 1) { // Selected clause.
+          context.fillRect(x, y + 1, metrics.width, 2);
+          // Let the IME know where the caret is.
+          inputContext.setCaretRectangle(x, y - 16, metrics.width, 16 + 5);
+      } else {
+          context.fillRect(x, y + 2, metrics.width, 1);
+      }
+      x += metrics.width;
     }
 
-    // Move the candidate window outside of the composition text.
-    window.inputmethodmanager.moveCandidateWindow(0, y, x, y + 10);
-}
-
-function onCompositionEnd(event) {
+    // Prevent the browser from drawing composition text.
+    event.preventDefault();
 }
 &lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;canvas id=&rdquo;canvas0&rdquo; width=&rdquo;640&rdquo; height=&rdquo;480&rdquo;&gt;&lt;/canvas&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+      <p>The next example shows the source which gives a hint for an IME
+      where the application wants it to avoid placing UI elements. A simple
+      web search page which gives a user suggestions while the user is
+      doing composition.</p>
+<pre class="example sh_javascript" id="ex-ime-suggest-position">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;style type=&rdquo;text/css&rdquo;&gt;
+#search0 {
+    max-width: 400px;
+}
+
+#input0 {
+    width: 100%;
+}
+
+#suggest0 {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000;
+}
+
+.suggest {
+    margin: 0;
+    padding: 0;
+}
+&lt;/style&gt;
+&lt;script language="javascript" type="text/javascript"&gt;
+function init() {
+    var node = document.getElementById(&rsquo;input0&rsquo;);
+    // Associates an IME with this node.
+    node.getInputContext().setEnable(true);
+    // This code only handles compositionupdate events for simplicity, but of
+    // course other input field changes should also be handled.
+    node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
+}
+
+function getSuggests(query) {
+    // Sends an XHR request to get search suggestions.
+    // Upon receiving the result, expandSuggest() is called back.
+}
+
+function expandSuggest(candidates) {
+    // Callback after getting search suggestions.
+    var suggest = document.getElementById(&rdsquo;suggest0&rsquo;);
+    var i;
+    for (i = 0; i &lt; suggest.childNodes.length; i++) {
+        suggest.removeChild(suggest.childNodes[0]);
+    }
+    for (i = 0; i &lt; candidates.length; i++) {
+        suggest.appendChild(document.createElement("li"));
+        suggest.childNodes[i].textContent = candidates[i];
+    }
+    // Set exclusion area hint for the IME.
+    var input = document.getElementById(&rsquo;input0&rsquo;);
+    var context = input.getInputContext();
+    context.setExclusionRectangle(input.offsetLeft, input.offsetTop,
+                                  input.offsetWidth, input.offsetHeight);
+}
+
+function onCompositionUpdate(event) {
+    var query = document.getElementById(&rsquo;input0&rsquo;).value;
+    getSuggests(query);
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&rdquo;search0&rdquo;&gt;
+  &lt;input type=&rdquo;text&rdquo; id=&rdquo;input0&rdquo; placeholder=&rdquo;search here&rdquo;&gt;
+  &lt;ul id=&rdquo;suggest0&rdquo;&gt;&lt;/ul&gt;
+&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -497,7 +582,7 @@ function onCompositionEnd(event) {
             equal to the text attribute of a compositionupdate event.</dd>
         <dt>readonly attribute Range caret</dt>
           <dd>Represents the caret in this composition text. The
-          CommonAncestorContainer attribute of this range should be <code><a>text</a></code></dd>
+          CommonAncestorContainer attribute of this range should be <code><a>text</a></code>.</dd>
       </dl>
     </section>
     <section id="inputmethodcontext-interface">
