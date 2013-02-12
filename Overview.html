@@ -181,7 +181,7 @@
 function init() {
     var node = document.getElementById(&rsquo;canvas0&rsquo;);
     // Associates an IME with this node.
-    node.getInputContext().setEnable(true);
+    node.getInputContext().enable = true;
     node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
 }
 
@@ -285,7 +285,7 @@ function onCompositionUpdate(event) {
 function init() {
     var node = document.getElementById(&rsquo;input0&rsquo;);
     // Associates an IME with this node.
-    node.getInputContext().setEnable(true);
+    node.getInputContext().enable = true;
     // This code only handles compositionupdate events for simplicity, but of
     // course other input field changes should also be handled.
     node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
