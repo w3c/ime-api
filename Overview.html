@@ -181,7 +181,7 @@
 function init() {
     var node = document.getElementById(&rsquo;canvas0&rsquo;);
     // Associates an IME with this node.
-    node.getInputContext().enable = true;
+    node.getInputContext().enabled = true;
     node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
 }
 
@@ -285,7 +285,7 @@ function onCompositionUpdate(event) {
 function init() {
     var node = document.getElementById(&rsquo;input0&rsquo;);
     // Associates an IME with this node.
-    node.getInputContext().enable = true;
+    node.getInputContext().enabled = true;
     // This code only handles compositionupdate events for simplicity, but of
     // course other input field changes should also be handled.
     node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
@@ -598,7 +598,7 @@ function onCompositionUpdate(event) {
           <p>When assigned, updates the composition information of the
             hosting user agent.</p>
           </dd>
-        <dt>attribute boolean enable</dt>
+        <dt>attribute boolean enabled</dt>
           <dd>
             <p>Controls the state of the IME associated with this context.</p>
             <p>The value represents whether a user agent
