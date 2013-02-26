@@ -623,7 +623,7 @@ function onCompositionUpdate(event) {
           <a href="http://www.w3.org/TR/DOM-Level-3-Events/#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
           [[!DOM-LEVEL-3-EVENTS]].</p>
           <p class="note">This function is just copied from WebKit, to solicit opinions
-          from developers of JavaScript-based IMEs.</p>
+          from developers.</p>
           </dd>
         <dt>void setCaretRectangle(long x, long y, long w, long h)</dt>
           <dd>
@@ -644,6 +644,12 @@ function onCompositionUpdate(event) {
               coordinates to the screen coordinates when it shows a
               <a href="#candidate-window">candidate window</a>.</li>
             </ul>
+          </dd>
+        <dt>boolean open()</dt>
+          <dd>
+          <p>Requests the hosting user agent to associate the context with its
+            IME. This function returns <code>true</code> if a user agent
+            can associate its IME with the context.</p>
           </dd>
         <dt>void setExclusionRectangle(long x, long y, long w, long h)</dt>
           <dd>
