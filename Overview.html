@@ -181,8 +181,9 @@
 function init() {
     var node = document.getElementById(&rsquo;canvas0&rsquo;);
     // Associates an IME with this node.
-    node.getInputContext().enabled = true;
-    node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
+    if (node.getInputContext && node.getInputContext().open()) {
+        node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
+    }
 }
 
 function getStartAndLengthFromComposition(composition) {

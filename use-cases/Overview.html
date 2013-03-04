@@ -135,12 +135,15 @@
 
       <section id="editor">
         <h2>[editor] Give webapps developers power to build a DOM-based editor</h2>
-        <p>For simple editing, &lt;input&gt; or &lt;textarea&gt; works, and
-          contenteditable attribute is also widely used for building a rich
-          text editor.
-          But when minute control than contenteditable provides is required,
+        <p>For simple editing, <code>&lt;input&gt;</code> or
+          <code>&lt;textarea&gt;</code> works, and
+          <code>contenteditable</code> attribute is widely used for
+          building a rich text editor.
+          But when more minute control than
+          <code>contenteditable</code> provides is required,
           a developer may go so far as to build a DOM-based editor without
-          using contenteditable. There are several projects such as
+          using <code>contenteditable</code>.
+          There are several projects such as
           <a href="http://ace.ajax.org">ACE editor</a>
           which is widely used for popular services like
           <a href="https://c9.io">Cloud9</a>
@@ -156,8 +159,9 @@
           It would be nice if webapps had an ability to draw composition
           text as native applications do as on-the-spot conversion.</p>
         <p><b>Requirement:</b> Developers of DOM-based editor should have a
-          way to interact with and control the system IME to prevent a user
-          agent from drawing composition text.</p>
+          way to interact with and control the system IME to retrieve
+          information about clauses of the composition text and
+          prevent a user agent from drawing composition text.</p>
       </section>
 
       <section id="suggest">
