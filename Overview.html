@@ -172,24 +172,32 @@
 
       <p>Consider the following examples.
         The first example shows the source for a Web application that renders
-        composition text by itself on canvas</p>
+        composition text by itself on canvas.</p>
 <pre class="example sh_javascript" id="ex-ime-on-canvas">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;script language="javascript" type="text/javascript"&gt;
+// Remembers cursor position.
+var cursor_x = 0;
+var cursor_y = 0;
+
+// Remembers cursor position after current composition is committed.
+var next_cursor_x = 0;
+
 function init() {
     var node = document.getElementById(&rsquo;canvas0&rsquo;);
     // Associates an IME with this node.
     if (node.getInputContext && node.getInputContext().open()) {
         node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
+        node.addEventListener(&rsquo;compositionend&rsquo;, onCompositionEnd, false);
     }
 }
 
 function getStartAndLengthFromComposition(composition) {
     var start = 0;
     var length = 0;
-    // Some code to convert Range object to (start, length) for text here.
+    // Some code to convert Range object to (start, length) for compostion text here.
     return { start: start, length: length };
 }
 
@@ -201,13 +209,15 @@ function onCompositionUpdate(event) {
     var text = composition.text.textContent;
 
     // Position of drawing text.  Assuming font height is 16px.
-    var x = 0;
-    var y = 16;
+    var x = cursor_x;
+    var y = cursor_y;
 
     // Erase background including 5px underline area.
+    // This doesn't handle case that composition text is shortened.
     var width = context.measureText(text).width;
+    next_cursor_x = cursor_x + width;
     context.fillStyle = &rsquo;white&rsquo;;
-    context.fillRect(0, 0, width, 16 + 5);
+    context.fillRect(cursor_x, cursor_y, width, 16 + 5);
 
     // Use { start, length } for simplicity.
     var range = getStartAndLengthFromComposition(composition);
@@ -220,6 +230,7 @@ function onCompositionUpdate(event) {
                                  text.length - (range.start + range.length)) ];
 
     // Setting font drawing style.
+    context.textBaseline = &rsquo;top&rsquo;;
     context.font = &rdquo;16px sans-serif&rdquo;;
     context.fillStyle = &rsquo;black&rsquo;;
 
@@ -231,17 +242,22 @@ function onCompositionUpdate(event) {
       // draws a bold underline for selected clauses, or a thin
       // underline for non-selected ones.
       if (i == 1) { // Selected clause.
-          context.fillRect(x, y + 1, metrics.width, 2);
+          context.fillRect(x + 1, y + 16 + 1, metrics.width - 1, 2);
           // Let the IME know where the caret is.
-          inputContext.setCaretRectangle(x, y - 16, metrics.width, 16 + 5);
+          inputContext.setCaretRectangle(canvas, x, y, metrics.width, 16 + 5);
       } else {
-          context.fillRect(x, y + 2, metrics.width, 1);
+          context.fillRect(x + 1, y + 16 + 1, metrics.width - 1, 1);
       }
       x += metrics.width;
     }
 
     // Prevent the browser from drawing composition text.
     event.preventDefault();
+}
+
+function onCompositionEnd(event) {
+    cursor_x = next_cursor_x;
+    // We don't handle line break yet.
 }
 &lt;/script&gt;
 &lt;/head&gt;
