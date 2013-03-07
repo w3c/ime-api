@@ -736,32 +736,31 @@ function onCompositionUpdate(event) {
 
     <section  class='informative' id="best-practices">
       <h1>Best practices</h1>
-    <p>This specification provides an interface for developing Web
-      applications that are aware of IMEs (IME-aware Web applications).</p>
+    <p>This specification provides an interface for developing IME-aware
+      Web applications.</p>
     <p>This section describes practices for some use-cases.</p>
-    <section id="ime-aware-webapps">
-      <h1>IME-aware Web applications</h1>
-      <p>When developers develop an IME-aware Web application, they need to
-        decide whether they want to use IME or not.
-        The following sections describe practices of these usages.</p>
-      <section id="using-system-imes">
-        <p>A Web application that uses the system IME
-          MUST enable the system IME when it becomes active.
-        <figure id="enabling-system-ime">
-          <p><img height="469" src="images/image09.png" width="657"></p>
-          <figcaption>Enable the system IME and disable JavaScript IMEs</figcaption>
-        </figure>
-        <p class="note">This diagram should be updated to the spec.</p>
-      </section>
-      <section id="does-not-use-imes">
-        <h1>Does not use IMEs</h1>
-        <p>When a Web application does not use any IMEs, it…</p>
-        <figure id="no-imes">
-          <p><img height="305" src="images/image00.png" width="657"></p>
-          <figcaption>[to come]</figcaption>
-        </figure>
-        <p class="note">To be written.</p>
-        </section>
-      </section>
+    <section id="drawing-composition-text">
+      <h1>Drawing composition text</h1>
+      <p>If a Web application wants to draw composition text itself,
+        it SHOULD handle <code>compositionupdate</code> events
+        to get notified from IME that composition text is changed, then
+        use this interface to retrieve composition and let the IME know
+        where the composition text is drawn by calling
+        <code>setCaretRectangle()</code> method.  Optionally it MAY call
+        <code>setExclusionRectangle()</code> method to hint the IME
+        that some area is not suitable for showing IME UI.</p>
+      <p>When a Web application draws composition text, it MUST call
+        <code>preventDefault()</code> in <code>compositionupdate</code>
+        handler so that the user agent will not draw the text.</p>
+      <p>When a Web application wants to handle DOM level3 composition events
+        on a non-<code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>,
+        or <code>contenteditable</code> node,
+        it MUST enable the IME via <code>getInputContext().open()</code> to
+        associate its node with composition events.</p>
+      <figure id="enabling-system-ime">
+        <p><img height="1133" src="images/imeapi_flow.png" width="744"></p>
+        <figcaption>Event flow of IME and an IME-aware web application.</figcaption>
+      </figure>
+    </section>
   </body>
 </html>
