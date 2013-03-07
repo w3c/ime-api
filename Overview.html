@@ -675,7 +675,7 @@ function onCompositionUpdate(event) {
           <p class="note">This function is just copied from WebKit, to solicit opinions
           from developers.</p>
           </dd>
-        <dt>void setCaretRectangle(long x, long y, long w, long h)</dt>
+        <dt>void setCaretRectangle(Node anchor, long x, long y, long w, long h)</dt>
           <dd>
             <p>Notifies the rectangle of composition text to a user agent. When
             a user agent renders a
@@ -688,20 +688,23 @@ function onCompositionUpdate(event) {
             [firstRectForCharacterRange:]. On Linux (GTK), this rectangle is used as a
             parameter for gtk_im_context_set_cursor_location().</p>
             <ul>
-              <li>The <var>x</var>, <var>y</var>, <var>w</var>, and <var>h</var>
-              parameters represent the local coordinates of a
-              composition-text rectangle. A user agent MAY need to convert these
-              coordinates to the screen coordinates when it shows a
-              <a href="#candidate-window">candidate window</a>.</li>
+              <li>The <var>anchor</var> parameter represents the DOM node
+                against which the rectangle is positioned.  This does not
+                have to be the same as the node that listens to composition
+                events and therefore an web application can draw composition
+                text where it does not have focus.
+              </li>
+              <li>The <var>x</var>, and <var>y</var> are the offsets to the
+                top-left of the rectangle relative to <var>anchor</var>
+                node's top-left.</li>
+              <li>The <var>w</var>, and <var>h</var> are width and height of
+                the rectangle.</li>
             </ul>
+            <p>A user agent MAY need to convert these
+              coordinates to the screen coordinates when it shows a
+              <a href="#candidate-window">candidate window</a>.
           </dd>
-        <dt>boolean open()</dt>
-          <dd>
-          <p>Requests the hosting user agent to associate the context with its
-            IME. This function returns <code>true</code> if a user agent
-            can associate its IME with the context.</p>
-          </dd>
-        <dt>void setExclusionRectangle(long x, long y, long w, long h)</dt>
+        <dt>void setExclusionRectangle(Node anchor, long x, long y, long w, long h)</dt>
           <dd>
             <p>Gives a hint for a user agent to avoid showing any input
               related UI elements (e.g. on-screen keyboard, a candidate window)
@@ -712,12 +715,21 @@ function onCompositionUpdate(event) {
               position for a candidate window, or determine zoom level
               and view port when on-screen keyboard comes in.</p>
             <ul>
-              <li>The <var>x</var>, <var>y</var>, <var>w</var>, and <var>h</var>
-              parameters represent the local coordinates of a
-              rectangle that an associated input methods should avoid for
-              showing any UI. A user agent MAY need to convert these
-              coordinates to the screen coordinates.</li>
+              <li>The <var>anchor</var> parameter represents the DOM node
+                against which the rectangle is positioned.
+              </li>
+              <li>The <var>x</var>, and <var>y</var> are the offsets to the
+                top-left of the rectangle relative to <var>anchor</var>
+                node's top-left.</li>
+              <li>The <var>w</var>, and <var>h</var> are width and height of
+                the rectangle.</li>
             </ul>
+          </dd>
+        <dt>boolean open()</dt>
+          <dd>
+          <p>Requests the hosting user agent to associate the context with its
+            IME. This function returns <code>true</code> if a user agent
+            can associate its IME with the context.</p>
           </dd>
       </dl>
     </section>
