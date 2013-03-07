@@ -748,7 +748,12 @@ function onCompositionUpdate(event) {
         to get notified from IME that composition text is changed, then
         use this interface to retrieve composition and let the IME know
         where the composition text is drawn by calling
-        <code>setCaretRectangle()</code> method.  Optionally it MAY call
+        <code>setCaretRectangle()</code> method.
+        If <code>setCaretRectangle()</code> is not called, IME will not have
+        information about where to show IME UIs, and it may show UIs at
+        an obtrusive position. To avoid this situation, a user agent may
+        set some decent default position around the focused node.
+        Optionally it MAY call
         <code>setExclusionRectangle()</code> method to hint the IME
         that some area is not suitable for showing IME UI.</p>
       <p>When a Web application draws composition text, it MUST call
@@ -759,7 +764,11 @@ function onCompositionUpdate(event) {
         or <code>contenteditable</code> node,
         it MUST enable the IME via <code>getInputContext().open()</code> to
         associate its node with composition events.</p>
-      <figure id="enabling-system-ime">
+      <p>The following diagram shows flow of events when a user types
+        &lsquo;kyouha&rsquo; to convert to
+        &lsquo;&#x4ECA;&#x65E5;&#x306F;&rsquo; among keyboard,
+      IME, user agent, and web application.</p>
+      <figure id="fig-imeapi-flow">
         <p><img height="1133" src="images/imeapi_flow.png" width="744"></p>
         <figcaption>Event flow of IME and an IME-aware web application.</figcaption>
       </figure>
