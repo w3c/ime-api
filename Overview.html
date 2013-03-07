@@ -327,8 +327,10 @@ function expandSuggest(candidates) {
     // Set exclusion area hint for the IME.
     var input = document.getElementById(&rsquo;input0&rsquo;);
     var context = input.getInputContext();
-    context.setExclusionRectangle(input.offsetLeft, input.offsetTop,
-                                  input.offsetWidth, input.offsetHeight);
+    var relative_x = input.offsetLeft - suggest.offsetLeft;
+    var relative_y = input.offsetTop - suggest.offsetTop;
+    context.setExclusionRectangle(input, relative_x, relative_y,
+                                         input.offsetWidth, input.offsetHeight);
 }
 
 function onCompositionUpdate(event) {
