@@ -197,7 +197,7 @@ function init() {
 function getStartAndLengthFromComposition(composition) {
     var start = 0;
     var length = 0;
-    // Some code to convert Range object to (start, length) for compostion text here.
+    // Some code to convert Range object to (start, length) for composition text here.
     return { start: start, length: length };
 }
 
@@ -357,6 +357,9 @@ function onCompositionUpdate(event) {
       keyboard itself. In China, Japan, and Korea, IMEs are used ubiquitously to
       enable standard keyboards to be employed to type the very large number
       of characters required for writing in Chinese, Japanese, and Korean.</p>
+      <p>On platforms with touch-based input device such as mobile phones,
+        an IME also plays a role to type text that a simple on-screen keyboard
+        cannot type directly.</p>
       <p>A <dfn id="system-ime">system IME</dfn> is an IME already installed on a user's system.
       <p>An IME consists of two modules; a <a href="#composer">composer</a>
       and a <a href="#converter">converter</a>.</p>
@@ -368,7 +371,7 @@ function onCompositionUpdate(event) {
       dictionary to convert phonetic characters to a set of ideographic
       characters.</p>
       <p>An <dfn id="ime-clause">IME clause</dfn> is a grammatical word produced in an IME.</p>
-      <p>An <dfn id="ime-selected-clause">IME selected clause</dfn> is an <a href="ime-clause">IME clause</a> being composed by an IME.</p>
+      <p>An <dfn id="ime-selected-clause">IME selected clause</dfn> is an <a href="ime-clause">IME clause</a> being converted by an IME.</p>
       <p>An <dfn id="ime-composition">IME composition</dfn>
       is an instance of text produced in an IME. For IMEs that can produce multiple words, an IME composition consists of multiple IME clauses. For IMEs that produce only one word, an IME composition is equal to an IME clause.</p>
 
@@ -481,6 +484,24 @@ function onCompositionUpdate(event) {
             <figcaption>Radical composer (Mac)</figcaption>
           </figure>
         </section>
+        <section id="on-screen-keyboard-section">
+          <h3>On-screen keyboard</h3>
+          <p>On touch-based platforms without hardware keyboard like
+            mobile phone or tablet platforms, some kind of on-screen keyboard
+            is displayed to help a user typing text, which occupies some
+            part of the screen. A user uses this keyboard to type composition
+            text.</p>
+          <figure id="fig-on-screen-keyboard-english">
+            <p><img height="540" src="images/mobile_ime_keyboard_en.png" width="352"></p>
+            <figcaption>An example of an on-screen keyboard (English)</figcaption>
+          </figure>
+          <p>The layout of an on-screen keyboard may vary on language or
+          its input modality (e.g. telephone number requires numbers only).</p>
+          <figure id="fig-on-screen-keyboard-japanese">
+            <p><img height="403" src="images/mobile_ime_keyboard_jp.png" width="352"></p>
+            <figcaption>An example of an on-screen keyboard (Japanese)</figcaption>
+          </figure>
+        </section>
       </section>
       <section id="converter-section">
         <h2>Converter</h2>
@@ -553,6 +574,18 @@ function onCompositionUpdate(event) {
         characters &lsquo;&#x304D;&#x304D;&#x3044;&#x3063;&#x3071;&#x3064;&rsquo;
         because &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x767A;&rsquo; is grammatically
         incorrect.</p>
+        <p>On a mobile platform, candidates may not appear in a separate
+          window, but occupies some part of the screen for a user to choose
+          an intended candidate.
+        </p>
+        <figure id="fig-mobile-ime">
+          <p><img height="587" src="images/mobile_ime_composition.png" width="352"></p>
+          <figcaption>Composition on mobile platform (Japanese)</figcaption>
+        </figure>
+        <figure id="fig-mobile-ime2">
+          <p><img height="528" src="images/mobile_ime_composition3.png" width="352"></p>
+          <figcaption>Composition on mobile platform (Japanese)</figcaption>
+        </figure>
       </section>
     </section>
     <section id="conformance">
