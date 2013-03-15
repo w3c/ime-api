@@ -358,35 +358,43 @@ function onCompositionUpdate(event) {
     <section class='informative' id="background">
       <h1>Background: What’s an Input Method Editor?</h1>
       <p>An <dfn id="IME">IME</dfn> (input-method editor) is an application
-      that allows a standard keyboard (such as a US-101 keyboard) to be used to
-      type characters and symbols that are not directly represented on the
-      keyboard itself. In China, Japan, and Korea, IMEs are used ubiquitously to
-      enable standard keyboards to be employed to type the very large number
-      of characters required for writing in Chinese, Japanese, and Korean.</p>
+        that allows a standard keyboard (such as a US-101 keyboard) to be used
+        to type characters and symbols that are not directly represented on the
+        keyboard itself. In China, Japan, and Korea, IMEs are used ubiquitously
+        to enable standard keyboards to be employed to type the very large
+        number of characters required for writing in Chinese, Japanese, and
+        Korean.</p>
       <p>On platforms with touch-based input device such as mobile phones,
         an IME also plays a role to type text that a simple on-screen keyboard
         cannot type directly.</p>
-      <p>A <dfn id="system-ime">system IME</dfn> is an IME already installed on a user's system.
+      <p>A <dfn id="system-ime">system IME</dfn> is an IME already installed
+        on a user's system.
       <p>An IME consists of two modules; a <a href="#composer">composer</a>
-      and a <a href="#converter">converter</a>.</p>
+        and a <a href="#converter">converter</a>.</p>
 
       <p>A <dfn id="composer">composer</dfn> is a context-free parser that
-      composes non-ASCII characters (including phonetic characters) from
-      keystrokes.</p>
-      <p>A <dfn id="converter">converter</dfn> is a context-sensitive parser that looks up a
-      dictionary to convert phonetic characters to a set of ideographic
-      characters.</p>
-      <p>An <dfn id="ime-clause">IME clause</dfn> is a grammatical word produced in an IME.</p>
-      <p>An <dfn id="ime-selected-clause">IME selected clause</dfn> is an <a href="ime-clause">IME clause</a> being converted by an IME.</p>
+        composes non-ASCII characters (including phonetic characters) from
+        keystrokes, e.g. Hiragana or Pinyin.</p>
+      <p>A <dfn id="converter">converter</dfn> is a context-sensitive parser
+        that looks up a dictionary to convert phonetic characters to
+        a set of ideographic characters, e.g. Kanji.</p>
+      <p>An <dfn id="ime-clause">IME clause</dfn> is a grammatical word
+        produced in an IME.</p>
+      <p>An <dfn id="ime-selected-clause">IME selected clause</dfn> is an
+        <a href="ime-clause">IME clause</a> currently being converted by
+        an IME.</p>
       <p>An <dfn id="ime-composition">IME composition</dfn>
-      is an instance of text produced in an IME. For IMEs that can produce multiple words, an IME composition consists of multiple IME clauses. For IMEs that produce only one word, an IME composition is equal to an IME clause.</p>
+        is an instance of text produced in an IME. For IMEs that can produce
+        multiple words, an IME composition consists of multiple IME clauses.
+        For IMEs that produce only one word, an IME composition is equal to an
+        IME clause.</p>
 
       <p>When an IME receives keystrokes, it sends the keystrokes to a
-      composer and receives phonetic characters matching to the keystrokes. When
-      an IME receives phonetic characters from a composer, it sends the phonetic
-      characters to a converter and receives the list of ideographic characters
-      matching to the phonetic characters. The following figure shows the
-      basic structure of an IME.</p>
+        composer and receives phonetic characters matching to the keystrokes.
+        When an IME receives phonetic characters from a composer, it sends the
+        phonetic characters to a converter and receives the list of ideographic
+        characters matching to the phonetic characters. The following figure
+        shows the basic structure of an IME.</p>
       <figure id="fig-ime-structure">
         <p><img height="199" src="images/image10.png" width="615"></p>
         <figcaption>Basic structure of an IME</figcaption>
@@ -404,15 +412,31 @@ function onCompositionUpdate(event) {
         <p>A <dfn id="radical-composer">radical composer</dfn> composes a
         phonetic character from <a href="#phonetic-radical">phonetic radicals</a>.</p>
 
-        <p>A <dfn id="phonetic-radical">phonetic radical</dfn> is a character component of a Latin character, a Chinese character, or a Korean character. A Latin character consists of an ASCII character and accent marks, e.g. a character '&aacute;' consists of an ASCII character 'a' and an accent mark '&acute;'. A Chinese character consists of Chinese character components that refer to its semantic origins, e.g. a Chinese character '&#x7565;' consists of two components '&#x7530;' and '&#x5404;'. A Korean character consists of Korean character components that represent consonants or vowels, e.g. a Korean character '&#xac00;' consists of a consonant '&#x3131;' and a vowel '&#x314f;'.</p>
+        <p>A <dfn id="phonetic-radical">phonetic radical</dfn> is a character
+          component of a Latin character, a Chinese character, or a Korean
+          character. A Latin character can consist of an ASCII character and
+          accent marks, e.g. the character &lsquo;&aacute;&rsquo; consists of
+          the ASCII character &lsquo;a&rsquo; and the accent mark
+          &lsquo;&acute;&rsquo;. A Chinese character can consist of Chinese
+          character components that refer to its semantic origins, e.g. the
+          Chinese character &lsquo;&#x7565;&rsquo; consists of two components
+          &lsquo;&#x7530;&rsquo; and &lsquo;&#x5404;&rsquo;. A Korean
+          character consists of Korean character components that represent
+          consonants or vowels, e.g. the Korean character
+          &lsquo;&#xac00;&rsquo; consists of the consonant
+          &lsquo;&#x3131;&rsquo; and the vowel '&#x314f;'.</p>
 
-        <p>A <dfn id="composition-window">composition window</dfn> is a window that shows ASCII characters being composed by <a href="#phonetic-composer">phonetic composers</a> or <a href="#phonetic-radical">phonetic radicals</a> being composed by <a href="#radical-composer">radical composers</a>.</p>
+        <p>A <dfn id="composition-window">composition window</dfn> is a window
+          that shows ASCII characters being composed by
+          <a href="#phonetic-composer">phonetic composers</a> or
+          <a href="#phonetic-radical">phonetic radicals</a> being composed by
+          <a href="#radical-composer">radical composers</a>.</p>
 
-        <p>An IME usually shows the text
-        being composed by a composer with its own style to distinguish it from the
-        existing text. Even though most of composers output phonetic characters,
-        some composers (such as Bopomofo composers) output a placeholder character
-        instead of phonetic characters while composing text.</p>
+        <p>An IME usually shows the text being composed by a composer with its
+          own style to distinguish it from the existing text. Even though most
+          of composers output phonetic characters, some composers (such as
+          Bopomofo composers) output a placeholder character
+          instead of phonetic characters while composing text.</p>
 
         <p class="issue">need to define <i>composition window</i></p>
 
@@ -423,32 +447,35 @@ function onCompositionUpdate(event) {
         <section id="phonetic-composer-section">
           <h3>Phonetic Composer</h3>
           <p>Phonetic composers are not only used for typing Simplified
-          Chinese and Japanese, but also used for typing non-ASCII characters (such
-          as mathematical symbols, Yi, Amharic, etc.) with a US-101 keyboard. Each of
-          these languages has a mapping table from its character to a sequence of
-          ASCII characters representing its pronunciation: e.g.,
-          &lsquo;&#x304B;&rsquo; to &lsquo;ka&rsquo; in Japanese, and;
-          &lsquo;&#x5361;&rsquo; to &lsquo;ka&rsquo; in Simplified Chinese. This
-          mapping table is called as Romaji for Japanese and Pinyin for Simplified
-          Chinese, respectively. A phonetic composer uses these mapping tables to
-          compose a phonetic character from a sequence of ASCII characters produced
-          by a US keyboard.</p>
-          <p>A phonetic composer for Simplified Chinese outputs the input
-          ASCII characters as its composition text.</p>
+            Chinese and Japanese, but also used for typing non-ASCII
+            characters (such as mathematical symbols, Yi, Amharic, etc.) with
+            a US-101 keyboard. Each of these languages has a mapping table
+            from its character to a sequence of ASCII characters representing
+            its pronunciation: e.g.,
+            &lsquo;&#x304B;&rsquo; to &lsquo;ka&rsquo; in Japanese, and;
+            &lsquo;&#x5361;&rsquo; to &lsquo;ka&rsquo; in Simplified Chinese.
+            This mapping table is called as Romaji for Japanese and Pinyin for
+            Simplified Chinese, respectively. A phonetic composer uses these
+            mapping tables to compose a phonetic character from a sequence of
+            ASCII characters produced by a US keyboard.</p>
+          <p>An example of a phonetic composer for Simplified Chinese outputs
+            the ASCII characters that were input by the user, as its
+            composition text.</p>
           <figure id="fig-ascii-composition-text">
             <p><img height="180" src="images/image11.png" width="352"></p>
             <figcaption>Composition text (Simplified Chinese)</figcaption>
           </figure>
-          <p>On the other hand, a phonetic composer for Japanese outputs
-          phonetic characters when the input ASCII characters have matching phonetic
-          characters.</p>
+          <p>On the other hand, a typical phonetic composer for Japanese
+            outputs phonetic characters when the typed ASCII characters have
+            corresponding phonetic characters.</p>
           <figure id="fig-kana-composition-text">
             <p><img height="180" src="images/image13.png" width="352"></p>
             <figcaption>Composition text (Japanese)</figcaption>
           </figure>
-          <p>A phonetic composer for mathematical symbols outputs a
-          composed mathematical symbol and shows the source keystrokes to its own
-          window, which is an example of a composition window.</p>
+          <p>An example of a phonetic composer for mathematical symbols
+            outputs composed mathematical symbol and shows the source
+            keystrokes in its own window, which is an example of a composition
+            window.</p>
           <figure id="fig-composition-window">
             <p><img height="214" src="images/image14.png" width="435"></p>
             <figcaption>Composition text (Latex input)</figcaption>
@@ -457,34 +484,37 @@ function onCompositionUpdate(event) {
         <section id="radical-composer-section">
           <h3>Radical Composer</h3>
           <p>Radical composers are mainly used for typing Traditional
-          Chinese and Korean with phonetic keyboards. Each phonetic keyboard of these
-          languages can produce phonetic radicals: e.g., typing &lsquo;r&rsquo;
-          produces &lsquo;&#x3131;&rsquo; on a Korean keyboard; typing
-          &lsquo;o&rsquo; produces &lsquo;&#x4EBA;&rsquo; on a Traditional-Chinese
-          (or Bopomofo) keyboard, etc. A radical composer composes a phonetic
-          character from phonetic radicals given by these keyboards: e.g., typing
-          '&#x3131;' (r) and '&#x314F;' (k) produces '&#xAC00;' on a Korean keyboard;
-          typing &lsquo;&#x4EBA;&rsquo; (o), &lsquo;&#x5F13;&rsquo; (n), and
-          &lsquo;&#x706B;&rsquo; (f) produces &lsquo;&#x4F60;&rsquo; on a
-          Traditional-Chinese keyboard, etc.</p>
+            Chinese and Korean with phonetic keyboards. Each phonetic
+            keyboard of these languages can produce phonetic radicals:
+            e.g., typing &lsquo;r&rsquo; produces &lsquo;&#x3131;&rsquo;
+            on a Korean keyboard; typing &lsquo;o&rsquo; produces
+            &lsquo;&#x4EBA;&rsquo; on a Traditional-Chinese (or Bopomofo)
+            keyboard, etc. A radical composer composes a phonetic
+            character from phonetic radicals given by these keyboards:
+            e.g., typing &lsquo;&#x3131;&rsquo; (r) and &lsquo;&#x314F;&rsquo;
+            (k) produces &lsquo;&#xAC00;&rsquo; on a Korean keyboard;
+            typing &lsquo;&#x4EBA;&rsquo; (o), &lsquo;&#x5F13;&rsquo; (n), and
+            &lsquo;&#x706B;&rsquo; (f) produces &lsquo;&#x4F60;&rsquo; on a
+            Traditional-Chinese keyboard, etc.</p>
           <p>A radical composer for Korean outputs the phonetic radicals as
-          its composition text.</p>
+            its composition text.</p>
           <figure id="fig-radical-composer-korean">
             <p><img height="180" src="images/image15.png" width="352"></p>
             <figcaption>Radical composer (Korean)</figcaption>
           </figure>
           <p>A radical composer for Traditional Chinese outputs a
-          placeholder character (U+3000) and shows the phonetic radicals being
-          composed to its own window. This window is an example of a composition
-          window.</p>
+            placeholder character (U+3000) and shows the phonetic radicals
+            being composed to its own window. This window is an example
+            of a composition window.</p>
           <figure id="fig-radical-composer-chinese">
             <p><img height="180" src="images/image02.png" width="352"></p>
             <figcaption>Radical composer (Traditional Chinese)</figcaption>
           </figure>
           <p>Some platforms (such as Mac and Linux) use radical composers
-          for typing accented characters used in European countries. For example,
-          typing &lsquo; &#x308; &rsquo; (option+u) and &lsquo;a&rsquo; (a) produces
-          &lsquo;&auml;&rsquo; on US keyboards of Mac.</p>
+            for typing accented characters used in European countries.
+            For example,
+            typing &lsquo; &#x308; &rsquo; (option+u) and &lsquo;a&rsquo; (a)
+            produces &lsquo;&auml;&rsquo; on US keyboards of Mac.</p>
           <figure id="fig-radical-composer-mac">
             <p><img height="177" src="images/image01.png" width="479"></p>
             <figcaption>Radical composer (Mac)</figcaption>
@@ -501,8 +531,9 @@ function onCompositionUpdate(event) {
             <p><img height="540" src="images/mobile_ime_keyboard_en.png" width="352"></p>
             <figcaption>An example of an on-screen keyboard (English)</figcaption>
           </figure>
-          <p>The layout of an on-screen keyboard may vary on language or
-          its input modality (e.g. telephone number requires numbers only).</p>
+          <p>The layout of an on-screen keyboard may vary depending on
+            language or its input modality (e.g. a telephone number
+            input field requires number buttons only).</p>
           <figure id="fig-on-screen-keyboard-japanese">
             <p><img height="403" src="images/mobile_ime_keyboard_jp.png" width="352"></p>
             <figcaption>An example of an on-screen keyboard (Japanese)</figcaption>
@@ -512,77 +543,91 @@ function onCompositionUpdate(event) {
       <section id="converter-section">
         <h2>Converter</h2>
         <p>A converter is a context-sensitive parser used for replacing
-        the outputs of a composer to ideographic characters on Chinese, Japanese,
-        and Korean.</p>
-        <p class="note">Korean does not use ideographic characters so often.</p>
+          the outputs of a composer to ideographic characters on Chinese,
+          Japanese, and Korean.</p>
+        <p class="note">Korean seldom uses ideographic characters.</p>
 
-        <p>Because Chinese, Japanese, and Korean have many homonyms, each sequence of phonetic
-        characters usually matches many ideographic characters: e.g., a Japanese
-        phonetic character '&#x304B;' matches Japanese ideographic characters
-        &lsquo;&#x5316;&rsquo;, &lsquo;&#x79D1;&rsquo;, &lsquo;&#x8AB2;&rsquo;,
-        etc.; Pinyin characters &lsquo;ka&rsquo; matches Simplified-Chinese
-        ideographic characters &lsquo;&#x5361;', &lsquo;&#x5580;&rsquo;,
-        &lsquo;&#x54AF;&rsquo;, etc.; Bopomofo characters
-        &lsquo;&#x4EBA;&#x5F13;&rsquo; matches Traditional-Chinese ideographic
-        characters &lsquo;&#x4E5E;&rsquo;, &lsquo;&#x4EBF;&rsquo;,
-        &lsquo;&#x4E87;&rsquo;, etc.</p>
-        <p>A converter looks up a dictionary and shows a
-        list of candidates of possible ideographic characters so a user can choose
-        one. This list is known as a <dfn id="candidate-list">candidate list</dfn>.
-        A candidate list is known as a <dfn id="candidate-window">candidate window</dfn>
-        when it has its own window.</p>
-        <p>Some Japanese IMEs show annotations in its <a href="#candidate-window">candidate window</a>
-        for a character that is not so easy to distinguish from other characters
-        (such as full-width alphabets, full-width Katakanas, and half-width
-        Katakanas, etc.), as shown in the following figure.</p>
+        <p>Because Chinese, Japanese, and Korean have many homonyms, each
+          sequence of phonetic characters usually matches many ideographic
+          characters: e.g., a Japanese
+          phonetic character &lsquo;&#x304B;&rsquo; matches Japanese
+          ideographic characters
+          &lsquo;&#x5316;&rsquo;, &lsquo;&#x79D1;&rsquo;,
+          &lsquo;&#x8AB2;&rsquo;,
+          etc.; Pinyin characters &lsquo;ka&rsquo; matches Simplified-Chinese
+          ideographic characters &lsquo;&#x5361;&rsquo;,
+          &lsquo;&#x5580;&rsquo;,
+          &lsquo;&#x54AF;&rsquo;, etc.; Bopomofo characters
+          &lsquo;&#x4EBA;&#x5F13;&rsquo; matches Traditional-Chinese
+          ideographic characters &lsquo;&#x4E5E;&rsquo;,
+          &lsquo;&#x4EBF;&rsquo;, &lsquo;&#x4E87;&rsquo;, etc.</p>
+        <p>A converter looks up a dictionary and shows a list of
+          candidates of possible ideographic characters so a user can choose
+          one. This list is known as a <dfn id="candidate-list">candidate
+            list</dfn>.
+          A candidate list is known as a <dfn id="candidate-window">candidate
+            window</dfn> when it has its own window.</p>
+        <p>Some Japanese IMEs show annotations in its
+          <a href="#candidate-window">candidate window</a>
+          for a character that is not so easy to distinguish from other
+          characters (such as full-width alphabets, full-width Katakanas,
+          and half-width Katakanas, etc.), as shown in the following
+          figure.</p>
         <figure id="fig-candidate-window-japanese">
           <p><img height="342" src="images/image05.png" width="393"></p>
           <figcaption>Candidate window (Japanese)</figcaption>
         </figure>
-        <p>The next figure shows a <a href="#candidate-window">candidate window</a> of a Simplified-Chinese IME.</p>
+        <p>The next figure shows a <a href="#candidate-window">candidate
+            window</a> of a Simplified-Chinese IME.</p>
         <figure id="fig-candidate-window-simplified-chinese">
           <p><img height="308" src="images/image04.png" width="390"></p>
           <figcaption>Candidate window (Simplified Chinese)</figcaption>
         </figure>
-        <p>And the next figure shows a <a href="#candidate-window">candidate window</a> of a Traditional-Chinese IME.</p>
+        <p>And the next figure shows a <a href="#candidate-window">candidate
+            window</a> of a Traditional-Chinese IME.</p>
         <figure id="fig-candidate-window-traditional-chinese">
           <p><img height="180" src="images/image06.png" width="352"></p>
           <figcaption>Candidate window (Traditional Chinese)</figcaption>
         </figure>
-        <p>A converter often integrates an <dfn id="MRU">MRU</dfn> (Most-Recently Used) list.
-        Even though there are many ideographic characters for each phonetic
-        character (or phonetic radical), a user does not usually use all these
-        ideographic characters. A converter uses an <a href="MRU">MRU list</a> to filter out
-        ideographic characters not used so often from a
-        <a href="#candidate-list">candidate list</a>.
-        A converter
-        sometimes integrates a grammar parser. A converter that integrates a
-        grammar parser splits the given phonetic characters into grammatical
-        clauses and converts only one clause at once. When a sequence of phonetic
-        characters consists of n clauses and the i-th clause has m_i candidates,
-        the total number of the candidates for the input characters become (m_1 *
-        m_2 * &hellip; * m_n). To reduce the number of candidates owned by a
-        converter, a converter usually processes one clause at once. This clause is
-        called as a <dfn id="selected-clause">selected clause</dfn>.</p>
+        <p>Some techniques are used to improve conversion quality.
+          For example, a converter integrates an <dfn id="MRU">MRU</dfn>
+          (Most-Recently Used) list.
+          Even though there are many ideographic characters for each phonetic
+          character (or phonetic radical), a user does not usually use all
+          these ideographic characters. A converter uses an
+          <a href="MRU">MRU list</a> to filter out ideographic characters not
+          used so often from a <a href="#candidate-list">candidate list</a>.
+          Another example is a grammar parser. A converter that
+          integrates a grammar parser splits the given phonetic characters
+          into grammatical clauses and converts only one clause at a time.
+          When a sequence of phonetic characters consists of n clauses and the
+          i-th clause has m_i candidates, the total number of the candidates
+          for the input characters becomes (m_1 * m_2 * &hellip; * m_n).
+          To reduce the number of candidates owned by a converter,
+          a converter usually processes one clause at a time. This clause is
+          called the <dfn id="selected-clause">selected clause</dfn>.</p>
 
-        <p>An IME usually renders a <a href="#selected-clause">selected clause</a> with
-        a special style to distinguish it from other clauses, as shown in
-        the following figure.</p>
+        <p>An IME usually renders a <a href="#selected-clause">selected
+            clause</a> with a special style to distinguish it from other
+          clauses, as shown in the following figure.</p>
         <figure id="fig-selected-clause">
           <p><img height="346" src="images/image08.png" width="394"></p>
           <figcaption>Selected clause (Japanese)</figcaption>
         </figure>
         <p>When a converter converts two or more clauses, it chooses
-        candidates for the selected clause so it becomes grammatically consistent
-        with the surrounding clauses: e.g., Japanese converters usually output
-        &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x9AEA;&rsquo; (not
-        &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x767A;&rsquo;) for Japanese phonetic
-        characters &lsquo;&#x304D;&#x304D;&#x3044;&#x3063;&#x3071;&#x3064;&rsquo;
-        because &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x767A;&rsquo; is grammatically
-        incorrect.</p>
+          candidates for the selected clause so it becomes grammatically
+          consistent with the surrounding clauses:
+          e.g., Japanese converters usually output
+          &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x9AEA;&rsquo; (not
+          &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x767A;&rsquo;)
+          for Japanese phonetic characters
+          &lsquo;&#x304D;&#x304D;&#x3044;&#x3063;&#x3071;&#x3064;&rsquo;
+          because
+          &lsquo;&#x5371;&#x6A5F;&#x4E00;&#x767A;&rsquo; is grammatically
+          incorrect.</p>
         <p>On a mobile platform, candidates may not appear in a separate
-          window, but occupies some part of the screen for a user to choose
-          an intended candidate.
+          window, but occupies some part of the screen for the user to choose
+          the candidate word that they intend.
         </p>
         <figure id="fig-mobile-ime">
           <p><img height="587" src="images/mobile_ime_composition.png" width="352"></p>
