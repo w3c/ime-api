@@ -87,25 +87,21 @@
   </head>
   <body>
     <section id="abstract">
-      <p>This specification defines an “IME API” that provides Web applications
-      with scripted access to an IME (<a href="#IME">input-method editor</a>)
-      associated with a hosting user agent. This IME API includes:</p>
+      <p>This specification defines an &ldquo;IME API&rdquo; that provides
+        Web applications with scripted access to an IME
+        (<a href="#IME">input-method editor</a>) associated with
+        a hosting user agent. This IME API includes:</p>
       <ul>
-       <li>An <a>InputMethodContext</a> interface, which provides methods to
-        retrieve detailed data from an in-progress IME
-        <a href="#ime-composition">composition</a>,
-        and to update that data.</li>
-       <li>A <a>Composition</a> dictionary, which represents read-only attributes
-        about the current
-        <a href="#ime-composition">composition</a>,
-        such as the actual text being input, its length, and its target
-        <a href="#clause">clause</a>.
-        <p class="issue">need to define what a <i>clause</i> is</p></li>
+        <li>An <a>InputMethodContext</a> interface, which provides methods to
+         retrieve detailed data from an in-progress IME
+         <a href="#ime-composition">composition</a>.</li>
+       <li>A <a>Composition</a> dictionary, which represents read-only
+         attributes about the current
+         <a href="#ime-composition">composition</a>,
+         such as the actual text and its style.</li>
       </ul>
-      <p>This API is designed to be used in conjunction with DOM events and
-      elements on the Web platform, notably: composition events and the
-      <a href="http://dev.w3.org/html5/2dcontext/">Canvas 2D Context API</a>
-      [[CANVAS-2D]].</p>
+      <p>This API is designed to be used in conjunction with DOM events
+        [[DOM-LEVEL-3-EVENTS]].</a>
     </section>
     <section id="sotd">
       <p>
