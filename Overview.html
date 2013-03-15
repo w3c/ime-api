@@ -28,7 +28,7 @@
         content: ">";
       }
     </style>
-    <script class='remove'>
+    <script class="remove">
       function addEllipsis(id) {
         document.getElementById(id).childNodes.item(2).textContent = "\n    …\n";
       }
@@ -41,14 +41,14 @@
         }
       }
     </script>
-    <script class='remove'>
+    <script class="remove">
       function getLastModifiedDate() {
         var d = new Date(document.lastModified);
         return d.toISOString().substring(0,10);
       }
     </script>
-    <script type="text/javascript" src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
-    <script type="text/javascript" class='remove'>
+    <script type="text/javascript" src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script type="text/javascript" class="remove">
       var respecConfig = {
           specStatus: "ED",
           shortName:  "ime-api",
@@ -79,14 +79,14 @@
               document.querySelectorAll("li.tocline > a[href^='#attributes']"),
               document.querySelectorAll("li.tocline > a[href^='#methods']"),
             ];
-            addEllipsis('idl-def-HTMLElement');
+            addEllipsis("idl-def-HTMLElement");
             removeNodes(nodesToRemove);
           }
       }
     </script>
   </head>
   <body>
-    <section id='abstract'>
+    <section id="abstract">
       <p>This specification defines an “IME API” that provides Web applications
       with scripted access to an IME (<a href="#IME">input-method editor</a>)
       associated with a hosting user agent. This IME API includes:</p>
@@ -107,7 +107,7 @@
       <a href="http://dev.w3.org/html5/2dcontext/">Canvas 2D Context API</a>
       [[CANVAS-2D]].</p>
     </section>
-    <section id='sotd'>
+    <section id="sotd">
       <p>
         This document is a proposal that is being made available for public
         review in order to solicit feedback, particularly from
@@ -115,7 +115,7 @@
         and standardization.
       </p>
     </section>
-    <section class='informative' id="introduction">
+    <section class="informative" id="introduction">
       <h2>Introduction</h2>
       <p>Even though existing Web-platform APIs allow developers to implement very
       complicated Web applications, such as visual chat applications, using
@@ -355,7 +355,7 @@ function onCompositionUpdate(event) {
           API </a>document.</p>
     </section>
 
-    <section class='informative' id="background">
+    <section class="informative" id="background">
       <h1>Background: What’s an Input Method Editor?</h1>
       <p>An <dfn id="IME">IME</dfn> (input-method editor) is an application
         that allows a standard keyboard (such as a US-101 keyboard) to be used
@@ -424,7 +424,7 @@ function onCompositionUpdate(event) {
           character consists of Korean character components that represent
           consonants or vowels, e.g. the Korean character
           &lsquo;&#xac00;&rsquo; consists of the consonant
-          &lsquo;&#x3131;&rsquo; and the vowel '&#x314f;'.</p>
+          &lsquo;&#x3131;&rsquo; and the vowel &lsquo;&#x314f;&rsquo;.</p>
 
         <p>A <dfn id="composition-window">composition window</dfn> is a window
           that shows ASCII characters being composed by
@@ -657,7 +657,7 @@ function onCompositionUpdate(event) {
       method cannot be added to the HTMLElement
       interface, it should be moved to the <a>InputMethodContext</a> interface.</p>
 
-      <dl title='partial interface HTMLElement' class='idl'>
+      <dl title="partial interface HTMLElement" class="idl">
         <dt>InputMethodContext getInputContext()</dt>
           <dd>Returns an InputMethodContext interface associated with this element. By
           default, a user agent returns an InputMethodContext interface representing
@@ -785,7 +785,7 @@ function onCompositionUpdate(event) {
       </dl>
     </section>
 
-    <section  class='informative' id="best-practices">
+    <section  class="informative" id="best-practices">
       <h1>Best Practices</h1>
     <p>This specification provides an interface for developing IME-aware
       Web applications.</p>
