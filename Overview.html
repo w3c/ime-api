@@ -137,39 +137,32 @@
         <li>indicate to the user whether the Web application renders
         composition text by itself, or needs to ask user agents to render it</li>
         <li>determine the place where user agents render composition text</li>
-        <li>detect whether the user agent renders
-        <a href="#candidate-window">candidate windows</a>
-        by themselves</li>
         <li>determine the place where user agents render
         <a href="#candidate-window">candidate windows</a></li>
       </ul>
 
       <p>To solve these IME-related problems, this specification introduces
-        an IME API that allows Web applications to read and write composition
-        data made available by user agents. Moreover, this specification
-        introduces interfaces for
+        an IME API that allows Web applications to interact with the IME.
+        Moreover, this specification introduces interfaces for
         <a href="#ime-composition">compositions</a>,
         so Web applications can read detailed composition data.
-        A <a>Composition</a> object provides a reference
-        to an ongoing IME
+        A <a>Composition</a> object provides a reference to an ongoing IME
         <a href="#ime-composition">composition</a>,
         so Web applications can retrieve the composition text and
-        attributes.</p>
+        its attributes.  In addition,
+        this API also gives Web applications the ability to
+        give a hint as to where to position a
+        <a href="#composition-window">composition window</a>.
 
       <p>There are also proposed standards for changing IME mode via CSS
         (<a href="http://www.w3.org/TR/css3-ui/#ime-mode">ime-mode property
         in CSS3 UI</a>) and controlling generic input modality
         (<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/association-of-controls-and-forms.html#input-modalities:-the-inputmode-attribute">inputmode attribute</a>), but this API spec is independent of them.
       </p>
-      <p>This API gives Web applications the ability to
-        give a hint as to where to position a
-        <a href="#composition-window">composition window</a>
-        and the ability to retrieve the text from the ongoing
-        <a href="#ime-composition">composition</a> and its attributes.</p>
 
-      <p>Consider the following examples.
-        The first example shows the source for a Web application that renders
-        composition text by itself on canvas.</p>
+      <p>Consider the following examples.</p>
+      <p>The first example shows the source for a Web application that renders
+        composition text by itself on a canvas.</p>
 <pre class="example sh_javascript" id="ex-ime-on-canvas">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
