@@ -792,19 +792,22 @@ function onCompositionUpdate(event) {
     <p>This section describes practices for some use-cases.</p>
     <section id="drawing-composition-text">
       <h1>Drawing Composition Text</h1>
-      <p>If a Web application wants to draw composition text itself,
-        it SHOULD handle <code>compositionupdate</code> events
-        to get notified from IME that composition text is changed, then
-        use this interface to retrieve composition and let the IME know
+      <p>If a Web application wants to draw composition text by itself,
+        it SHOULD handle the <code>compositionupdate</code> event
+        to get notified from the IME that the composition text has been
+        changed, and then
+        use the interface described in this document to retrieve
+        composition and let the IME know
         where the composition text is drawn by calling
         <code>setCaretRectangle()</code> method.
         If <code>setCaretRectangle()</code> is not called, IME will not have
         information about where to show IME UIs, and it may show UIs at
         an obtrusive position. To avoid this situation, a user agent may
-        set some decent default position around the focused node.
+        set some decent default position in the vicinity of the focused
+        input field.
         Optionally it MAY call
-        <code>setExclusionRectangle()</code> method to hint the IME
-        that some area is not suitable for showing IME UI.</p>
+        <code>setExclusionRectangle()</code> method to hint to the IME
+        that a certain area is not suitable for showing the IME UI.</p>
       <p>When a Web application draws composition text, it MUST call
         <code>preventDefault()</code> in <code>compositionupdate</code>
         handler so that the user agent will not draw the text.</p>
@@ -813,10 +816,11 @@ function onCompositionUpdate(event) {
         or <code>contenteditable</code> node,
         it MUST enable the IME via <code>getInputContext().open()</code> to
         associate its node with composition events.</p>
-      <p>The following diagram shows flow of events when a user types
+      <p>The following diagram shows the flow of events
+        among the keyboard, the IME, the user agent, and the web application
+        when a user types
         &lsquo;kyouha&rsquo; to convert to
-        &lsquo;&#x4ECA;&#x65E5;&#x306F;&rsquo; among keyboard,
-      IME, user agent, and web application.</p>
+        &lsquo;&#x4ECA;&#x65E5;&#x306F;&rsquo;.</p>
       <figure id="fig-imeapi-flow">
         <p><img height="1133" src="images/imeapi_flow.png" width="744"></p>
         <figcaption>Event flow of IME and an IME-aware web application.</figcaption>
