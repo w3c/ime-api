@@ -149,26 +149,27 @@
       </ul>
 
       <p>To solve these IME-related problems, this specification introduces
-      an IME API that allows Web applications to read and write composition
-      data made available by user agents. Moreover, this specification introduces
-      interfaces for
-      <a href="#ime-composition">compositions</a>,
-      so Web applications can read detailed composition
-      data and update it. A <a>Composition</a> object provides a reference
-      to an ongoing IME
-      <a href="#ime-composition">composition</a>,
-      so Web applications can retrieve the composition text and attributes.</p>
+        an IME API that allows Web applications to read and write composition
+        data made available by user agents. Moreover, this specification
+        introduces interfaces for
+        <a href="#ime-composition">compositions</a>,
+        so Web applications can read detailed composition data.
+        A <a>Composition</a> object provides a reference
+        to an ongoing IME
+        <a href="#ime-composition">composition</a>,
+        so Web applications can retrieve the composition text and
+        attributes.</p>
 
       <p>There are also proposed standards for changing IME mode via CSS
         (<a href="http://www.w3.org/TR/css3-ui/#ime-mode">ime-mode property
         in CSS3 UI</a>) and controlling generic input modality
-        (<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/association-of-controls-and-forms.html#input-modalities:-the-inputmode-attribute">inputmode attribute</a>), and this API spec is orthogonal to them.
+        (<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/association-of-controls-and-forms.html#input-modalities:-the-inputmode-attribute">inputmode attribute</a>), but this API spec is independent of them.
       </p>
-      <p>The use of those APIs allows Web applications the ability to
-        give a hint where to set the
-      position of a <a href="#composition-window">composition window</a>
-      and to retrieve the text and attributes of the ongoing
-      <a href="#ime-composition">composition</a>.</p>
+      <p>This API gives Web applications the ability to
+        give a hint as to where to position a
+        <a href="#composition-window">composition window</a>
+        and the ability to retrieve the text from the ongoing
+        <a href="#ime-composition">composition</a> and its attributes.</p>
 
       <p>Consider the following examples.
         The first example shows the source for a Web application that renders
@@ -197,7 +198,8 @@ function init() {
 function getStartAndLengthFromComposition(composition) {
     var start = 0;
     var length = 0;
-    // Some code to convert Range object to (start, length) for composition text here.
+    // For the brevity of this example, code to convert composition's Range
+    // object to (start, length) pair is omitted.
     return { start: start, length: length };
 }
 
@@ -212,8 +214,9 @@ function onCompositionUpdate(event) {
     var x = cursor_x;
     var y = cursor_y;
 
-    // Erase background including 5px underline area.
-    // This doesn't handle case that composition text is shortened.
+    // Clear the drawing area including the 5px underline area.
+    // Note: For brevity, a case that text is shortened (e.g. as a result of
+    //       typeing backspace) is omitted.
     var width = context.measureText(text).width;
     next_cursor_x = cursor_x + width;
     context.fillStyle = &rsquo;white&rsquo;;
@@ -223,13 +226,13 @@ function onCompositionUpdate(event) {
     var range = getStartAndLengthFromComposition(composition);
 
     // Render the clauses in the composition.
-    // This code assumes LTR text.
+    // Note: This code assumes LTR text.
     var texts = [ text.substring(0, range.start);
                   text.substring(range.start, range.length);
                   text.substring(range.start + range.length,
                                  text.length - (range.start + range.length)) ];
 
-    // Setting font drawing style.
+    // Set font drawing style.
     context.textBaseline = &rsquo;top&rsquo;;
     context.font = &rdquo;16px sans-serif&rdquo;;
     context.fillStyle = &rsquo;black&rsquo;;
@@ -238,9 +241,8 @@ function onCompositionUpdate(event) {
       var metrics = context.measureText(texts[i]);
       // Draw the text of this clause.
       context.fillText(texts[i], x, y);
-      // Draw an underline under the text. For simplicity, this code
-      // draws a bold underline for selected clauses, or a thin
-      // underline for non-selected ones.
+      // Draw an underline under the text. For brevity, this code draws a bold
+      // underline for the selected clause, or a thin underline for others.
       if (i == 1) { // Selected clause.
           context.fillRect(x + 1, y + 16 + 1, metrics.width - 1, 2);
           // Let the IME know where the caret is.
@@ -257,7 +259,7 @@ function onCompositionUpdate(event) {
 
 function onCompositionEnd(event) {
     cursor_x = next_cursor_x;
-    // We don't handle line break yet.
+    // Line breaks are not handled yet.
 }
 &lt;/script&gt;
 &lt;/head&gt;
@@ -301,21 +303,22 @@ function onCompositionEnd(event) {
 &lt;script language="javascript" type="text/javascript"&gt;
 function init() {
     var node = document.getElementById(&rsquo;input0&rsquo;);
-    // Associates an IME with this node.
+    // Associate an IME with this node.
     node.getInputContext().enabled = true;
-    // This code only handles compositionupdate events for simplicity, but of
-    // course other input field changes should also be handled.
+    // This code only handles the compositionupdate event for brevity of the
+    // example, but of course other input field changes should also be handled.
     node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
 }
 
+// Sends an XHR request to get search suggestions.
+// Upon receiving the result, expandSuggest() is called back.
 function getSuggests(query) {
-    // Sends an XHR request to get search suggestions.
-    // Upon receiving the result, expandSuggest() is called back.
+    // For brevity, implementation of this function is omitted.
 }
 
 function expandSuggest(candidates) {
     // Callback after getting search suggestions.
-    var suggest = document.getElementById(&rdsquo;suggest0&rsquo;);
+    var suggest = document.getElementById(&rsquo;suggest0&rsquo;);
     var i;
     for (i = 0; i &lt; suggest.childNodes.length; i++) {
         suggest.removeChild(suggest.childNodes[0]);
@@ -348,9 +351,10 @@ function onCompositionUpdate(event) {
 &lt;/html&gt;
 </pre>
       <p>Please also refer to the separate
-        <a href="use-cases/Overview.html">use cases for Input Method Editor API document</a>.</p>
-
+        <a href="use-cases/Overview.html">use cases for Input Method Editor
+          API </a>document.</p>
     </section>
+
     <section class='informative' id="background">
       <h1>Background: What’s an Input Method Editor?</h1>
       <p>An <dfn id="IME">IME</dfn> (input-method editor) is an application
