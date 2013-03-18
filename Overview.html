@@ -646,7 +646,7 @@ function onCompositionUpdate(event) {
           <dd>Returns an InputMethodContext interface associated with this element. By
           default, a user agent returns an InputMethodContext interface representing
           the system IME. To change the behavior of the IME associated with an
-          element, authors must first obtain an InputMethodContext interface by
+          element, authors MUST first obtain an InputMethodContext interface by
           calling the getInputContext() method of the HTMLElement interface.
           </dd>
       </dl>
@@ -659,9 +659,9 @@ function onCompositionUpdate(event) {
       composition text.</p>
       <dl title="dictionary Composition" class="idl">
         <dt>readonly attribute Node text</dt>
-          <dd>Represents the styled text being composed by an IME. This node may
-          have child nodes, e.g. when an <a href="#ime-composition">IME
-          composition</a> consists of multiple <a href="#ime-clause">IME clauses</a>,
+          <dd>Represents the styled text being composed by an IME. This node
+            MAY have child nodes, e.g. when an <a href="#ime-composition">IME
+              composition</a> consists of multiple <a href="#ime-clause">IME clauses</a>,
           this node has child nodes and each child node represents an
           <a href="#ime-clause">IME clause</a>. The text attribute of this node
           is equal to the text
@@ -697,7 +697,7 @@ function onCompositionUpdate(event) {
         <dt>readonly attribute DOMString locale</dt>
           <dd>Represents the locale of the current input method as
             a BCP-47 tag (e.g. "en-US").
-            The locale may be the empty string when
+            The locale MAY be the empty string when
             inapplicable or unknown.</dd>
         <dt>void confirmComposition()</dt>
           <dd>
@@ -724,10 +724,10 @@ function onCompositionUpdate(event) {
             parameter for gtk_im_context_set_cursor_location().</p>
             <ul>
               <li>The <var>anchor</var> parameter represents the DOM node
-                against which the rectangle is positioned.  This does not
-                have to be the same as the node that listens to composition
-                events and therefore an web application can draw composition
-                text where it does not have focus.
+                against which the rectangle is positioned. This MAY
+                be a different node than the node that listens to composition
+                events which has focus and therefore a Web application can
+                draw composition text where it does not have focus.
               </li>
               <li>The <var>x</var>, and <var>y</var> are the offsets to the
                 top-left of the rectangle relative to <var>anchor</var>
@@ -744,9 +744,9 @@ function onCompositionUpdate(event) {
             <p>Gives a hint for a user agent to avoid showing any input
               related UI elements (e.g. on-screen keyboard, a candidate window)
               on the given rectangle, for an application to show some
-              input-related UI elements (such as search suggestions) in that
-              area, which may overlap.</p>
-            <p>A user agent may use this hint to explicitly control the
+              input-related UI elements (such as search suggestions) in the
+              rectangle.</p>
+            <p>A user agent MAY use this hint to explicitly control the
               position for a candidate window, or determine zoom level
               and view port when on-screen keyboard comes in.</p>
             <ul>
@@ -762,7 +762,7 @@ function onCompositionUpdate(event) {
           </dd>
         <dt>boolean open()</dt>
           <dd>
-          <p>Requests the hosting user agent to associate the context with its
+          <p>Requests the hosting user agent to associate the context with an
             IME. This function returns <code>true</code> if a user agent
             can associate its IME with the context.</p>
           </dd>
