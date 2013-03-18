@@ -113,37 +113,32 @@
     </section>
     <section class="informative" id="introduction">
       <h2>Introduction</h2>
-      <p>Even though existing Web-platform APIs allow developers to implement very
-      complicated Web applications, such as visual chat applications, using
-      technologies such as SVG or the <code>&lt;canvas&gt;</code> element and API,
-      developers have difficulties when implementing Web applications that
-      control <a href="#IME">input-method editors</a>. To provide the
-      ability for hosting user agents to expose Web applications to the
-      <a href="#ime-composition">composition text</a>
-      being composed in an associated IME,
-      <a href="http://www.w3.org/TR/DOM-Level-3-Events/">the DOM Level 3 Events specification</a>
-      [[DOM-LEVEL-3-EVENTS]]
-      introduces <i>composition events</i>. Using composition events, Web
-      applications can retrieve
-      <a href="#ime-composition">composition text</a>
-      from an IME.</p>
-
+      <p>Even though existing Web-platform APIs allow developers to implement
+        very complicated Web applications, such as visual chat applications or
+        WYSIWYG presentation editors, developers have difficulties when
+        implementing Web applications that involve
+        <a href="#IME">input-method editors</a>.
+        To mitigate the difficulties,
+        <a href="http://www.w3.org/TR/DOM-Level-3-Events/">the DOM
+          Level 3 Events specification</a>[[DOM-LEVEL-3-EVENTS]]
+        introduces <i>composition events</i>
+        to retrieve <a href="#ime-composition">composition text</a>
+        while it is being composed in an associated IME.</p>
       <p>However, Web applications can still run into difficulties when
-      they manipulate IMEs on non-editable elements such as the
-      <code>&lt;canvas&gt;</code> element; those difficulties include the fact
-      that a Web application cannot do the following:</p>
-
+        they manipulate IMEs on non-editable elements such as the
+        <code>&lt;canvas&gt;</code> element; those difficulties include
+        the fact that a Web application cannot do the following:</p>
       <ul>
         <li>indicate to the user whether the Web application renders
-        composition text by itself, or needs to ask user agents to render it</li>
+          composition text by itself, or needs to ask user agents to
+          render it</li>
         <li>determine the place where user agents render composition text</li>
         <li>determine the place where user agents render
         <a href="#candidate-window">candidate windows</a></li>
       </ul>
-
       <p>To solve these IME-related problems, this specification introduces
         an IME API that allows Web applications to interact with the IME.
-        Moreover, this specification introduces interfaces for
+        This specification introduces interfaces for
         <a href="#ime-composition">compositions</a>,
         so Web applications can read detailed composition data.
         A <a>Composition</a> object provides a reference to an ongoing IME
@@ -153,11 +148,11 @@
         this API also gives Web applications the ability to
         give a hint as to where to position a
         <a href="#composition-window">composition window</a>.
-
       <p>There are also proposed standards for changing IME mode via CSS
         (<a href="http://www.w3.org/TR/css3-ui/#ime-mode">ime-mode property
         in CSS3 UI</a>) and controlling generic input modality
-        (<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/association-of-controls-and-forms.html#input-modalities:-the-inputmode-attribute">inputmode attribute</a>), but this API spec is independent of them.
+        (<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/association-of-controls-and-forms.html#input-modalities:-the-inputmode-attribute">inputmode attribute</a>), but they are independent of this API and they
+        are for solving different issues.
       </p>
 
       <p>Consider the following examples.</p>
