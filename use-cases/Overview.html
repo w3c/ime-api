@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- foo -->
+    <meta charset="UTF-8">
+    <title>Use cases: Input Method Editor API</title>
+    <style rel="stylesheet">
+      body {
+        counter-reset: figcaption;
+        counter-reset: example;
+      }
+      figcaption {
+        font-weight: bold;
+      }
+      figcaption:before {
+        font-weight: bold;
+        content: "Figure " counter(figcaption) ": ";
+        counter-increment: figcaption;
+      }
+      var {
+        font-weight: bold;
+        color: green;
+        padding-left: 2px;
+        padding-right: 4px;
+      }
+      .tocline {
+        padding-top: 2px;
+      }
+      .ed_mailto:before {
+        content: "<";
+      }
+      .ed_mailto:after {
+        content: ">";
+      }
+      pre.example::before {
+        content: "Example " counter(example) " " !important;
+        counter-increment: example;
+      }
+    </style>
+    <script class='remove'>
+      function addEllipsis(id) {
+        document.getElementById(id).childNodes.item(2).textContent = "\n    …\n";
+      }
+      function removeNodes(nodesToRemove) {
+        var i, j;
+        for (i = 0; i < nodesToRemove.length; ++i) {
+          for (j = 0; j < nodesToRemove[i].length; ++j) {
+            nodesToRemove[i][j].parentNode.removeChild(nodesToRemove[i][j]);
+          }
+        }
+      }
+    </script>
+    <script class='remove'>
+      function getLastModifiedDate() {
+        var d = new Date(document.lastModified);
+        return d.toISOString().substring(0,10);
+      }
+    </script>
+    <script type="text/javascript" src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+    <script type="text/javascript" class='remove'>
+      var respecConfig = {
+        specStatus: "unofficial",
+        shortName:  "ime-api",
+        edDraftURI: "http://dvcs.w3.org/hg/ime-api/", // FIXME
+        editors: [
+              {   name:       "Hironori Bono (坊野 博典)",
+                  company:    "Google",
+                  mailto:     "hbono@google.com"
+              },
+              {   name:       "Takayoshi Kochi",
+                  company:    "Google",
+                  mailto:     "kochi@google.com"
+              },
+              {   name:       "Kenji Baheux",
+                  company:    "Google",
+                  mailto:     "kenjibaheux@google.com"
+              },
+        ],
+        extraCSS: [ "http://dev.w3.org/2009/dap/ReSpec.js/css/respec.css" ],
+        wg:           "[to come]",
+        wgURI:        "[to come]",
+        wgPublicList: "public-webapps",
+        wgPatentURI:  "[to come]",
+        additionalCopyrightHolders: "Hironori Bono, Kenji Baheux",
+        publishDate: getLastModifiedDate(),
+        after: function () {
+          var nodesToRemove = [
+            document.querySelectorAll("table.parameters"),
+            document.querySelectorAll("li.tocline > a[href^='#attributes']"),
+            document.querySelectorAll("li.tocline > a[href^='#methods']"),
+           ];
+          addEllipsis('idl-def-HTMLElement');
+          removeNodes(nodesToRemove);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>This document describes use cases for a proposed
+        <a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">IME API</a>
+      that provides Web applications with scripted access to IMEs.</p>
+    </section>
+
+    <section id='sotd'>
+      <p>This is a non-normative document that provides background information
+        relevant to the proposed
+        <a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">IME API</a>.
+      </p>
+    </section>
+
+    <section id="introduction">
+      <h2>Introduction</h2>
+      <p>An IME (input-method editor) is an application that allows a standard
+        keyboard (such as a US-101 keyboard) to be used to type characters and
+        symbols that are not directly represented on the keyboard itself.
+        In China, Japan, and Korea, IMEs are used ubiquitously to enable
+        standard keyboards to be employed to type the very large number
+        of characters required for writing in Chinese, Japanese, and Korean.
+      </p>
+      <p>Web-application developers currently encounter a number of
+        <b>problems, pain points, and shortcomings related to interaction with
+          operating-system IMEs</b>.
+        The
+        <a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">IME API</a>
+        addresses those issues, and this document describes use cases to which
+        the IME API is applicable in addressing those issues.</p>
+    </section>
+
+    <section id="use-cases">
+      <h2>Use cases</h2>
+      <p>This section lists some use cases for the
+        <a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">IME API</a>.
+      </p>
+
+      <section id="editor">
+        <h2>[editor] Give webapps developers power to build a DOM-based editor</h2>
+        <p>For simple editing, <code>&lt;input&gt;</code> or
+          <code>&lt;textarea&gt;</code> works, and
+          <code>contenteditable</code> attribute is widely used for
+          building a rich text editor.
+          But when more minute control than
+          <code>contenteditable</code> provides is required,
+          a developer may go so far as to build a DOM-based editor without
+          using <code>contenteditable</code>.
+          There are several projects such as
+          <a href="http://ace.ajax.org">ACE editor</a>
+          which is widely used for popular services like
+          <a href="https://c9.io">Cloud9</a>
+          or
+          <a href="https://gist.github.com">gist.github.com</a>,
+          and
+          <a href="http://codemirror.net">CodeMirror</a>,
+          which is also widely used. Most building blocks for building such an
+          editor like key events, composition events, and drawing arbitrary
+          text are provided. But once IME is involved, for example, a webapp
+          cannot draw composition text itself or control how composition text
+          is drawn by the hosting user agent until the text is committed.
+          It would be nice if webapps had an ability to draw composition
+          text as native applications do as on-the-spot conversion.</p>
+        <p><b>Requirement:</b> Developers of DOM-based editor should have a
+          way to interact with and control the system IME to retrieve
+          information about clauses of the composition text and
+          prevent a user agent from drawing composition text.</p>
+      </section>
+
+      <section id="suggest">
+        <h2>[suggest] Prevent system IME from interfering with “suggest” features</h2>
+        <p>A user goes to a Web-based search engine and starts typing in
+          Japanese, and with each keypress, the search engine starts giving a
+          drop-down list of auto-completion suggestions. At the same time, the
+          user’s
+          <a href="../Overview.html#system-ime">system IME</a>
+          has been invoked (by the user, in order for the user to type in
+          Japanese) and also starts providing completion candidates for what
+          the user has typed in—shown in a separate
+          <a href="../Overview.html#candidate-window">candidate window</a>.
+          But that candidate
+          window appears <i>over</i> (in terms of Z-index) the drop-down list
+          of auto-completion suggestions the Web-based search engine is
+          displaying, making it impossible for the user to actually select any
+          of the suggestions provided by the search engine.</p>
+        <p><b>Requirement</b>: Web developers should have a way to prevent a
+          system IME from interfering with text input in their Web
+          applications and from obscuring parts of their Web applications from
+          which users are intended to make selections from suggestions based
+          on what they type.</p>
+      </section>
+
+      <section id="games">
+        <h2>[games] Prevent system IME from interfering with games</h2>
+        <p>A user who is playing a Web-based game might inadvertently press a
+          key combination that would suddenly cause an
+          <a href="../Overview.html#system-ime">system IME</a>
+          to be invoked and then also possibly cause an IME
+          <a href="../Overview.html#candidate-window">candidate window</a>
+          to appear in the midst of that game. That wouldn’t be what the user
+          would expect.
+        </p>
+        <p><b>Requirement</b>: Developers of Web-based game should have a way
+          prevent the system IME from being invoked during a game.</p>
+        <p>This use case in similar to the use case for providing the
+          proposed
+          <a href="http://lists.w3.org/Archives/Public/public-webapps/2012JanMar/0402.html">Screen Orientation Lock</a>
+          API, or even the
+          <a href="http://dvcs.w3.org/hg/pointerlock/raw-file/default/index.html">Pointer Lock</a> API,
+          in that game developer should have a way to “lock” (out) the system
+          IME behavior while the user is playing the game.</p>
+      </section>
+
+      <section id="ime-interaction">
+        <h2>[ime-interact] Get information back and forth from installed IMEs</h2>
+        <p>Native applications running on devices are able to interact with the
+          <a href="../Overview.html#system-ime">system IME</a>
+          in useful ways, and are able to get information back and forth from
+          them.
+          Other third-party runtime environments also provide
+          APIs for applications to interact with a system IME and user agents
+          in useful ways. For example, ActionScript® 3.0 for the Adobe® Flash®
+          Platform provides a
+          <a href="http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/system/IME.html">flash.system.IME</a>
+          interface with methods that let you
+          “directly manipulate the operating system’s inp method editor
+          (IME) in the Flash runtime application that is running on a
+          client computer. You can determine whether an IME is installed,
+          whether or not the IME is currently enabled, and which IME is
+          enabled. You can disable or enable the IME in the application,
+          and you can perform other limited functions, depending on the
+          operating system.”</p>
+        <p><b>Requirement</b>: Web applications should be able to get
+          information back and forth from system IMEs and to otherwise interact
+          with system IMEs—in a similar way to the ways in which native
+          applications and third-party runtime applications can interact with
+          system IMEs, including capabilities such as the following:
+          <ul>
+            <li>indicate to the user whether the Web application renders
+              composition text by itself, or needs to ask user agents to
+              render it</li>
+            <li>determine the place where user agents render composition
+              text</li>
+            <li>detect whether the user agent renders
+              <a href="../Overview.html#candidate-window">candidate windows</a>
+              by themselves</li>
+            <li>determine the place where user agents render
+              <a href="../Overview.html#candidate-window">candidate windows</a>
+            </li>
+          </ul>
+        </p>
+      </section>
+
+      <section id="custom-ime">
+        <h2>[custom-ime] Enable a Web application to provide its own IME</h2>
+        <p>Users of Web applications optimally want to have a user experience
+          that is consistent within the application; for example, with text
+          rendering and with text input displayed in a way that is consistent
+          with the rest of the application’s UI, optimized for that specifc
+          application. The sudden appearance of a
+          <a href="../Overview.html#system-ime">system IME</a>
+          over an otherwise consistent, application-specific UI is jarring to
+          the user experience, and detrimental to the overall integrity of the
+          application.</p>
+        <p><b>Requirement</b>: For Web applications that require text input,
+          Web developers should have the option to build and/or re-use
+          (e.g., from a JS library) in-application IMEs—built with JavaScript
+          HTML, and CSS—that enable th developers to control the look and
+          feel of the IME in a way consistent with the UI theming of their
+          applications, and to provide those IMEs as an integrated part of
+          their applications, and not just be left to rely on whatever system
+          IME might or might not be installed on the user’s system.
+      </section>
+
+    </section>
+  </body>
+</html>
