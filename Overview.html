@@ -54,10 +54,6 @@
           shortName:  "ime-api",
           edDraftURI: "http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html",
           editors: [
-                {   name:       "Hironori Bono (坊野 博典)",
-                    company:    "Google",
-                    mailto:     "hbono@google.com"
-                },
                 {   name:       "Takayoshi Kochi",
                     company:    "Google",
                     mailto:     "kochi@google.com"
@@ -65,6 +61,9 @@
                 {   name:       "Kenji Baheux",
                     company:    "Google",
                     mailto:     "kenjibaheux@google.com"
+                },
+                {   name:       "Hironori Bono (坊野 博典)",
+                    company:    "(formerly) Google",
                 },
           ],
           extraCSS: [ "http://dev.w3.org/2009/dap/ReSpec.js/css/respec.css" ],
@@ -218,7 +217,7 @@ function onCompositionUpdate(event) {
 
     // Set font drawing style.
     context.textBaseline = &rsquo;top&rsquo;;
-    context.font = &rdquo;16px sans-serif&rdquo;;
+    context.font = &quot;16px sans-serif&quot;;
     context.fillStyle = &rsquo;black&rsquo;;
 
     for (var i = 0; i &lt; texts.length; i++) {
@@ -248,7 +247,7 @@ function onCompositionEnd(event) {
 &lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;canvas id=&rdquo;canvas0&rdquo; width=&rdquo;640&rdquo; height=&rdquo;480&rdquo;&gt;&lt;/canvas&gt;
+&lt;canvas id=&quot;canvas0&quot; width=&quot;640&quot; height=&quot;480&quot;&gt;&lt;/canvas&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -260,7 +259,7 @@ function onCompositionEnd(event) {
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
-&lt;style type=&rdquo;text/css&rdquo;&gt;
+&lt;style type=&quot;text/css&quot;&gt;
 #search0 {
     max-width: 400px;
 }
@@ -327,9 +326,9 @@ function onCompositionUpdate(event) {
 &lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;div id=&rdquo;search0&rdquo;&gt;
-  &lt;input type=&rdquo;text&rdquo; id=&rdquo;input0&rdquo; placeholder=&rdquo;search here&rdquo;&gt;
-  &lt;ul id=&rdquo;suggest0&rdquo;&gt;&lt;/ul&gt;
+&lt;div id=&quot;search0&quot;&gt;
+  &lt;input type=&quot;text&quot; id=&quot;input0&quot; placeholder=&quot;search here&quot;&gt;
+  &lt;ul id=&quot;suggest0&quot;&gt;&lt;/ul&gt;
 &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
