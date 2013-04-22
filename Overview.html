@@ -170,11 +170,11 @@ var cursor_y = 0;
 var next_cursor_x = 0;
 
 function init() {
-    var node = document.getElementById(&rsquo;canvas0&rsquo;);
+    var node = document.getElementById('canvas0');
     // Associates an IME with this node.
     if (node.getInputContext && node.getInputContext().open()) {
-        node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
-        node.addEventListener(&rsquo;compositionend&rsquo;, onCompositionEnd, false);
+        node.addEventListener('compositionupdate', onCompositionUpdate, false);
+        node.addEventListener('compositionend', onCompositionEnd, false);
     }
 }
 
@@ -187,8 +187,8 @@ function getStartAndLengthFromComposition(composition) {
 }
 
 function onCompositionUpdate(event) {
-    var canvas = document.getElementById(&rsquo;canvas0&rsquo;);
-    var context = canvas.getContext(&rsquo;2d&rsquo;);
+    var canvas = document.getElementById('canvas0');
+    var context = canvas.getContext('2d');
     var inputContext = canvas.getInputContext();
     var composition = inputContext.composition;
     var text = composition.text.textContent;
@@ -202,7 +202,7 @@ function onCompositionUpdate(event) {
     //       typeing backspace) is omitted.
     var width = context.measureText(text).width;
     next_cursor_x = cursor_x + width;
-    context.fillStyle = &rsquo;white&rsquo;;
+    context.fillStyle = 'white';
     context.fillRect(cursor_x, cursor_y, width, 16 + 5);
 
     // Use { start, length } for simplicity.
@@ -216,9 +216,9 @@ function onCompositionUpdate(event) {
                                  text.length - (range.start + range.length)) ];
 
     // Set font drawing style.
-    context.textBaseline = &rsquo;top&rsquo;;
+    context.textBaseline = 'top';
     context.font = &quot;16px sans-serif&quot;;
-    context.fillStyle = &rsquo;black&rsquo;;
+    context.fillStyle = 'black';
 
     for (var i = 0; i &lt; texts.length; i++) {
       var metrics = context.measureText(texts[i]);
@@ -285,12 +285,12 @@ function onCompositionEnd(event) {
 &lt;/style&gt;
 &lt;script language="javascript" type="text/javascript"&gt;
 function init() {
-    var node = document.getElementById(&rsquo;input0&rsquo;);
+    var node = document.getElementById('input0');
     // Associate an IME with this node.
     node.getInputContext().enabled = true;
     // This code only handles the compositionupdate event for brevity of the
     // example, but of course other input field changes should also be handled.
-    node.addEventListener(&rsquo;compositionupdate&rsquo;, onCompositionUpdate, false);
+    node.addEventListener('compositionupdate', onCompositionUpdate, false);
 }
 
 // Sends an XHR request to get search suggestions.
@@ -301,7 +301,7 @@ function getSuggests(query) {
 
 function expandSuggest(candidates) {
     // Callback after getting search suggestions.
-    var suggest = document.getElementById(&rsquo;suggest0&rsquo;);
+    var suggest = document.getElementById('suggest0');
     var i;
     for (i = 0; i &lt; suggest.childNodes.length; i++) {
         suggest.removeChild(suggest.childNodes[0]);
@@ -311,7 +311,7 @@ function expandSuggest(candidates) {
         suggest.childNodes[i].textContent = candidates[i];
     }
     // Set exclusion area hint for the IME.
-    var input = document.getElementById(&rsquo;input0&rsquo;);
+    var input = document.getElementById('input0');
     var context = input.getInputContext();
     var relative_x = input.offsetLeft - suggest.offsetLeft;
     var relative_y = input.offsetTop - suggest.offsetTop;
@@ -320,7 +320,7 @@ function expandSuggest(candidates) {
 }
 
 function onCompositionUpdate(event) {
-    var query = document.getElementById(&rsquo;input0&rsquo;).value;
+    var query = document.getElementById('input0').value;
     getSuggests(query);
 }
 &lt;/script&gt;
