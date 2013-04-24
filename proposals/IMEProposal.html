@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <title>Input Method Editor API</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    
+    
+    <!--link href="http://dev.w3.org/2009/dap/ReSpec.js/css/respec.css" rel="stylesheet" type="text/css" -->
+    <style>
+        .issue {
+            background: #fcc !important;
+        }
+
+        pre.idl::before, pre.example::before {
+            font-family: sans-serif !important;
+        }
+
+        ol > li {
+            margin-bottom: 1em;
+        }
+    </style>
+<style>/*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+
+/* --- INLINES --- */
+em.rfc2119 { 
+    text-transform:     lowercase;
+    font-variant:       small-caps;
+    font-style:         normal;
+    color:              #900;
+}
+
+h1 acronym, h2 acronym, h3 acronym, h4 acronym, h5 acronym, h6 acronym, a acronym,
+h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
+    border: none;
+}
+
+dfn {
+    font-weight:    bold;
+}
+
+a.internalDFN {
+    color:  inherit;
+    border-bottom:  1px solid #99c;
+    text-decoration:    none;
+}
+
+a.externalDFN {
+    color:  inherit;
+    border-bottom:  1px dotted #ccc;
+    text-decoration:    none;
+}
+
+a.bibref {
+    text-decoration:    none;
+}
+
+cite .bibref {
+    font-style: normal;
+}
+
+code {
+    color:  #ff4500;
+}
+
+/* --- TOC --- */
+.toc a, .tof a {
+    text-decoration:    none;
+}
+
+a .secno, a .figno {
+    color:  #000;
+}
+
+ul.tof, ol.tof {
+    list-style: none outside none;
+}
+
+.caption {
+    margin-top: 0.5em;
+    font-style:   italic;
+}
+
+/* --- TABLE --- */
+table.simple {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    border-bottom:  3px solid #005a9c;
+}
+
+.simple th {
+    background: #005a9c;
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+}
+
+.simple th[scope="row"] {
+    background: inherit;
+    color:  inherit;
+    border-top: 1px solid #ddd;
+}
+
+.simple td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+}
+
+.simple tr:nth-child(even) {
+    background: #f0f6ff;
+}
+
+/* --- DL --- */
+.section dd > p:first-child {
+    margin-top: 0;
+}
+
+.section dd > p:last-child {
+    margin-bottom: 0;
+}
+
+.section dd {
+    margin-bottom:  1em;
+}
+
+.section dl.attrs dd, .section dl.eldef dd {
+    margin-bottom:  0;
+}
+</style><style>/* --- ISSUES/NOTES --- */
+div.issue-title, div.note-title {
+    padding-right:  1em;
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.issue-title { color: #e05252; }
+div.note-title { color: #2b2; }
+div.issue-title span, div.note-title span {
+    text-transform: uppercase;
+}
+div.note, div.issue {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.note > p:first-child, .issue > p:first-child { margin-top: 0 }
+.issue, .note {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+}
+div.issue, div.note {
+    padding: 1em 1.2em 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+span.note, span.issue { padding: .1em .5em .15em; }
+
+.issue {
+    border-color: #e05252;
+    background: #fbe9e9;
+}
+.note {
+    border-color: #52e052;
+    background: #e9fbe9;
+}
+
+
+</style><style>/* --- WEB IDL --- */
+pre.idl {
+    border-top: 1px solid #90b8de;
+    border-bottom: 1px solid #90b8de;
+    padding:    1em;
+    line-height:    120%;
+}
+
+pre.idl::before {
+    content:    "WebIDL";
+    display:    block;
+    width:      150px;
+    background: #90b8de;
+    color:  #fff;
+    font-family:    initial;
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+}
+
+.idlType {
+    color:  #ff4500;
+    font-weight:    bold;
+    text-decoration:    none;
+}
+
+/*.idlModule*/
+/*.idlModuleID*/
+/*.idlInterface*/
+.idlInterfaceID, .idlDictionaryID, .idlCallbackID, .idlEnumID {
+    font-weight:    bold;
+    color:  #005a9c;
+}
+a.idlEnumItem {
+    color:  #000;
+    border-bottom:  1px dotted #ccc;
+    text-decoration: none;
+}
+
+.idlSuperclass {
+    font-style: italic;
+    color:  #005a9c;
+}
+
+/*.idlAttribute*/
+.idlAttrType, .idlFieldType, .idlMemberType {
+    color:  #005a9c;
+}
+.idlAttrName, .idlFieldName, .idlMemberName {
+    color:  #ff4500;
+}
+.idlAttrName a, .idlFieldName a, .idlMemberName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlMethod*/
+.idlMethType, .idlCallbackType {
+    color:  #005a9c;
+}
+.idlMethName {
+    color:  #ff4500;
+}
+.idlMethName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlCtor*/
+.idlCtorName {
+    color:  #ff4500;
+}
+.idlCtorName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlParam*/
+.idlParamType {
+    color:  #005a9c;
+}
+.idlParamName, .idlDefaultValue {
+    font-style: italic;
+}
+
+.extAttr {
+    color:  #666;
+}
+
+/*.idlSectionComment*/
+.idlSectionComment {
+    color: gray;
+}
+
+/*.idlConst*/
+.idlConstType {
+    color:  #005a9c;
+}
+.idlConstName {
+    color:  #ff4500;
+}
+.idlConstName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlException*/
+.idlExceptionID {
+    font-weight:    bold;
+    color:  #c00;
+}
+
+.idlTypedefID, .idlTypedefType {
+    color:  #005a9c;
+}
+
+.idlRaises, .idlRaises a.idlType, .idlRaises a.idlType code, .excName a, .excName a code {
+    color:  #c00;
+    font-weight:    normal;
+}
+
+.excName a {
+    font-family:    monospace;
+}
+
+.idlRaises a.idlType, .excName a.idlType {
+    border-bottom:  1px dotted #c00;
+}
+
+.excGetSetTrue, .excGetSetFalse, .prmNullTrue, .prmNullFalse, .prmOptTrue, .prmOptFalse {
+    width:  45px;
+    text-align: center;
+}
+.excGetSetTrue, .prmNullTrue, .prmOptTrue { color:  #0c0; }
+.excGetSetFalse, .prmNullFalse, .prmOptFalse { color:  #c00; }
+
+.idlImplements a {
+    font-weight:    bold;
+}
+
+dl.attributes, dl.methods, dl.constants, dl.constructors, dl.fields, dl.dictionary-members {
+    margin-left:    2em;
+}
+
+.attributes dt, .methods dt, .constants dt, .constructors dt, .fields dt, .dictionary-members dt {
+    font-weight:    normal;
+}
+
+.attributes dt code, .methods dt code, .constants dt code, .constructors dt code, .fields dt code, .dictionary-members dt code {
+    font-weight:    bold;
+    color:  #000;
+    font-family:    monospace;
+}
+
+.attributes dt code, .fields dt code, .dictionary-members dt code {
+    background:  #ffffd2;
+}
+
+.attributes dt .idlAttrType code, .fields dt .idlFieldType code, .dictionary-members dt .idlMemberType code {
+    color:  #005a9c;
+    background:  transparent;
+    font-family:    inherit;
+    font-weight:    normal;
+    font-style: italic;
+}
+
+.methods dt code {
+    background:  #d9e6f8;
+}
+
+.constants dt code {
+    background:  #ddffd2;
+}
+
+.constructors dt code {
+    background:  #cfc;
+}
+
+.attributes dd, .methods dd, .constants dd, .constructors dd, .fields dd, .dictionary-members dd {
+    margin-bottom:  1em;
+}
+
+table.parameters, table.exceptions {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    margin: 0.5em 0;
+    width:  100%;
+}
+table.parameters { border-bottom:  1px solid #90b8de; }
+table.exceptions { border-bottom:  1px solid #deb890; }
+
+.parameters th, .exceptions th {
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+    font-family:    initial;
+    font-weight:    normal;
+    text-shadow:    #666 1px 1px 0;
+}
+.parameters th { background: #90b8de; }
+.exceptions th { background: #deb890; }
+
+.parameters td, .exceptions td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.parameters tr:first-child td, .exceptions tr:first-child td {
+    border-top: none;
+}
+
+.parameters td.prmName, .exceptions td.excName, .exceptions td.excCodeName {
+    width:  100px;
+}
+
+.parameters td.prmType {
+    width:  120px;
+}
+
+table.exceptions table {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    width:  100%;
+}
+</style><link href="//www.w3.org/StyleSheets/TR/w3c-unofficial" rel="stylesheet"><!--[if lt IE 9]><script src='http://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]--></head>
+<body><div class="head">
+  <p>
+    
+  </p>
+  <h1 class="title" id="title">Input Method Editor API</h1>
+  
+  <h2 id="unofficial-draft-19-april-2013">Unofficial Draft 19 April 2013</h2>
+  <dl>
+        
+    <dt>Contributors:</dt>
+    <dd><a href="mailto:travil@microsoft.com">Travis Leithead</a>, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
+<dd><a href="mailto:brene@microsoft.com">Brendan Elliott</a>, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
+<dd><a href="mailto:jianflin@microsoft.com">Jianfeng Lin</a>, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
+    
+  </dl>
+  
+		<p class="copyright">
+			<a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 
+			2013
+			
+			<a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> 
+			(<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+			<a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+			<a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved.
+			<abbr title="World Wide Web Consortium">W3C</abbr> <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+			<a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and
+			<a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.
+		</p>
+	  
+  <hr>
+</div>
+    <section class="introductory" id="abstract"><h2>Abstract</h2>
+        The goal of this API proposal is to enable web developers to build IME-aware web applications for a better IME input experience, for example to be able to use IME composition information for auto-complete or search suggestion, to avoid user-interface collisions between IME candidate window and search suggestion list, and to limit the input mode of an input box to be either katakana or hiragana.
+        <div class="note"><div class="note-title" role="heading" aria-level="3"><span>Note</span></div><div>
+            <p>The current <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">editor's draft on IME API</a> indicates another goal of enabling using IME on non-editable elements such as <code>&lt;canvas&gt;</code>. As we raised in the discussion threads <a href="http://lists.w3.org/Archives/Public/public-html/2011Nov/0210">here</a>, <a href="http://lists.w3.org/Archives/Public/public-html/2011Dec/0157.html">here</a> and <a href="http://lists.w3.org/Archives/Public/public-canvas-api/2012JanMar/0029.html">here</a>, we don’t think using canvas to create an editor is the right way to go. Please let’s discuss about issues you are trying to solve and find out a better solution. The former versions of the editor's draft on IME API also indicated a goal of facilitating JavaScript-based IMEs, but in current draft we see that some related functions are removed. We are not pursuing that goal but are not against it.</p>
+        </div></div>
+    </section><section class="introductory" id="sotd"><h2>Status of This Document</h2>
+  
+    <p>
+      This document is merely a public working draft of a potential specification. It has
+      no official standing of any kind and does not represent the support or consensus of any
+      standards organisation.
+    </p>
+    
+        <div style="color: red;">This document is currently an editor's draft.</div>
+    
+  
+</section><section id="toc"><h2 class="introductory">Table of Contents</h2><ul class="toc"><li class="tocline"><a class="tocxref" href="#intro"><span class="secno">1. </span>Introduction</a></li><li class="tocline"><a class="tocxref" href="#the-inputmethodcontext-object"><span class="secno">2. </span>The InputMethodContext Object</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#the-getinputcontext-method"><span class="secno">2.1 </span>The getInputContext() method</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#methods"><span class="secno">2.1.1 </span>Methods</a></li></ul></li><li class="tocline"><a class="tocxref" href="#inputmethodcontext-interface"><span class="secno">2.2 </span>The InputMethodContext Interface</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes"><span class="secno">2.2.1 </span>Attributes</a></li><li class="tocline"><a class="tocxref" href="#methods-1"><span class="secno">2.2.2 </span>Methods</a></li></ul></li></ul></li><li class="tocline"><a class="tocxref" href="#ime-css-properties"><span class="secno">3. </span>IME CSS Properties</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#ime-property-shorthand"><span class="secno">3.1 </span>ime property (shorthand)</a></li><li class="tocline"><a class="tocxref" href="#ime-align-property"><span class="secno">3.2 </span>ime-align property</a></li><li class="tocline"><a class="tocxref" href="#ime-mode-property"><span class="secno">3.3 </span>ime-mode property</a></li><li class="tocline"><a class="tocxref" href="#ime-width-property"><span class="secno">3.4 </span>ime-width property</a></li><li class="tocline"><a class="tocxref" href="#ime-offset-property"><span class="secno">3.5 </span>ime-offset property</a></li></ul></li><li class="tocline"><a class="tocxref" href="#inputmode-attribute"><span class="secno">4. </span>Inputmode Attribute</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-1"><span class="secno">4.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#usage-scenarios"><span class="secno">5. </span>Usage Scenarios</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#moving-search-suggestions-to-accommodate-ime-candidate-window-placement"><span class="secno">5.1 </span>Moving search suggestions to accommodate IME candidate window placement</a></li><li class="tocline"><a class="tocxref" href="#matching-the-layout-style-of-search-suggestion-list-and-ime-candidate-window"><span class="secno">5.2 </span>Matching the layout style of search suggestion list and IME candidate window</a></li><li class="tocline"><a class="tocxref" href="#sending-ime-candidates-to-a-web-service-to-improve-search-suggestions"><span class="secno">5.3 </span>Sending IME candidates to a web service to improve search suggestions</a></li><li class="tocline"><a class="tocxref" href="#presetting-the-input-mode"><span class="secno">5.4 </span>Presetting the input mode</a></li></ul></li><li class="tocline"><a class="tocxref" href="#acknowledgements"><span class="secno">A. </span>Acknowledgements</a></li><li class="tocline"><a class="tocxref" href="#references"><span class="secno">B. </span>References</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><span class="secno">B.1 </span>Normative references</a></li></ul></li></ul></section>
+
+    
+
+    <section class="informative" id="intro">
+        <!--OddPage--><h2><span class="secno">1. </span>Introduction</h2><p><em>This section is non-normative.</em></p>
+        <div>
+            This API proposal consists of:
+        <ol>
+            <li>An InputMethodContext object that can be requested on an HTML element. It provides information about the current status of IME composition.</li>
+            <li>CSS properties to define the positioning of IME candidate window.</li>
+            <li>An Inputmode attribute to define the initial status of IME.</li>
+        </ol>
+            You can find in the <a href="#usage-scenarios">Usage Scenarios</a> section about how the API is supposed to be used.
+        </div>
+    </section>
+    <!-- intro -->
+
+    <section id="the-inputmethodcontext-object">
+        <!--OddPage--><h2><span class="secno">2. </span>The InputMethodContext Object</h2>
+
+        <section id="the-getinputcontext-method">
+            <h3><span class="secno">2.1 </span>The getInputContext() method</h3>
+            <div>This method returns or creates (if none already exists) an InputMethodContext object on an HTML element, regardless of whether it's editable or not.</div>
+            <pre class="idl"><span class="idlInterface" id="idl-def-HTMLElement">partial interface <span class="idlInterfaceID">HTMLElement</span> {
+<span class="idlMethod">    <span class="idlMethType"><a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a></span> <span class="idlMethName"><a href="#widl-HTMLElement-getInputContext-InputMethodContext">getInputContext</a></span> ();</span>
+};</span></pre><section id="methods"><h4><span class="secno">2.1.1 </span>Methods</h4><dl class="methods"><dt id="widl-HTMLElement-getInputContext-InputMethodContext"><code>getInputContext</code></dt><dd>Returns an InputMethodContext interface associated with this element, regardless of whether it's editable or not.<div><em>No parameters.</em></div><div><em>Return type: </em><code><a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a></code></div></dd></dl></section>
+            <div class="note"><div class="note-title" role="heading" aria-level="4"><span>Note</span></div><div>
+                The same API exists in current <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">editor's draft on IME API</a>.
+            </div></div>
+            <div class="note"><div class="note-title" role="heading" aria-level="4"><span>Note</span></div><div>
+                The purpose of allowing this method on non-editable elements is not to enable using non-editable elements like <code>&lt;canvas&gt;</code> for editing, but to allow developers to set up the objects and event listeners on an element that may switch in between editable and non-editable, for example the email message body that switches in between reading and replying modes.
+            </div></div>
+        </section>
+
+        <section id="inputmethodcontext-interface">
+            <h3><span class="secno">2.2 </span>The InputMethodContext Interface</h3>
+             <div class="note"><div class="note-title" role="heading" aria-level="4"><span>Note</span></div><div>
+                <p>For <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html#composition-dictionary" <code="">composition dictionary</a> in current proposal, we can see exposing IME clauses as child nodes of <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html#widl-Composition-text"><code>text</code></a> node, and making them real DOM nodes with styles being useful for a JS-based IME as the IME needs to tell the web application how to render the composition, but if JS IME is not a goal, is there any other scenarios that will benefit from this? If not, how about a simple design that expose the text being composed as DOMString?</p>
+                <p>For <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html#widl-Composition-caret"><code>caret</code></a> range, if it’s for enabling JS-based IME, then exposing the caret ranges of IME clauses is helpful, but if it’s not for JS IME, is there any other usage? We understand that web applications want to know about the whole string of the tentative composition, but we are not sure in which case they want to know how the whole tentative composition string is divided into several parts. Another issue is that the range type only tells the start and end offsets of the composition from its immediate parent. Web application usually wants to know the offset from the beginning of the text field so that it could combine the composition alternate with the text before it to create a full text string. But the beginning of the text field can be up in the parent tree if it’s a contentEditable element and requires JavaScript code to trace up in the parent tree to get the right offset.</p>
+                 <p>So instead of a dictionary type for composition, we suggest <code>compositionText</code>, <code>compositionStartOffset</code> and <code>compositionEndOffset</code> as a simpler design. Please let us know if you have scenarios that need to be the other way.</p>
+            </div></div>
+            <pre class="idl"><span class="idlInterface" id="idl-def-InputMethodContext">interface <span class="idlInterfaceID">InputMethodContext</span> : <span class="idlSuperclass"><a>EventTarget</a></span> {
+<span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span>            <span class="idlMethName"><a href="#widl-InputMethodContext-hasComposition-boolean">hasComposition</a></span> ();</span>
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a>DOMString</a></span>     <span class="idlAttrName"><a href="#widl-InputMethodContext-compositionText">compositionText</a></span>;</span>
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a>unsigned long</a></span> <span class="idlAttrName"><a href="#widl-InputMethodContext-compositionStartOffset">compositionStartOffset</a></span>;</span>
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a>unsigned long</a></span> <span class="idlAttrName"><a href="#widl-InputMethodContext-compositionEndOffset">compositionEndOffset</a></span>;</span>
+<span class="idlMethod">    <span class="idlMethType"><a>sequence DOMString</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-getCompositionAlternatives-sequence-DOMString">getCompositionAlternatives</a></span> ();</span>
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a>DOMString</a></span>     <span class="idlAttrName"><a href="#widl-InputMethodContext-locale">locale</a></span>;</span>
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-HTMLElement"><code>HTMLElement</code></a></span>   <span class="idlAttrName"><a href="#widl-InputMethodContext-target">target</a></span>;</span>
+<span class="idlMethod">    <span class="idlMethType"><a>boolean</a></span>            <span class="idlMethName"><a href="#widl-InputMethodContext-isCandidateWindowVisible-boolean">isCandidateWindowVisible</a></span> ();</span>
+<span class="idlMethod">    <span class="idlMethType"><a>ClientRect</a></span>         <span class="idlMethName"><a href="#widl-InputMethodContext-getCandidateWindowClientRect-ClientRect">getCandidateWindowClientRect</a></span> ();</span>
+<span class="idlAttribute">                attribute <span class="idlAttrType"><a>EventHandler</a></span>  <span class="idlAttrName"><a href="#widl-InputMethodContext-oncandidatewindowshow">oncandidatewindowshow</a></span>;</span>
+<span class="idlAttribute">                attribute <span class="idlAttrType"><a>EventHandler</a></span>  <span class="idlAttrName"><a href="#widl-InputMethodContext-oncandidatewindowupdate">oncandidatewindowupdate</a></span>;</span>
+<span class="idlAttribute">                attribute <span class="idlAttrType"><a>EventHandler</a></span>  <span class="idlAttrName"><a href="#widl-InputMethodContext-oncandidatewindowhide">oncandidatewindowhide</a></span>;</span>
+};</span></pre><section id="attributes"><h4><span class="secno">2.2.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-InputMethodContext-compositionText"><code>compositionText</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly   </dt><dd>Represents the text being composed by an IME.</dd><dt id="widl-InputMethodContext-compositionStartOffset"><code>compositionStartOffset</code> of type <span class="idlAttrType"><a>unsigned long</a></span>, readonly   </dt><dd>
+                    <p>
+                        Represents the starting offset of the composition relative to the target if a composition is occurring, or 0 if there is no composition in progress. For composition occurring on an <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code> element, the compositionStartOffset is the starting offset of the composition within the target's value string. For compositions occurring on an element with the <code>contentEditable</code> flag set, then this is the starting offset relative to the target's textContent property (textContent is a linear view of all the text under an element).
+                    </p>
+                    <p>
+                        When assigned, updates the composition information of the            
+  hosting user agent.
+                    </p>
+                </dd><dt id="widl-InputMethodContext-compositionEndOffset"><code>compositionEndOffset</code> of type <span class="idlAttrType"><a>unsigned long</a></span>, readonly   </dt><dd>Represents the ending offset of the composition, in a similar way to compositionStartOffset.</dd><dt id="widl-InputMethodContext-locale"><code>locale</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly   </dt><dd>Represents the locale of the current input method as            a BCP-47 
+  tag (e.g. "en-US").            The locale <em title="MAY" class="rfc2119">MAY</em> be the empty string when         
+     inapplicable or unknown.</dd><dt id="widl-InputMethodContext-target"><code>target</code> of type <span class="idlAttrType"><a class="idlType" href="#idl-def-HTMLElement"><code>HTMLElement</code></a></span>, readonly   </dt><dd>Represents the element associated with the InputMethodContext object.
+      <div class="note"><div class="note-title" role="heading" aria-level="4"><span>Note</span></div><div>This does not exist in current <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">editor's draft on IME API</a>. We recommend it as an easy way to get back to the associated element.</div></div>
+                </dd><dt id="widl-InputMethodContext-oncandidatewindowshow"><code>oncandidatewindowshow</code> of type <span class="idlAttrType"><a>EventHandler</a></span>,            </dt><dd>
+                    <p>This event should be fired immediately after the IME candidate window is set to appear, which means immediately after the position information for the candidate window has been identified, but before any related animation has started, if the user agent decided to open the candidate window with animation. The event is fired synchronously such that the browser's message pump does not have a chance to run between the time the candidate window is set to appear and the event handler code runs. This allows web developer positioning code to adjust the position of other UI around the candidates window before the candidate window occludes this content.</p>
+                    <p>
+                        Common things among oncandidatewindowshow/update/hide events:
+                        <ol>
+                            <li>To get a better performance, these events are of the generic "Event" interface and fired directly to the InputMethodContext object. They do not bubble or capture through the DOM tree.</li>
+                            <li>Event handlers for these events will be able to use the "this" property of the event, or event.target / event.currentTarget to refer to the InputMethodContext object upon which the event is firing.</li>
+                            <li>These events are not cancellable, meaning that the appearing of the candicate window cannot be controlled via these events by cancelling them. Web applications should use "ime-mode" CSS property to control that.</li>
+                            <li>Web applications need only register for these events once per element (the handlers will remain valid for as long as the element is alive.</li>
+                        </ol>
+                    <p></p>
+                </dd><dt id="widl-InputMethodContext-oncandidatewindowupdate"><code>oncandidatewindowupdate</code> of type <span class="idlAttrType"><a>EventHandler</a></span>,            </dt><dd>This events should be fire synchronously after either:
+                    <ol>
+                        <li>The IME candidate window has been identified as needing to change size (but before animating to the new position) as a result of displaying new/changed alternatives or predictions.</li>
+                        <li>The IME candidate window has been identified as needing to change size (but before animating to the new position) due to user-zoom, browser frame resize, or other action that changes the candidate window placement.</li>
+                    </ol>
+                    In either case, the event should be fired after the new size/location of the candidate window is known by the user agent.
+                </dd><dt id="widl-InputMethodContext-oncandidatewindowhide"><code>oncandidatewindowhide</code> of type <span class="idlAttrType"><a>EventHandler</a></span>,            </dt><dd>This event should be fired synchronously after the candidate window is fully hidden (after the dismissal animation has ended, if there is any). The event handler code will see that the isCandidateWindowVisible() method returns false, and no ClientRect can be obtained inside this handler.
+                </dd></dl></section><section id="methods-1"><h4><span class="secno">2.2.2 </span>Methods</h4><dl class="methods"><dt id="widl-InputMethodContext-hasComposition-boolean"><code>hasComposition</code></dt><dd><p>The hasComposition method is used to determine if there is a composition in-progress on the element associated with this context. The method returns true if a composition is in progress, false otherwise.</p>
+<p>Note: candidate windows (such as for predictivate candidate suggestions on an element) may be active/visible even if hasComposition() returns false.</p>
+<p>Web applications should check this method prior to requesting alternates (via getCompositionAlternatives).</p>
+<div><em>No parameters.</em></div><div><em>Return type: </em><code><a>boolean</a></code></div></dd><dt id="widl-InputMethodContext-getCompositionAlternatives-sequence-DOMString"><code>getCompositionAlternatives</code></dt><dd>Returns a copy (per call) of the current list of alternate candidate strings from the InputMethodContext object.
+The InputMethodContext object can produce alternates while it has a composition in progress. As soon as hasComposition() returns false, then getCompositionAlternatives() will always return an empty list. The list of alternatives is not updated "live"; it is only updated between compositionupdate events.
+<div><em>No parameters.</em></div><div><em>Return type: </em><code><a>sequence DOMString</a></code></div></dd><dt id="widl-InputMethodContext-isCandidateWindowVisible-boolean"><code>isCandidateWindowVisible</code></dt><dd>
+                    <p>This method reports whether the IME's candidate window UI is visible (for all kinds of candidates). It returns true just after the user agent starts to show the candidate window, and returns false after the window is fully hidden.</p>
+                    <p>Note: the state of the candidate window visibility can change multiple times during a composition, and can even show after the composition completes (to display other types of candidates like predictions).</p>
+                <div><em>No parameters.</em></div><div><em>Return type: </em><code><a>boolean</a></code></div></dd><dt id="widl-InputMethodContext-getCandidateWindowClientRect-ClientRect"><code>getCandidateWindowClientRect</code></dt><dd>
+                    <p>An web application <em title="MAY" class="rfc2119"><em title="MAY" class="rfc2119">MAY</em></em> use this information to explicitly control the position for its own input-related UI elements, such as search suggestions. One example is to dock the suggestion list below the IME candidate window and give them the same width.</p>
+                    <p>Note: client coordinates are in document pixels and have origin at the upper-left corner of the client area.</p>
+                    <div class="note"><div class="note-title" role="heading" aria-level="4"><span>Note</span></div><div>We propose this to replace the <a href="file:///C:/Doc/Blue/Input%20Method%20Editor%20API.html#widl-InputMethodContext-setExclusionRectangle-void-Node-anchor-long-x-long-y-long-w-long-h"><code>setExclusionRectangle</code></a> in current <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">editor's draft on IME API</a>. Although <code>setExclusionRectangle</code> can ensure that the IME candidate window doesn't overlap with some specific UI that the web application doesn't want to be occluded (e.g. search suggestion list), it doesn't seem to be able to ensure that the two UIs layout in a desirable way. . For example, if the web application wants to render a search suggestion list that docks below the IME candidate window and aligns nicely without gap, it can't do so with <code>setExclusionRectangle</code> because it doesn't know where is the candidate window, how tall it is below the text field, and whether it is horizontally shifted to follow the caret position. Therefore we are proposing <code>getCandidateWindowClientRect</code> together with a group of CSS properties below to give more flexibility for the UI design. Please refer to the <a href="#usage-scenarios">Usage Scenarios</a> section for examples.</div></div>
+                <div><em>No parameters.</em></div><div><em>Return type: </em><code><a>ClientRect</a></code></div></dd></dl></section>
+                <div class="note"><div class="note-title" role="heading" aria-level="4"><span>Note</span></div><div>For <span class="idlAttrName"><a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html#widl-InputMethodContext-enabled">enabled</a></span>, <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html#widl-InputMethodContext-setCaretRectangle-void-Node-anchor-long-x-long-y-long-w-long-h">setCaretRectangle()</a> and <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html#widl-InputMethodContext-open-boolean">open()</a> in current <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">editor's draft on IME API</a>, is there any usage scenario besides enabling IME for non-editable elements? Please refer to the first note about our opinion on this scenario.</div></div>
+                <div class="note"><div class="note-title" role="heading" aria-level="4"><span>Note</span></div><div>The <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html#widl-InputMethodContext-confirmComposition-void">confirmComposition()</a> in current <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">editor's draft on IME API</a> looks like was designed to enable JavaScript-based IMEs based on the discussion <a href="http://lists.w3.org/Archives/Public/www-international/2010OctDec/0017.html">here</a>, but other functions for JavaScript-based IMEs had been removed from the draft. Is there any other scenarios where this function is still useful?</div></div>
+        </section>
+
+    </section>
+    <section id="ime-css-properties">
+        <!--OddPage--><h2><span class="secno">3. </span>IME CSS Properties</h2>
+        <section id="ime-property-shorthand">
+            <h3><span class="secno">3.1 </span>ime property (shorthand)</h3>
+            <div>
+                <table class="simple">
+			        <tbody><tr><th>Name:</th><td><code>ime</code></td></tr>
+			        <tr><th>Value:</th><td>[&lt;<code>ime-mode</code>&gt; || &lt;<code>ime-align</code>&gt; || [ &lt;<code>ime-width</code>&gt; [ / &lt;<code>ime-offset</code>&gt; ] ? ] ] | <code>auto</code></td></tr>
+			        <tr><th>Initial:</th><td><code>auto</code></td></tr>
+			        <tr><th>Applies to:</th><td>text fields</td></tr>
+			        <tr><th>Inherited:</th><td>no</td></tr>
+			        <tr><th>Percentages:</th><td>N/A</td></tr>
+			        <tr><th>Media:</th><td>interactive</td></tr>
+			        <tr><th>Computed value:</th><td>Same as specified value.</td></tr>
+		        </tbody></table>
+                <p>This property is a shorthand to combine the other IME CSS properties into a single line.</p>
+            </div>
+        </section>
+        <section id="ime-align-property">
+            <h3><span class="secno">3.2 </span>ime-align property</h3>
+            <div>
+                <table class="simple">
+			        <tbody><tr><th>Name:</th><td><code>ime-align</code></td></tr>
+			        <tr><th>Value:</th><td><code>before</code> | <code>after</code> | <code>start</code> | <code>end</code> | <code>auto</code></td></tr>
+			        <tr><th>Initial:</th><td><code>auto</code></td></tr>
+			        <tr><th>Applies to:</th><td>text fields</td></tr>
+			        <tr><th>Inherited:</th><td>no</td></tr>
+			        <tr><th>Percentages:</th><td>N/A</td></tr>
+			        <tr><th>Media:</th><td>interactive</td></tr>
+			        <tr><th>Computed value:</th><td>Same as specified value.</td></tr>
+		        </tbody></table>
+                <p>This property aligns the candidate window box relative to the element on which the IME composition is active.</p>
+                <dl>
+                    <dt>before</dt>
+                    <dd>The window is at the side that comes earlier in the block progression, for example in horizontal left-to-right writing mode it’s above the element.</dd>
+                    <dt>after</dt>
+                    <dd>The window is at the side that comes later in the block progression, for example in horizontal left-to-right writing mode it’s below the element.</dd>
+                    <dt>start</dt>
+                    <dd>The window is at the side from which text of its inline base direction will start, for example in horizontal left-to-right writing mode it’s to the left of the element.</dd>
+                    <dt>end</dt>
+                    <dd>The window is at the side from which text of its inline base direction will end, for example in horizontal left-to-right writing mode it’s to the right of the element.</dd>
+                    <dt>auto</dt>
+                    <dd>The user agent may align the candidate window in any manner (including alignment with the caret). The behavior of auto may change depending on the particular IME in use.</dd>
+                </dl>
+                <p>IME candidate lists should always be placed on screen with sufficient size to allow basic text input, so the IME may enforce a reasonable minimum size. If there isn’t sufficient screen space to align the IME candidate list in the specified side, it should fall back to the opposite site, for example if there isn’t sufficient space <code>before</code> the element, it should try the <code>after</code> position, and finally if there isn’t sufficient space for that either, it can fall back to its default <code>auto</code> behavior.</p>
+            </div>
+        </section>
+        <section id="ime-mode-property">
+            <h3><span class="secno">3.3 </span>ime-mode property</h3>
+            <div>
+                <div class="note"><div class="note-title" role="heading" aria-level="4"><span>Note</span></div><div>This property is the same as <a href="http://www.w3.org/TR/css3-ui/#ime-mode">the one in current W3C proposal</a>. We put it here as part of the group of IME CSS properties we are proposing.</div></div>
+                <table class="simple">
+			        <tbody><tr><th>Name:</th><td><code>ime-mode</code></td></tr>
+			        <tr><th>Value:</th><td><code>auto</code> | <code>normal</code> | <code>active</code> | <code>inactive</code> | <code>disabled</code> | <code>inherit</code></td></tr>
+			        <tr><th>Initial:</th><td><code>auto</code></td></tr>
+			        <tr><th>Applies to:</th><td>text fields</td></tr>
+			        <tr><th>Inherited:</th><td>no</td></tr>
+			        <tr><th>Percentages:</th><td>N/A</td></tr>
+			        <tr><th>Media:</th><td>interactive</td></tr>
+			        <tr><th>Computed value:</th><td>Same as specified value.</td></tr>
+		        </tbody></table>
+                <p>This property controls the state of the input method editor for text fields.</p>
+                <dl>
+                    <dt>auto</dt>
+                    <dd>No change is made to the current input method editor state. This is the default.</dd>
+                    <dt>normal</dt>
+                    <dd>The IME state should be normal; this value can be used in a user style sheet to override the page setting.</dd>
+                    <dt>active</dt>
+                    <dd>The input method editor is initially active; text entry is performed using it unless the user specifically dismisses it.</dd>
+                    <dt>inactive</dt>
+                    <dd>The input method editor is initially inactive, but the user may activate it if they wish.</dd>
+                    <dt>disabled</dt>
+                    <dd>The input method editor is disabled and may not be activated by the user.</dd>
+                    <dt>inherit</dt>
+                    <dd>The <code>ime-mode</code> of this element inherits from its parents.</dd>
+                </dl>
+            </div>
+        </section>
+        <section id="ime-width-property">
+            <h3><span class="secno">3.4 </span>ime-width property</h3>
+            <div>
+                <table class="simple">
+			        <tbody><tr><th>Name:</th><td><code>ime-width</code></td></tr>
+			        <tr><th>Value:</th><td>&lt;<code>length</code>&gt; | <code>box-width</code> | <code>auto</code></td></tr>
+			        <tr><th>Initial:</th><td><code>auto</code></td></tr>
+			        <tr><th>Applies to:</th><td>text fields</td></tr>
+			        <tr><th>Inherited:</th><td>no</td></tr>
+			        <tr><th>Percentages:</th><td>N/A</td></tr>
+			        <tr><th>Media:</th><td>interactive</td></tr>
+			        <tr><th>Computed value:</th><td>Same as specified value.</td></tr>
+		        </tbody></table>
+                <p>This property specifies the width of the IME candidate window when it appears.</p>
+                <dl>
+                    <dt>&lt;length&gt;</dt>
+                    <dd>Specifies the width of the IME candidate window using a length unit.</dd>
+                    <dt>box-width</dt>
+                    <dd>IME candidate window uses the same width as the text field that it associates with.</dd>
+                    <dt>auto</dt>
+                    <dd>The width of the IME candidate window is set by the user agent.</dd>
+                </dl>
+            </div>
+        </section>
+        <section id="ime-offset-property">
+            <h3><span class="secno">3.5 </span>ime-offset property</h3>
+            <div>
+                <table class="simple">
+			        <tbody><tr><th>Name:</th><td><code>ime-offset</code></td></tr>
+			        <tr><th>Value:</th><td>&lt;<code>length</code>&gt; | <code>auto</code></td></tr>
+			        <tr><th>Initial:</th><td><code>auto</code></td></tr>
+			        <tr><th>Applies to:</th><td>text fields</td></tr>
+			        <tr><th>Inherited:</th><td>no</td></tr>
+			        <tr><th>Percentages:</th><td>N/A</td></tr>
+			        <tr><th>Media:</th><td>interactive</td></tr>
+			        <tr><th>Computed value:</th><td>Same as specified value.</td></tr>
+		        </tbody></table>
+                <p>This property specifies the offset between the IME candidate window and the element that the IME is associated with.</p>
+                <dl>
+                    <dt>&lt;length&gt;</dt>
+                    <dd>Specifies the offset between the IME candidate window and the element using a length unit.</dd>
+                    <dt>auto</dt>
+                    <dd>The offset between the IME candidate window and the element is set by the user agent.</dd>
+                </dl>
+            </div>
+        </section>
+    </section>
+
+    <section id="inputmode-attribute">
+        <!--OddPage--><h2><span class="secno">4. </span>Inputmode Attribute</h2>
+        <div class="note"><div class="note-title" role="heading" aria-level="3"><span>Note</span></div><div>The proposal of this attribute is based on <a href="http://www.w3.org/html/wg/drafts/html/master/single-page.html#attr-fe-inputmode">current proposal on W3C</a>. We added several more models for East Asian, especially full-width and half-width options that Japanese uses would like to see them preset in textboxes. For <code>tel</code>, <code>email</code> and <code>url</code> modes in the exisiting proposal, is there any reason why developers want to use them and not <code>&lt;input type="tel|email|url"&gt;</code>?</div></div>
+        <pre class="idl"><span class="idlInterface" id="idl-def-Element"><span class="idlEnum" id="idl-def-InputMode">enum <span class="idlEnumID">InputMode</span> {
+    "<a class="idlEnumItem" href="#idl-def-InputMode.default">default</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.verbatim">verbatim</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.latin">latin</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.latin-name">latin-name</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.latin-prose">latin-prose</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.latin-full-width">latin-full-width</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.hiragana">hiragana</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.katakana-full-width">katakana-full-width</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.katakana-half-width">katakana-half-width</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.hanja">hanja</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.hangul-full-width">hangul-full-width</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.hangul-half-width">hangul-half-width</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.chinese-full-width">chinese-full-width</a>",
+    "<a class="idlEnumItem" href="#idl-def-InputMode.chinese-half-width">chinese-half-width</a>"
+};</span><br><br>partial interface <span class="idlInterfaceID">Element</span> {
+<span class="idlAttribute">                attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-InputMode"><code>InputMode</code></a></span> <span class="idlAttrName"><a href="#widl-Element-inputmode">inputmode</a></span>;</span>
+};</span></pre><section id="attributes-1"><h3><span class="secno">4.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-Element-inputmode"><code>inputmode</code> of type <span class="idlAttrType"><a class="idlType" href="#idl-def-InputMode"><code>InputMode</code></a></span>,            </dt><dd></dd></dl></section>
+        <table class="simple"><tr><th colspan="2">Enumeration description</th></tr><tr><td><code id="idl-def-InputMode.default">default</code></td><td>The user agent decides which mode to use. This is also the missing value default.</td></tr><tr><td><code id="idl-def-InputMode.verbatim">verbatim</code></td><td>Alphanumeric Latin-script input of non-prose content, e.g. usernames, passwords, product codes.</td></tr><tr><td><code id="idl-def-InputMode.latin">latin</code></td><td>Latin-script input in the user's preferred language(s), with some typing aids enabled (e.g. text prediction). Intended for human-to-computer communications, e.g. free-form text search field.</td></tr><tr><td><code id="idl-def-InputMode.latin-name">latin-name</code></td><td>Latin-script input in the user's preferred language(s), with typing aids intended for entering human names enabled (e.g. text prediction from the user's contact list and automatic capitalisation at every word). Intended for situations such as customer name fields.</td></tr><tr><td><code id="idl-def-InputMode.latin-prose">latin-prose</code></td><td>Latin-script input in the user's preferred language(s), with aggressive typing aids intended for human-to-human communications enabled (e.g. text prediction and automatic capitalisation at the start of sentences). Intended for situations such as e-mails and instant messaging.</td></tr><tr><td><code id="idl-def-InputMode.latin-full-width">latin-full-width</code></td><td>Latin-script input in the user's secondary language(s), using full-width characters, with aggressive typing aids intended for human-to-human communications enabled (e.g. text prediction and automatic capitalisation at the start of sentences). Intended for latin text embedded inside CJK text. </td></tr><tr><td><code id="idl-def-InputMode.hiragana">hiragana</code></td><td>Hiragana input for Japanese.</td></tr><tr><td><code id="idl-def-InputMode.katakana-full-width">katakana-full-width</code></td><td>Katakana input using full-width characters for Japanese. </td></tr><tr><td><code id="idl-def-InputMode.katakana-half-width">katakana-half-width</code></td><td>Katakana input using half-width characters for Japanese. </td></tr><tr><td><code id="idl-def-InputMode.hanja">hanja</code></td><td>Hanja input for Korean.</td></tr><tr><td><code id="idl-def-InputMode.hangul-full-width">hangul-full-width</code></td><td>Hangul input using full-width characters for Korean. </td></tr><tr><td><code id="idl-def-InputMode.hangul-half-width">hangul-half-width</code></td><td>Hangul input using half-width characters for Korean. </td></tr><tr><td><code id="idl-def-InputMode.chinese-full-width">chinese-full-width</code></td><td>Chinese input using full-width characters. </td></tr><tr><td><code id="idl-def-InputMode.chinese-half-width">chinese-half-width</code></td><td>Chinese input using half-width characters.</td></tr></table>
+    </section>
+
+    <section id="usage-scenarios">
+        <!--OddPage--><h2><span class="secno">5. </span>Usage Scenarios</h2>
+        <section id="moving-search-suggestions-to-accommodate-ime-candidate-window-placement">
+            <h3><span class="secno">5.1 </span>Moving search suggestions to accommodate IME candidate window placement</h3>
+            <div>
+                <ol>
+                    <li>Set the <code>ime-align</code> CSS property to <code>after</code> for the desired search box.</li>
+                    <li>Add a <code>compositionstart</code> event handler to the desired search box.</li>
+                    <li>In the <code>compositionstart</code> event handler, get the <code>InputMethodContext</code> (call <code>getInputContext()</code>) object from the event's <code>target</code> element, and register for the <code>candidatewindowshow</code>, <code>candidatewindowupdate</code>, and <code>candidatewindowhide</code> events.</li>
+                    <li>In the <code>candiatewindowshow</code> handler, get the candidate window's ClientRect by <code>getCandidateWindowClientRect()</code>, and align the search suggestions box with the ClientRect's bottom/left.</li>
+                    <li>Use the same handler for <code>candidatewindowshow</code> with the <code>candidatewindowupdate</code> event.</li>
+                    <li>In the <code>candidatewindowhide</code> event, restore the search suggestions box to the bottom edge of the search box.</li>
+                </ol>
+            </div>
+        </section>
+        <section id="matching-the-layout-style-of-search-suggestion-list-and-ime-candidate-window">
+            <h3><span class="secno">5.2 </span>Matching the layout style of search suggestion list and IME candidate window</h3>
+            <div>
+                <ol>
+                    <li>Do the steps in the first scenario to avoid visual collision.</li>
+                    <li>Set <code>ime-align</code> style to move the IME candidate window to the same side as the search suggestion list.</li>
+                    <li>Set <code>ime-width</code> and <code>ime-offset</code> to match the sizes and layout distances of the search suggestion and the text input element.</li>
+                </ol>
+            </div>
+        </section>
+        <section id="sending-ime-candidates-to-a-web-service-to-improve-search-suggestions">
+            <h3><span class="secno">5.3 </span>Sending IME candidates to a web service to improve search suggestions</h3>
+            <div>
+                <ol>
+                    <li>Add a <code>compositionupdate</code> event handler to the desired search box.</li>
+                    <li>In the <code>compositionupdate</code> event handler, get the <code>InputMethodContext</code> object, and request the current alternatives thourgh <code>composition</code>.<code>text</code> attribute.</li>
+                    <li>Get the current range of the composition within the editing context using the <code>InputMethodContext</code> object's <code>composition</code>.<code>caret</code> attribute.</li>
+                    <li>Append the text before the current composition range to each of the current candidates.
+                        <ol>
+                            <li>If this is an input field or textarea, then get a substring of the value of the element from 0 to the start of the <code>caret</code> range.</li>
+                            <li>If this is a contenteditable element, then get a substring of the target's textContent from 0 to the end of the <code>caret</code> range.</li>
+                        </ol>
+                    </li>
+                    <li>Append the text after the current composition range to each of the candidates.
+                        <ol>
+                            <li>If this is an input field or textarea, then get a substring of the value of the element from 0 to the start of the <code>caret</code> range.</li>
+                            <li>If this is a contenteditable element, then get a substring of the target's textContent from 0 to the end of the <code>caret</code> range.</li>
+                        </ol>
+                    </li>
+                    <li>XHR the current candidates to a web server/service and refresh the search suggestions with the results.</li>
+                </ol>
+            </div>
+        </section>
+        <section id="presetting-the-input-mode">
+            <h3><span class="secno">5.4 </span>Presetting the input mode</h3>
+            <div>
+                <ol>
+                    <li>Set the <code>inputmode</code> attribute of the text input element to be the mode that you want the user to type in. For example some Japanese address input fields require the input to be in half-width katakana. By setting <code>inputmode</code>="<code>katakana-half-width</code>", the web application can tell the Japanese IME to switch to half-width katakana mode when the focus is moved to this input element.</li>
+                </ol>
+            </div>
+        </section>
+    </section>
+
+    <section class="appendix" id="acknowledgements">
+        <!--OddPage--><h2><span class="secno">A. </span>Acknowledgements</h2>
+        <p>
+            Many thanks to lots of people for their proposals and recommendations, some of which
+        are incorporated into this document.
+        </p>
+    </section>
+    <section class="appendix">
+        [<cite><a class="bibref" href="#bib-WEBIDL">WEBIDL</a></cite>]
+        [<cite><a class="bibref" href="#bib-CSS3WRITINGMODES">CSS3WRITINGMODES</a></cite>]
+        [<cite><a class="bibref" href="#bib-DOM-LEVEL-3-EVENTS">DOM-LEVEL-3-EVENTS</a></cite>]
+        [<cite><a class="bibref" href="#bib-RFC2119">RFC2119</a></cite>]
+    </section>
+    <!-- appendix -->
+    
+
+
+<section class="appendix" id="references"><!--OddPage--><h2><span class="secno">B. </span>References</h2><section id="normative-references"><h3><span class="secno">B.1 </span>Normative references</h3><dl class="bibliography"><dt id="bib-CSS3WRITINGMODES">[CSS3WRITINGMODES]</dt><dd>Elika J. Etemad; Koji Ishii; Shinyu Murakami. <a href="http://dev.w3.org/csswg/css3-writing-modes"><cite>CSS Writing Modes Module Level 3</cite></a>. 17 October 2010. W3C Editor's Draft. URL: <a href="http://dev.w3.org/csswg/css3-writing-modes">http://dev.w3.org/csswg/css3-writing-modes</a>
+</dd><dt id="bib-DOM-LEVEL-3-EVENTS">[DOM-LEVEL-3-EVENTS]</dt><dd>Travis Leithead; Jacob Rossi; Doug Schepers; Björn Höhrmann; Philippe Le Hégaret; Tom Pixley. <a href="http://www.w3.org/TR/2012/WD-DOM-Level-3-Events-20120906"><cite>Document Object Model (DOM) Level 3 Events Specification</cite></a>. 06 September 2012. W3C Working Draft. URL: <a href="http://www.w3.org/TR/2012/WD-DOM-Level-3-Events-20120906">http://www.w3.org/TR/2012/WD-DOM-Level-3-Events-20120906</a>
+</dd><dt id="bib-RFC2119">[RFC2119]</dt><dd>S. Bradner. <a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key words for use in RFCs to Indicate Requirement Levels.</cite></a> March 1997. Internet RFC 2119.  URL: <a href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a> 
+</dd><dt id="bib-WEBIDL">[WEBIDL]</dt><dd>Cameron McCormack. <a href="http://www.w3.org/TR/2012/CR-WebIDL-20120419/"><cite>Web IDL</cite></a>. 19 April 2012. W3C Candidate Recommendation. URL: <a href="http://www.w3.org/TR/2012/CR-WebIDL-20120419/">http://www.w3.org/TR/2012/CR-WebIDL-20120419/</a>
+</dd></dl></section></section></body></html>
