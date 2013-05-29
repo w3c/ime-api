@@ -192,7 +192,7 @@
 function init() {
     var node = document.getElementById('input0');
     // Associate an IME with this node.
-    node.getInputContext().enabled = true;
+    node.inputMethodContext.enabled = true;
     // This code only handles the compositionupdate event for brevity of the
     // example, but of course other input field changes should also be handled.
     node.addEventListener('compositionupdate', onCompositionUpdate, false);
@@ -217,7 +217,7 @@ function expandSuggest(candidates) {
     }
     // Set exclusion area hint for the IME.
     var input = document.getElementById('input0');
-    var context = input.getInputContext();
+    var context = input.inputMethodContext;
     var relative_x = input.offsetLeft - suggest.offsetLeft;
     var relative_y = input.offsetTop - suggest.offsetTop;
     context.setExclusionRectangle(input, relative_x, relative_y,
@@ -536,22 +536,22 @@ function onCompositionUpdate(event) {
     </section>
 
     <section>
-      <h1>The getInputContext() method</h1>
+      <h1>The inputMethodContext property</h1>
       <p>For each element, a user agent can choose an IME for the element.
       To control the IME attached to an element, it is a good idea to add a
       method to the HTMLElement interface.</p>
       <p class="issue">If the
-      <code>getInputContext()</code>
-      method cannot be added to the HTMLElement
+      <code>.inputMethodContext</code>
+      property cannot be added to the HTMLElement
       interface, it should be moved to the <a>InputMethodContext</a> interface.</p>
 
       <dl title="partial interface HTMLElement" class="idl">
-        <dt>InputMethodContext getInputContext()</dt>
+        <dt>attribute InputMethodContext inputMethodContext</dt>
           <dd>Returns an InputMethodContext interface associated with this element. By
           default, a user agent returns an InputMethodContext interface representing
           the system IME. To change the behavior of the IME associated with an
           element, authors MUST first obtain an InputMethodContext interface by
-          calling the getInputContext() method of the HTMLElement interface.
+          calling the inputMethodContext property of the HTMLElement interface.
           </dd>
       </dl>
     </section>
@@ -702,7 +702,7 @@ function onCompositionUpdate(event) {
       <p>When a Web application wants to handle DOM level3 composition events
         on a non-<code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>,
         or <code>contenteditable</code> node,
-        it MUST enable the IME via <code>getInputContext().open()</code> to
+        it MUST enable the IME via <code>inputMethodContext.open()</code> to
         associate its node with composition events.</p>
       <p>The following diagram shows the flow of events
         among the keyboard, the IME, the user agent, and the Web application
