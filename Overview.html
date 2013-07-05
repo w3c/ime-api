@@ -90,18 +90,12 @@
       <p>This specification defines an &ldquo;IME API&rdquo; that provides
         Web applications with scripted access to an IME
         (<a href="#IME">input-method editor</a>) associated with
-        a hosting user agent. This IME API includes:</p>
-      <ul>
-        <li>An <a>InputMethodContext</a> interface, which provides methods to
+        a hosting user agent. This IME API includes
+        an <a>InputMethodContext</a> interface, which provides methods to
          retrieve detailed data from an in-progress IME
-         <a href="#ime-composition">composition</a>.</li>
-       <li>A <a>Composition</a> dictionary, which represents read-only
-         attributes about the current
-         <a href="#ime-composition">composition</a>,
-         such as the actual text and its style.</li>
-      </ul>
+         <a href="#ime-composition">composition</a>.</p>
       <p>This API is designed to be used in conjunction with DOM events
-        [[DOM-LEVEL-3-EVENTS]].</a>
+        [[DOM-LEVEL-3-EVENTS]].</a></p>
     </section>
     <section id="sotd">
       <p>
@@ -125,10 +119,13 @@
         to retrieve <a href="#ime-composition">composition text</a>
         while it is being composed in an associated IME.</p>
       <p>However, Web applications can still run into difficulties when
-        they manipulate IMEs on non-editable elements such as the
-        <code>&lt;canvas&gt;</code> element; those difficulties include
+        they want text input on non-editable elements such as the
+        <code>&lt;div&gt;</code> element without <code>contenteditable</code>
+        attribute being set to <code>true</code>, or interact with IMEs;
+        those difficulties include
         the fact that a Web application cannot do the following:</p>
       <ul>
+        <li>get input outside any editable element even with focus</li>
         <li>indicate to the user whether the Web application renders
           composition text by itself, or needs to ask user agents to
           render it</li>
@@ -155,7 +152,7 @@
         are for solving different issues.
       </p>
 
-      <p>Consider the following example.</p>
+      <p>Consider the following examples.</p>
       <p>This example shows the source which gives a hint for an IME
       where the application wants it to avoid placing UI elements. A simple
       web search page which gives a user suggestions while the user is
@@ -182,17 +179,10 @@
     border-width: 1px;
     border-color: #000;
 }
-
-.suggest {
-    margin: 0;
-    padding: 0;
-}
 &lt;/style&gt;
 &lt;script language="javascript" type="text/javascript"&gt;
 function init() {
     var node = document.getElementById('input0');
-    // Associate an IME with this node.
-    node.inputMethodContext.enabled = true;
     // This code only handles the compositionupdate event for brevity of the
     // example, but of course other input field changes should also be handled.
     node.addEventListener('compositionupdate', onCompositionUpdate, false);
@@ -208,20 +198,23 @@ function expandSuggest(candidates) {
     // Callback after getting search suggestions.
     var suggest = document.getElementById('suggest0');
     var i;
+    // Clear old suggestions.
     for (i = 0; i &lt; suggest.childNodes.length; i++) {
         suggest.removeChild(suggest.childNodes[0]);
     }
+    // Render new suggeston list.
     for (i = 0; i &lt; candidates.length; i++) {
-        suggest.appendChild(document.createElement("li"));
+        suggest.appendChild(document.createElement('li'));
         suggest.childNodes[i].textContent = candidates[i];
     }
     // Set exclusion area hint for the IME.
     var input = document.getElementById('input0');
     var context = input.inputMethodContext;
-    var relative_x = input.offsetLeft - suggest.offsetLeft;
-    var relative_y = input.offsetTop - suggest.offsetTop;
+    var relative_x = suggest.offsetLeft - input.offsetLeft;
+    var relative_y = suggest.offsetTop - input.offsetTop;
     context.setExclusionRectangle(input, relative_x, relative_y,
-                                         input.offsetWidth, input.offsetHeight);
+                                         suggest.offsetWidth,
+                                         suggest.offsetHeight);
 }
 
 function onCompositionUpdate(event) {
@@ -235,6 +228,78 @@ function onCompositionUpdate(event) {
   &lt;input type=&quot;text&quot; id=&quot;input0&quot; placeholder=&quot;search here&quot;&gt;
   &lt;ul id=&quot;suggest0&quot;&gt;&lt;/ul&gt;
 &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+      <p>This example shows the source which draws composition text in
+        its own style.</p>
+
+<pre class="example sh_javascript" id="ex-drawing-composition">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+.clause {
+  margin-right: 2px;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: #333333;
+}
+.selected {
+  border-width: 0px 0px 2px 0px;
+  border-color: #000000;
+}
+&lt;/style&gt;
+&lt;script language="javascript" type="text/javascript"&gt;
+// compositionupdate event handler
+function onCompositionUpdate(event) {
+    var target = event.target;
+
+    // Remove all children.
+    while (target.childNodes.length &lt; 0) {
+        edit.removeChild(edit.childNodes[0]);
+    }
+
+    // Get the IME context.
+    var ctx = target.inputMethodContext;
+
+    // Create clause spans.
+    var text = ctx.text;
+    var segments = ctx.segments;
+    for (i = 0; i &lt; segments.length; i++) {
+        var span = document.createElement('span');
+        span.classList.add('clause');
+        var selected = false;
+        if (segments[i] == ctx.selectionStart) {
+            selected = true;
+            span.classList.add('selected');
+        }
+        var end = text.length;
+        if (i &lt; segments.length - 1) {
+             end = segments[i + 1];
+        }
+        span.textContent = text.substring(ctx.segments[i], end);
+        target.appendChild(span);
+        if (selected) {
+            ctx.setCaretRectangle(document.body, rect.left, rect.top,
+                                                 rect.width, rect.height);
+        }
+    }
+
+    // Prevent the browser from drawing composition text.
+    event.preventDefault();
+}
+
+function init() {
+    var composition = document.getElementById('composition');
+    composition.focus();
+    composition.addEventHandler('compositionupdate', onCompositionUpdate, false);
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body onload="init();"&gt;
+&lt;div id="composition"&gt;&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -537,72 +602,96 @@ function onCompositionUpdate(event) {
 
     <section>
       <h1>The inputMethodContext property</h1>
-      <p>For each element, a user agent can choose an IME for the element.
-      To control the IME attached to an element, it is a good idea to add a
-      method to the HTMLElement interface.</p>
-      <p class="issue">If the
-      <code>.inputMethodContext</code>
-      property cannot be added to the HTMLElement
-      interface, it should be moved to the <a>InputMethodContext</a> interface.</p>
-
+      <p>Authors can get an object which implements the
+        <a href="#inputmethodcontext-interface">InputMethodContext</a>
+        interface on an editable or
+        <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/editing.html#focusable">focusable</a>
+        element, which can get keyboard input first
+        (i.e. a &ldquo;target&rdquo; element).
+.
+        If this property is accessed
+        on non-editable, non-focusable element, a user agent SHOULD
+        return a context for the innermost editable or focusable element
+        to the element.  In this case, the <code>target</code> property
+        in the <a href="#inputmethodcontext-interface">InputMethodContext</a>
+        interface points to the target element.
+        If all ancestors of an element are neither editable nor focusable,
+        this property returns <code>null</code>.</p>
+      <p>To control the IME attached to an element, it is a good idea to add
+        this property to the HTMLElement interface.</p>
       <dl title="partial interface HTMLElement" class="idl">
-        <dt>attribute InputMethodContext inputMethodContext</dt>
-          <dd>Returns an InputMethodContext interface associated with this element. By
-          default, a user agent returns an InputMethodContext interface representing
-          the system IME. To change the behavior of the IME associated with an
-          element, authors MUST first obtain an InputMethodContext interface by
-          calling the inputMethodContext property of the HTMLElement interface.
+        <dt>attribute InputMethodContext? inputMethodContext</dt>
+          <dd>
+            <p>Returns an InputMethodContext interface associated with
+              this element.</p>
+            <p>To change the behavior of the IME associated with an
+              element, authors MUST first obtain an InputMethodContext
+              interface from the inputMethodContext property of
+              the HTMLElement interface.</p>
+            <p>The returned InputMethodContext interface MAY not be directly
+              associated to the element.  An interface MAY be shared
+              among elements under an innermost editable or focusable element.
+              In that case, <code>target</code> property in the
+              InputMethodContext interface points to the element which owns
+              the interface.</p>
           </dd>
-      </dl>
-    </section>
-    <section id="composition-dictionary">
-      <h1>The Composition Dictionary</h1>
-      <p>This dictionary represents an ongoing IME composition. It provides
-      an attribute representing the text being composed by an IME. It also
-      provides a method to retrieve attributes of the specified character in the
-      composition text.</p>
-      <dl title="dictionary Composition" class="idl">
-        <dt>Node text</dt>
-          <dd>Represents the styled text being composed by an IME. This node
-            MAY have child nodes, e.g. when an <a href="#ime-composition">IME
-              composition</a> consists of multiple <a href="#ime-clause">IME clauses</a>,
-          this node has child nodes and each child node represents an
-          <a href="#ime-clause">IME clause</a>. The text attribute of this node
-          is equal to the text
-          attribute of a compositionupdate event.
-          <dd>Represents the text being composed by an IME. This string is
-            equal to the text attribute of a compositionupdate event.</dd>
-        <dt>Range caret</dt>
-          <dd>Represents the caret in this composition text. The
-          CommonAncestorContainer attribute of this range MUST be <code>text</code>.</dd>
       </dl>
     </section>
     <section id="inputmethodcontext-interface">
       <h1>The InputMethodContext Interface</h1>
       <dl title="interface InputMethodContext" class="idl">
-        <dt>readonly attribute Composition composition</dt>
-          <dd><p>Represents the detailed information of the ongoing IME
-          composition. When an IME is not composing text, this value MUST be
-          null.</p>
-          <p>When assigned, updates the composition information of the
-            hosting user agent.</p>
+        <dt>readonly attribute DOMString? text</dt>
+          <dd>Represents the text being composed by an IME.
+            The text attribute of this node is equal to the text
+            attribute of a compositionupdate event when this is referenced
+            in compositionupdate's event handler.</dd>
+        <dt>readonly attribute long? selectionStart</dt>
+          <dd><p>Represents the 0-based index to the first character of
+            the selection in the current composition text.</p>
+          <p class="note">An author can assume that
+            <code>selectionStart</code> and <code>selectionEnd</code>
+            boundary fit in with any of <code>segments</code>, and
+            that <code>selectionStart</code> is equal or less than
+            <code>selectionEnd</code>.</p></dd>
+        <dt>readonly attribute long? selectionEnd</dt>
+          <dd>Represents the 0-based index to the next position of
+            the last character of the selection in the current composition
+            text.
+            If there is no selection, selectionStart and selectionEnd MUST
+            be the same value and they indicate the position of the caret.</dd>
+        <dt>readonly attribute sequence&lt;long&gt;? segments</dt>
+          <dd>If composition text is segmented into clauses by an IME,
+             this array contains 0-based indices of the starting character of
+             each clause in increasing order.  If composition text is not
+             segmented, it contains one '0' element.
+            <p class="note">This can be used to render compostion text as
+              segmented clauses, but how to visualize them are not specified
+              here.  It is recommended to follow the platform standard way to
+              visualize the segmentation (e.g. using underline or reverse
+              background etc.).</p>
+            <p class="note">The way the platform standard renders composition
+              text might be customized by a user (e.g. for accessibility).
+              CSS property to indicate the current default style to render
+              the composition is desired.
+            </p>
           </dd>
-        <dt>attribute boolean enabled</dt>
-          <dd>
-            <p>Controls the state of the IME associated with this context.</p>
-            <p>The value represents whether a user agent
-              activates this IME when the given node gains the input focus.</p>
-            <p>When this attribute is set to be <code>true</code>,
-              a user agent activates this IME when the given node gains the
-              input focus and sends composition events to the given node even
-              though the node is not an editable one, such as a
-              <code>&lt;canvas&gt;</code> element.
-          </dd>
-        <dt>readonly attribute DOMString locale</dt>
+        <dt>readonly attribute DOMString? locale</dt>
           <dd>Represents the locale of the current input method as
             a BCP-47 tag (e.g. "en-US").
             The locale MAY be the empty string when
             inapplicable or unknown.</dd>
+        <dt>readonly attribute HTMLElement? target</dt>
+          <dd>
+            <p>Represents the element associated with the InputMethodContext
+              object.</p>
+            <p>Once a target element gets deleted or modified not to accept
+              any input, any access to the
+              <a href="#inputmethodcontext-interface">InputMethodContext</a>
+              interface through the object has no effect.  Any method calls
+              will just return and accesses to any attribute will return
+              <code>null</code>.
+            </p>
+          </dd>
         <dt>void confirmComposition()</dt>
           <dd>
           <p>Finishes the ongoing composition of the hosting user agent.</p>
@@ -611,8 +700,16 @@ function onCompositionUpdate(event) {
           &lsquo;Accept&rsquo; key as written in
           <a href="http://www.w3.org/TR/DOM-Level-3-Events/#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
           [[!DOM-LEVEL-3-EVENTS]].</p>
-          <p class="note">This function is just copied from WebKit, to solicit opinions
-          from developers.</p>
+          <p class="note">This may cause the race condition when a script
+          calls confirmComposition while system IME gets accept key in the
+          same time, a user agent may confirm the ongoing composition twice.
+          Instead,
+            <a href="http://lists.w3.org/Archives/Public/public-webapps/2013AprJun/0361.html">
+              introducing cancelComposition() is proposed
+            </a>
+            and when a script needs the behavior of confirmComposition(), it
+            can commit the current composition and then call
+            cancelComposition().</p>
           </dd>
         <dt>void setCaretRectangle(Node anchor, long x, long y, long w, long h)</dt>
           <dd>
@@ -620,8 +717,12 @@ function onCompositionUpdate(event) {
             a user agent renders a
             <a href="#candidate-window">candidate window</a>
             or a composition window, it uses
-            this rectangle to prevent these windows from being rendered on this
-            rectangle.</p>
+            this rectangle to draw windows next to the composition or
+            prevent these windows from being rendered on this rectangle.</p>
+            <p>If a Web application wants to render composition text itself,
+            it has to tell a user agent where the composition text will be
+            located whenever it gets <code>compositionstart</code> event
+            or <code>compositionend</code> event.</p>
             <p>On Windows, this rectangle is used as a parameter for
             ImmSetCandidateWindow(). On Mac, this rectangle is sent when it calls
             [firstRectForCharacterRange:]. On Linux (GTK), this rectangle is used as a
@@ -639,6 +740,9 @@ function onCompositionUpdate(event) {
               <li>The <var>w</var>, and <var>h</var> are width and height of
                 the rectangle.</li>
             </ul>
+            <p>These set values apply only to the current
+              composition session (i.e. until <code>compositionend</code>
+              event is sent).</p>
             <p>A user agent MAY need to convert these
               coordinates to the screen coordinates when it shows a
               <a href="#candidate-window">candidate window</a>.
@@ -653,6 +757,9 @@ function onCompositionUpdate(event) {
             <p>A user agent MAY use this hint to explicitly control the
               position for a candidate window, or determine zoom level
               and view port when on-screen keyboard comes in.</p>
+            <p>These set values apply only to the current
+              composition session (i.e. until <code>compositionend</code>
+              event is sent).</p>
             <ul>
               <li>The <var>anchor</var> parameter represents the DOM node
                 against which the rectangle is positioned.
@@ -664,12 +771,6 @@ function onCompositionUpdate(event) {
                 the rectangle.</li>
             </ul>
           </dd>
-        <dt>boolean open()</dt>
-          <dd>
-          <p>Requests the hosting user agent to associate the context with an
-            IME. This function returns <code>true</code> if a user agent
-            can associate its IME with the context.</p>
-          </dd>
       </dl>
     </section>
 
@@ -678,6 +779,21 @@ function onCompositionUpdate(event) {
     <p>This specification provides an interface for developing IME-aware
       Web applications.</p>
     <p>This section describes practices for some use-cases.</p>
+    <section id="life-of-inputmethodcontext">
+      <h1>Life of InputMethodContext</h1>
+      <p>Once a <code>InputMethodContext</code> interface is obtained,
+        it should be valid for the lifetime of its <code>target</code>
+        element's lifetime, as long as the element is editable or focusable.
+        Once the target gets disabled,
+        authors MAY NOT access an IME through the interface even after the
+        target gets enabled again.  Once the target is deleted,
+        any access to the interface is void.</p>
+      <p>Any access to the InputMethodContext interface makes sense
+        mostly when the target element has focus.  In other words,
+        it makes little sense if you access the interface when the target
+        element doesn't have focus.
+      </p>
+    </section>
     <section id="drawing-composition-text">
       <h1>Drawing Composition Text</h1>
       <p>If a Web application wants to draw composition text by itself,
@@ -702,8 +818,8 @@ function onCompositionUpdate(event) {
       <p>When a Web application wants to handle DOM level3 composition events
         on a non-<code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>,
         or <code>contenteditable</code> node,
-        it MUST enable the IME via <code>inputMethodContext.open()</code> to
-        associate its node with composition events.</p>
+        it MUST add <code>inputmode</code> attribute with a proper value
+        and move focus to it to get composition events.</p>
       <p>The following diagram shows the flow of events
         among the keyboard, the IME, the user agent, and the Web application
         when a user types
