@@ -240,7 +240,11 @@ function onCompositionUpdate(event) {
 
       <p>This example shows the source which draws composition text in
         its own style.</p>
-
+      <p class="note">For the usage of compositionupdate event, see also
+        the note in
+        <a href="#drawing-composition-text">Drawing Composition Text</a>
+        section.
+      </p>
 <pre class="example sh_javascript" id="ex-drawing-composition">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -817,6 +821,14 @@ function init() {
     </section>
     <section id="drawing-composition-text">
       <h1>Drawing Composition Text</h1>
+      <p class="note" id="note-beforeInput">As of this writing, the order of
+        <code>compositionupdate</code> event and DOM update is being
+        discussed
+        (see <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18931">Bug 18931</a>)
+        and if <code>compositionupdate</code> event happens after
+        DOM modification, this section has to be rewritten using
+        <code>beforeInput</code> event, which is also being discussed.
+        Example 2 code should be updated as well.</p>
       <p>If a Web application wants to draw composition text by itself,
         it SHOULD handle the <code>compositionupdate</code> event
         to get notified from the IME that the composition text has been
