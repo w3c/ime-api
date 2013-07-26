@@ -699,8 +699,9 @@ function init() {
       <h1>The InputMethodContext Interface</h1>
       <dl title="interface InputMethodContext" class="idl">
         <dt>readonly attribute Composition? composition</dt>
-          <dd>Represents the current composition.</dd>
-        <dt>readonly attribute DOMString? locale</dt>
+          <dd>Represents the current composition.  If there is no ongoing
+            composition, returns null.</dd>
+        <dt>readonly attribute DOMString locale</dt>
           <dd>Represents the locale of the current input method as
             a BCP-47 tag (e.g. "en-US").
             The locale MAY be the empty string when
@@ -713,8 +714,9 @@ function init() {
               any input, any access to the
               <a href="#inputmethodcontext-interface">InputMethodContext</a>
               interface through the object has no effect.  Any method calls
-              will just return and accesses to any attribute will return
-              <code>null</code>.
+              will just return, accesses to <code>composition</code> and
+              <code>target</code> will return null, and accesses to
+              <code>locale</code> will return the empty string.
             </p>
           </dd>
         <dt>void confirmComposition()</dt>
