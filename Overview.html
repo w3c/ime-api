@@ -151,13 +151,19 @@
         this API also gives Web applications the ability to
         give a hint as to where to position a
         <a href="#composition-window">composition window</a>.
-      <p>There are also proposed standards for changing IME mode via CSS
+      <p>There are also proposed standards related to IME:
+        <ul>
+          <li>Changing IME mode via CSS
         (<a href="http://www.w3.org/TR/css3-ui/#ime-mode">ime-mode property
-        in CSS3 UI</a>) and controlling generic input modality
-        (<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/association-of-controls-and-forms.html#input-modalities:-the-inputmode-attribute">inputmode attribute</a>), but they are independent of this API and they
-        are for solving different issues.
+        in CSS3 UI</a>)
+          <li>Controlling generic input modality
+            (<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/association-of-controls-and-forms.html#input-modalities:-the-inputmode-attribute">inputmode attribute in HTML spec</a>)
+        </ul>
+        They can work independently of this API.
       </p>
-
+      <p>Please also refer to the separate
+        <a href="use-cases/Overview.html">use cases for Input Method Editor
+          API </a>document for more information about possible use cases.</p>
       <p>Consider the following examples.</p>
       <p>This example shows the source which gives a hint for an IME
       where the application wants it to avoid placing UI elements. A simple
@@ -313,9 +319,6 @@ function init() {
 &lt;/body&gt;
 &lt;/html&gt;
 </pre>
-      <p>Please also refer to the separate
-        <a href="use-cases/Overview.html">use cases for Input Method Editor
-          API </a>document.</p>
     </section>
 
     <section class="informative" id="background">
