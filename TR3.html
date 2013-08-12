@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html dir="ltr" typeof="bibo:Document " about="" property="dcterms:language" content="en" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- foo -->
+    <meta charset="UTF-8">
+    <title>Input Method Editor API</title>
+    <style>
+      body {
+        counter-reset: figcaption;
+        counter-reset: example;
+      }
+      figcaption {
+        font-weight: bold;
+      }
+      var {
+        font-weight: bold;
+        color: green;
+        padding-left: 2px;
+        padding-right: 4px;
+      }
+      .tocline {
+        padding-top: 2px;
+      }
+      .ed_mailto:before {
+        content: "<";
+      }
+      .ed_mailto:after {
+        content: ">";
+      }
+    </style>
+
+
+
+
+  <style>/*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+
+/* --- INLINES --- */
+em.rfc2119 {
+    text-transform:     lowercase;
+    font-variant:       small-caps;
+    font-style:         normal;
+    color:              #900;
+}
+
+h1 acronym, h2 acronym, h3 acronym, h4 acronym, h5 acronym, h6 acronym, a acronym,
+h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
+    border: none;
+}
+
+dfn {
+    font-weight:    bold;
+}
+
+a.internalDFN {
+    color:  inherit;
+    border-bottom:  1px solid #99c;
+    text-decoration:    none;
+}
+
+a.externalDFN {
+    color:  inherit;
+    border-bottom:  1px dotted #ccc;
+    text-decoration:    none;
+}
+
+a.bibref {
+    text-decoration:    none;
+}
+
+cite .bibref {
+    font-style: normal;
+}
+
+code {
+    color:  #ff4500;
+}
+
+/* --- TOC --- */
+.toc a, .tof a {
+    text-decoration:    none;
+}
+
+a .secno, a .figno {
+    color:  #000;
+}
+
+ul.tof, ol.tof {
+    list-style: none outside none;
+}
+
+.caption {
+    margin-top: 0.5em;
+    font-style:   italic;
+}
+
+/* --- TABLE --- */
+table.simple {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    border-bottom:  3px solid #005a9c;
+}
+
+.simple th {
+    background: #005a9c;
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+}
+
+.simple th[scope="row"] {
+    background: inherit;
+    color:  inherit;
+    border-top: 1px solid #ddd;
+}
+
+.simple td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+}
+
+.simple tr:nth-child(even) {
+    background: #f0f6ff;
+}
+
+/* --- DL --- */
+.section dd > p:first-child {
+    margin-top: 0;
+}
+
+.section dd > p:last-child {
+    margin-bottom: 0;
+}
+
+.section dd {
+    margin-bottom:  1em;
+}
+
+.section dl.attrs dd, .section dl.eldef dd {
+    margin-bottom:  0;
+}
+</style><style>/* --- EXAMPLES --- */
+div.example-title {
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.example-title span {
+    text-transform: uppercase;
+}
+aside.example, div.example, div.illegal-example {
+    padding: 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+div.illegal-example { color: red }
+div.illegal-example p { color: black }
+aside.example, div.example {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+    border-color: #e0cb52;
+    background: #fcfaee;
+}
+
+aside.example div.example {
+    border-left-width: .1em;
+    border-color: #999;
+    background: #fff;
+}
+aside.example div.example div.example-title {
+    color: #999;
+}
+</style><style>/* --- ISSUES/NOTES --- */
+div.issue-title, div.note-title {
+    padding-right:  1em;
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.issue-title { color: #e05252; }
+div.note-title { color: #2b2; }
+div.issue-title span, div.note-title span {
+    text-transform: uppercase;
+}
+div.note, div.issue {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.note > p:first-child, .issue > p:first-child { margin-top: 0 }
+.issue, .note {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+}
+div.issue, div.note {
+    padding: 1em 1.2em 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+span.note, span.issue { padding: .1em .5em .15em; }
+
+.issue {
+    border-color: #e05252;
+    background: #fbe9e9;
+}
+.note {
+    border-color: #52e052;
+    background: #e9fbe9;
+}
+
+
+</style><style>/* HIGHLIGHTS */
+code.prettyprint {
+    color:  inherit;
+}
+
+/* this from google-code-prettify */
+.pln{color:#000}@media screen{.str{color:#080}.kwd{color:#008}.com{color:#800}.typ{color:#606}.lit{color:#066}.pun,.opn,.clo{color:#660}.tag{color:#008}.atn{color:#606}.atv{color:#080}.dec,.var{color:#606}.fun{color:red}}@media print,projection{.str{color:#060}.kwd{color:#006;font-weight:bold}.com{color:#600;font-style:italic}.typ{color:#404;font-weight:bold}.lit{color:#044}.pun,.opn,.clo{color:#440}.tag{color:#006;font-weight:bold}.atn{color:#404}.atv{color:#060}}ol.linenums{margin-top:0;margin-bottom:0}li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}li.L1,li.L3,li.L5,li.L7,li.L9{background:#eee}
+</style><style>/* --- WEB IDL --- */
+pre.idl {
+    border-top: 1px solid #90b8de;
+    border-bottom: 1px solid #90b8de;
+    padding:    1em;
+    line-height:    120%;
+}
+
+pre.idl::before {
+    content:    "WebIDL";
+    display:    block;
+    width:      150px;
+    background: #90b8de;
+    color:  #fff;
+    font-family:    initial;
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+}
+
+.idlType {
+    color:  #ff4500;
+    font-weight:    bold;
+    text-decoration:    none;
+}
+
+/*.idlModule*/
+/*.idlModuleID*/
+/*.idlInterface*/
+.idlInterfaceID, .idlDictionaryID, .idlCallbackID, .idlEnumID {
+    font-weight:    bold;
+    color:  #005a9c;
+}
+a.idlEnumItem {
+    color:  #000;
+    border-bottom:  1px dotted #ccc;
+    text-decoration: none;
+}
+
+.idlSuperclass {
+    font-style: italic;
+    color:  #005a9c;
+}
+
+/*.idlAttribute*/
+.idlAttrType, .idlFieldType, .idlMemberType {
+    color:  #005a9c;
+}
+.idlAttrName, .idlFieldName, .idlMemberName {
+    color:  #ff4500;
+}
+.idlAttrName a, .idlFieldName a, .idlMemberName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlMethod*/
+.idlMethType, .idlCallbackType {
+    color:  #005a9c;
+}
+.idlMethName {
+    color:  #ff4500;
+}
+.idlMethName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlCtor*/
+.idlCtorName {
+    color:  #ff4500;
+}
+.idlCtorName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlParam*/
+.idlParamType {
+    color:  #005a9c;
+}
+.idlParamName, .idlDefaultValue {
+    font-style: italic;
+}
+
+.extAttr {
+    color:  #666;
+}
+
+/*.idlSectionComment*/
+.idlSectionComment {
+    color: gray;
+}
+
+/*.idlConst*/
+.idlConstType {
+    color:  #005a9c;
+}
+.idlConstName {
+    color:  #ff4500;
+}
+.idlConstName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlException*/
+.idlExceptionID {
+    font-weight:    bold;
+    color:  #c00;
+}
+
+.idlTypedefID, .idlTypedefType {
+    color:  #005a9c;
+}
+
+.idlRaises, .idlRaises a.idlType, .idlRaises a.idlType code, .excName a, .excName a code {
+    color:  #c00;
+    font-weight:    normal;
+}
+
+.excName a {
+    font-family:    monospace;
+}
+
+.idlRaises a.idlType, .excName a.idlType {
+    border-bottom:  1px dotted #c00;
+}
+
+.excGetSetTrue, .excGetSetFalse, .prmNullTrue, .prmNullFalse, .prmOptTrue, .prmOptFalse {
+    width:  45px;
+    text-align: center;
+}
+.excGetSetTrue, .prmNullTrue, .prmOptTrue { color:  #0c0; }
+.excGetSetFalse, .prmNullFalse, .prmOptFalse { color:  #c00; }
+
+.idlImplements a {
+    font-weight:    bold;
+}
+
+dl.attributes, dl.methods, dl.constants, dl.constructors, dl.fields, dl.dictionary-members {
+    margin-left:    2em;
+}
+
+.attributes dt, .methods dt, .constants dt, .constructors dt, .fields dt, .dictionary-members dt {
+    font-weight:    normal;
+}
+
+.attributes dt code, .methods dt code, .constants dt code, .constructors dt code, .fields dt code, .dictionary-members dt code {
+    font-weight:    bold;
+    color:  #000;
+    font-family:    monospace;
+}
+
+.attributes dt code, .fields dt code, .dictionary-members dt code {
+    background:  #ffffd2;
+}
+
+.attributes dt .idlAttrType code, .fields dt .idlFieldType code, .dictionary-members dt .idlMemberType code {
+    color:  #005a9c;
+    background:  transparent;
+    font-family:    inherit;
+    font-weight:    normal;
+    font-style: italic;
+}
+
+.methods dt code {
+    background:  #d9e6f8;
+}
+
+.constants dt code {
+    background:  #ddffd2;
+}
+
+.constructors dt code {
+    background:  #cfc;
+}
+
+.attributes dd, .methods dd, .constants dd, .constructors dd, .fields dd, .dictionary-members dd {
+    margin-bottom:  1em;
+}
+
+table.parameters, table.exceptions {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    margin: 0.5em 0;
+    width:  100%;
+}
+table.parameters { border-bottom:  1px solid #90b8de; }
+table.exceptions { border-bottom:  1px solid #deb890; }
+
+.parameters th, .exceptions th {
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+    font-family:    initial;
+    font-weight:    normal;
+    text-shadow:    #666 1px 1px 0;
+}
+.parameters th { background: #90b8de; }
+.exceptions th { background: #deb890; }
+
+.parameters td, .exceptions td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.parameters tr:first-child td, .exceptions tr:first-child td {
+    border-top: none;
+}
+
+.parameters td.prmName, .exceptions td.excName, .exceptions td.excCodeName {
+    width:  100px;
+}
+
+.parameters td.prmType {
+    width:  120px;
+}
+
+table.exceptions table {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    width:  100%;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-WD"/>
+<!--[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]--></head>
+  <body class="h-entry"><div class="head">
+  <p>
+
+      <a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home.png"></a>
+
+  </p>
+  <h1 class="title p-name" id="title" property="dcterms:title">Input Method Editor API</h1>
+
+  <h2 id="w3c-working-draft-15-august-2013" property="dcterms:issued" datatype="xsd:dateTime" content="2013-08-15T15:00:00.000Z"><abbr title="World Wide Web Consortium">W3C</abbr> Working Draft <time class="dt-published" datetime="2013-08-15">15 August 2013</time></h2>
+  <dl>
+
+      <dt>This version:</dt>
+      <dd><a href="http://www.w3.org/TR/2013/WD-ime-api-20130815/">http://www.w3.org/TR/2013/WD-ime-api-20130815/</a></dd>
+      <dt>Latest published version:</dt>
+      <dd><a href="http://www.w3.org/TR/ime-api/">http://www.w3.org/TR/ime-api/</a></dd>
+      <dt>Previous versions:</dt>
+      <dd><a href="http://www.w3.org/TR/2013/WD-ime-api-20130404/">http://www.w3.org/TR/2013/WD-ime-api-20130404/</a></dd>
+      <dd><a href="http://www.w3.org/TR/2012/WD-ime-api-20120524/">http://www.w3.org/TR/2012/WD-ime-api-20120524/</a></dd>
+
+      <dt>Latest editor's draft:</dt>
+      <dd><a href="http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html">http://dvcs.w3.org/hg/ime-api/raw-file/default/Overview.html</a></dd>
+
+    <dt>Editors:</dt>
+    <dd class="p-author h-card vcard" rel="bibo:editor" inlist=""><span typeof="foaf:Person"><span property="foaf:name" class="p-name fn">Takayoshi Kochi</span>, Google, <span class="ed_mailto"><a class="u-email email" rel="foaf:mbox" href="mailto:kochi@google.com">kochi@google.com</a></span></span>
+</dd>
+<dd class="p-author h-card vcard" rel="bibo:editor" inlist=""><span typeof="foaf:Person"><span property="foaf:name" class="p-name fn">Kenji Baheux</span>, Google, <span class="ed_mailto"><a class="u-email email" rel="foaf:mbox" href="mailto:kenjibaheux@google.com">kenjibaheux@google.com</a></span></span>
+</dd>
+    <dt>Previous editor:</dt>
+<dd class="p-author h-card vcard" rel="bibo:editor" inlist=""><span typeof="foaf:Person"><span property="foaf:name" class="p-name fn">Hironori Bono (坊野 博典)</span>, (formerly) Google</span>
+</dd>
+
+
+
+  </dl>
+
+
+
+
+
+      <p class="copyright">
+        <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> ©
+        2013
+
+        <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup>
+        (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+        <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+        <a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved.
+        <abbr title="World Wide Web Consortium">W3C</abbr> <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+        <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and
+        <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.
+      </p>
+
+
+  <hr>
+</div>
+    <section rel="bibo:chapter" resource="#abstract" typeof="bibo:Chapter" datatype="" property="dcterms:abstract" class="introductory" id="abstract"><h2>Abstract</h2>
+      <p>This specification defines an “IME API” that provides
+        Web applications with scripted access to an IME
+        (<a href="#IME">input-method editor</a>) associated with
+        a hosting user agent. This IME API includes:</p>
+        <ul>
+          <li>An <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a> interface, which provides methods to
+            retrieve detailed data from an in-progress IME
+            <a href="#ime-composition">composition</a>.</li>
+          <li>A <a class="idlType" href="#idl-def-Composition"><code>Composition</code></a> interface, which represents read-only
+            attributes about the current
+            <a href="#ime-composition">composition</a>, such as actual text
+            and its associated information.</li>
+        </ul>
+      <p>This API is designed to be used in conjunction with DOM events
+        [<cite><a href="#bib-DOM-LEVEL-3-EVENTS" class="bibref">DOM-LEVEL-3-EVENTS</a></cite>].</p>
+    </section><section rel="bibo:chapter" resource="#sotd" typeof="bibo:Chapter" id="sotd" class="introductory"><h2>Status of This Document</h2>
+
+
+
+        <p>
+          <em>This section describes the status of this document at the time of its publication. Other
+          documents may supersede this document. A list of current <abbr title="World Wide Web Consortium">W3C</abbr> publications and the latest revision
+          of this technical report can be found in the <a href="http://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports
+          index</a> at http://www.w3.org/TR/.</em>
+        </p>
+
+      <p>
+        This document is a proposal that is being made available for public
+        review in order to solicit feedback, particularly from
+        implementors, with a goal of potential cross-browser implementation
+        and standardization.
+      </p>
+
+        <p>
+          This document was published by the <a href="http://www.w3.org/2008/webapps/">Web Applications Working Group</a> as an Editor's Draft.
+
+
+          If you wish to make comments regarding this document, please send them to
+          <a href="mailto:public-webapps@w3.org">public-webapps@w3.org</a>
+          (<a href="mailto:public-webapps-request@w3.org?subject=subscribe">subscribe</a>,
+          <a href="http://lists.w3.org/Archives/Public/public-webapps/">archives</a>).
+
+
+
+
+            All comments are welcome.</p>
+
+
+          <p>
+            Publication as a Working Draft does not imply endorsement by the <abbr title="World Wide Web Consortium">W3C</abbr> Membership.
+            This is a draft document and may be updated, replaced or obsoleted by other documents at
+            any time. It is inappropriate to cite this document as other than work in progress.
+          </p>
+
+
+        <p>
+
+            This document was produced by a group operating under the
+
+                <a id="sotd_patent" about="" rel="w3p:patentRules" href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+
+
+
+
+
+              <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href="http://www.w3.org/2004/01/pp-impl/42538/status" rel="disclosure">public list of any patent disclosures</a>
+
+            made in connection with the deliverables of the group; that page also includes instructions for
+            disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains
+            <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the
+            information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
+            6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+
+
+        </p>
+
+
+
+
+</section><section id="toc"><h2 class="introductory">Table of Contents</h2><ul class="toc"><li class="tocline"><a class="tocxref" href="#introduction"><span class="secno">1. </span>Introduction</a></li><li class="tocline"><a class="tocxref" href="#background"><span class="secno">2. </span>Background: What’s an Input Method Editor?</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#composer-section"><span class="secno">2.1 </span>Composer</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#phonetic-composer-section"><span class="secno">2.1.1 </span>Phonetic Composer</a></li><li class="tocline"><a class="tocxref" href="#radical-composer-section"><span class="secno">2.1.2 </span>Radical Composer</a></li><li class="tocline"><a class="tocxref" href="#on-screen-keyboard-section"><span class="secno">2.1.3 </span>On-Screen Keyboard</a></li></ul></li><li class="tocline"><a class="tocxref" href="#converter-section"><span class="secno">2.2 </span>Converter</a></li></ul></li><li class="tocline"><a class="tocxref" href="#conformance"><span class="secno">3. </span>Conformance</a></li><li class="tocline"><a class="tocxref" href="#terminology"><span class="secno">4. </span>Terminology and Algorithms</a></li><li class="tocline"><a class="tocxref" href="#the-inputmethodcontext-property"><span class="secno">5. </span>The inputMethodContext property</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes"><span class="secno">5.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#composition-interface"><span class="secno">6. </span>The Composition Interface</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-1"><span class="secno">6.1 </span>Attributes</a></li><li class="tocline"><a class="tocxref" href="#methods"><span class="secno">6.2 </span>Methods</a></li></ul></li><li class="tocline"><a class="tocxref" href="#inputmethodcontext-interface"><span class="secno">7. </span>The InputMethodContext Interface</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-2"><span class="secno">7.1 </span>Attributes</a></li><li class="tocline"><a class="tocxref" href="#methods-1"><span class="secno">7.2 </span>Methods</a></li></ul></li><li class="tocline"><a class="tocxref" href="#best-practices"><span class="secno">8. </span>Best Practices</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#life-of-inputmethodcontext"><span class="secno">8.1 </span>Life of InputMethodContext</a></li><li class="tocline"><a class="tocxref" href="#drawing-composition-text"><span class="secno">8.2 </span>Drawing Composition Text</a></li></ul></li><li class="tocline"><a class="tocxref" href="#references"><span class="secno">A. </span>References</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><span class="secno">A.1 </span>Normative references</a></li></ul></li></ul></section>
+
+    <section rel="bibo:chapter" resource="#introduction" typeof="bibo:Chapter" class="informative" id="introduction">
+      <!--OddPage--><h2><span class="secno">1. </span>Introduction</h2><p><em>This section is non-normative.</em></p>
+      <p>Even though existing Web-platform APIs allow developers to implement
+        very complicated Web applications, such as visual chat applications or
+        WYSIWYG presentation editors, developers have difficulties when
+        implementing Web applications that involve
+        <a href="#IME">input-method editors</a>.
+        To mitigate the difficulties,
+        <a href="http://www.w3.org/TR/DOM-Level-3-Events/">the DOM
+          Level 3 Events specification</a>[<cite><a href="#bib-DOM-LEVEL-3-EVENTS" class="bibref">DOM-LEVEL-3-EVENTS</a></cite>]
+        introduces <i>composition events</i>
+        to retrieve <a href="#ime-composition">composition text</a>
+        while it is being composed in an associated IME.</p>
+      <p>However, Web applications can still run into difficulties when
+        they want text input on non-editable elements such as the
+        <code>&lt;div&gt;</code> element without <code>contenteditable</code>
+        attribute being set to <code>true</code>, or interact with IMEs;
+        those difficulties include
+        the fact that a Web application cannot do the following:</p>
+      <ul>
+        <li>get input outside any editable element even with focus</li>
+        <li>indicate to the user whether the Web application renders
+          composition text by itself, or needs to ask user agents to
+          render it</li>
+        <li>determine the place where user agents render composition text</li>
+        <li>determine the place where user agents render
+        <a href="#candidate-window">candidate windows</a></li>
+      </ul>
+      <p>To solve these IME-related problems, this specification introduces
+        an IME API that allows Web applications to interact with the IME.
+        This specification introduces interfaces for
+        <a href="#ime-composition">compositions</a>,
+        so Web applications can read detailed composition data.
+        A <a class="idlType" href="#idl-def-Composition"><code>Composition</code></a> object provides a reference to an ongoing IME
+        <a href="#ime-composition">composition</a>,
+        so Web applications can retrieve the composition text and
+        its attributes.  In addition,
+        this API also gives Web applications the ability to
+        give a hint as to where to position a
+        <a href="#composition-window">composition window</a>.
+      </p><p>There are also proposed standards related to IME:
+        </p><ul>
+          <li>Changing IME mode via CSS
+        (<a href="http://www.w3.org/TR/css3-ui/#ime-mode">ime-mode property
+        in CSS3 UI</a>)
+          </li><li>Controlling generic input modality
+            (<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/association-of-controls-and-forms.html#input-modalities:-the-inputmode-attribute">inputmode attribute in HTML spec</a>)
+        </li></ul>
+        They can work independently of this API.
+      <p></p>
+      <p>Please also refer to the separate
+        <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/use-cases/Overview.html">use cases for Input Method Editor
+          API </a>document for more information about possible use cases.</p>
+      <p>Consider the following examples.</p>
+      <p>This example shows the source which gives a hint for an IME
+      where the application wants it to avoid placing UI elements. A simple
+      web search page which gives a user suggestions while the user is
+      doing composition.</p>
+<div class="example"><div class="example-title"><span>Example 1</span></div><pre class="example highlight prettyprint" id="ex-ime-suggest-position"><span class="dec">&lt;!DOCTYPE html&gt;</span><span class="pln">
+</span><span class="tag">&lt;html&gt;</span><span class="pln">
+</span><span class="tag">&lt;head&gt;</span><span class="pln">
+</span><span class="tag">&lt;style</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/css"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="com">#search0 {</span><span class="pln">
+    max</span><span class="pun">-</span><span class="pln">width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">400px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">#input0 {</span><span class="pln">
+    width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">#suggest0 {</span><span class="pln">
+    width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln">
+    list</span><span class="pun">-</span><span class="pln">style</span><span class="pun">:</span><span class="pln"> none</span><span class="pun">;</span><span class="pln">
+    margin</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+    padding</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+    border</span><span class="pun">-</span><span class="pln">style</span><span class="pun">:</span><span class="pln"> solid</span><span class="pun">;</span><span class="pln">
+    border</span><span class="pun">-</span><span class="pln">width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1px</span><span class="pun">;</span><span class="pln">
+    border</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> </span><span class="com">#000;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/style&gt;</span><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">language</span><span class="pun">=</span><span class="atv">"javascript"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="kwd">function</span><span class="pln"> init</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> node </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'input0'</span><span class="pun">);</span><span class="pln">
+    </span><span class="com">// This code only handles the compositionupdate event for brevity of the</span><span class="pln">
+    </span><span class="com">// example, but of course other input field changes should also be handled.</span><span class="pln">
+    node</span><span class="pun">.</span><span class="pln">addEventListener</span><span class="pun">(</span><span class="str">'compositionupdate'</span><span class="pun">,</span><span class="pln"> onCompositionUpdate</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">// Sends an XHR request to get search suggestions.</span><span class="pln">
+</span><span class="com">// Upon receiving the result, expandSuggest() is called back.</span><span class="pln">
+</span><span class="kwd">function</span><span class="pln"> getSuggests</span><span class="pun">(</span><span class="pln">query</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// For brevity, implementation of this function is omitted.</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">function</span><span class="pln"> expandSuggest</span><span class="pun">(</span><span class="pln">candidates</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// Callback after getting search suggestions.</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> suggest </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'suggest0'</span><span class="pun">);</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> i</span><span class="pun">;</span><span class="pln">
+    </span><span class="com">// Clear old suggestions.</span><span class="pln">
+    </span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="pln">i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> suggest</span><span class="pun">.</span><span class="pln">childNodes</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        suggest</span><span class="pun">.</span><span class="pln">removeChild</span><span class="pun">(</span><span class="pln">suggest</span><span class="pun">.</span><span class="pln">childNodes</span><span class="pun">[</span><span class="lit">0</span><span class="pun">]);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="com">// Render new suggeston list.</span><span class="pln">
+    </span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="pln">i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> candidates</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        suggest</span><span class="pun">.</span><span class="pln">appendChild</span><span class="pun">(</span><span class="pln">document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'li'</span><span class="pun">));</span><span class="pln">
+        suggest</span><span class="pun">.</span><span class="pln">childNodes</span><span class="pun">[</span><span class="pln">i</span><span class="pun">].</span><span class="pln">textContent </span><span class="pun">=</span><span class="pln"> candidates</span><span class="pun">[</span><span class="pln">i</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="com">// Set exclusion area hint for the IME.</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> input </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'input0'</span><span class="pun">);</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> context </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="pln">inputMethodContext</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> relative_x </span><span class="pun">=</span><span class="pln"> suggest</span><span class="pun">.</span><span class="pln">offsetLeft </span><span class="pun">-</span><span class="pln"> input</span><span class="pun">.</span><span class="pln">offsetLeft</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> relative_y </span><span class="pun">=</span><span class="pln"> suggest</span><span class="pun">.</span><span class="pln">offsetTop </span><span class="pun">-</span><span class="pln"> input</span><span class="pun">.</span><span class="pln">offsetTop</span><span class="pun">;</span><span class="pln">
+    context</span><span class="pun">.</span><span class="pln">setExclusionRectangle</span><span class="pun">(</span><span class="pln">input</span><span class="pun">,</span><span class="pln"> relative_x</span><span class="pun">,</span><span class="pln"> relative_y</span><span class="pun">,</span><span class="pln">
+                                         suggest</span><span class="pun">.</span><span class="pln">offsetWidth</span><span class="pun">,</span><span class="pln">
+                                         suggest</span><span class="pun">.</span><span class="pln">offsetHeight</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">function</span><span class="pln"> onCompositionUpdate</span><span class="pun">(</span><span class="pln">event</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> query </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'input0'</span><span class="pun">).</span><span class="pln">value</span><span class="pun">;</span><span class="pln">
+    getSuggests</span><span class="pun">(</span><span class="pln">query</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;/head&gt;</span><span class="pln">
+</span><span class="tag">&lt;body&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"search0"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"input0"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"search here"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;ul</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"suggest0"</span><span class="tag">&gt;&lt;/ul&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></pre></div>
+
+      <p>This example shows the source which draws composition text in
+        its own style.</p>
+      <div class="note"><div aria-level="3" class="note-title" role="heading"><span>Note</span></div><p class="">For the usage of compositionupdate event, see also
+        the note in
+        <a href="#drawing-composition-text">Drawing Composition Text</a>
+        section.
+      </p></div>
+<div class="example"><div class="example-title"><span>Example 2</span></div><pre class="example highlight prettyprint" id="ex-drawing-composition"><span class="dec">&lt;!DOCTYPE html&gt;</span><span class="pln">
+</span><span class="tag">&lt;html&gt;</span><span class="pln">
+</span><span class="tag">&lt;head&gt;</span><span class="pln">
+</span><span class="tag">&lt;style&gt;</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">clause </span><span class="pun">{</span><span class="pln">
+  margin</span><span class="pun">-</span><span class="pln">right</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2px</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">-</span><span class="pln">style</span><span class="pun">:</span><span class="pln"> solid</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">-</span><span class="pln">width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0px</span><span class="pln"> </span><span class="lit">0px</span><span class="pln"> </span><span class="lit">1px</span><span class="pln"> </span><span class="lit">0px</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> </span><span class="com">#333333;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">selected </span><span class="pun">{</span><span class="pln">
+  border</span><span class="pun">-</span><span class="pln">width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0px</span><span class="pln"> </span><span class="lit">0px</span><span class="pln"> </span><span class="lit">2px</span><span class="pln"> </span><span class="lit">0px</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> </span><span class="com">#000000;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/style&gt;</span><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">language</span><span class="pun">=</span><span class="atv">"javascript"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="com">// compositionupdate event handler</span><span class="pln">
+</span><span class="kwd">function</span><span class="pln"> onCompositionUpdate</span><span class="pun">(</span><span class="pln">event</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> target </span><span class="pun">=</span><span class="pln"> event</span><span class="pun">.</span><span class="pln">target</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="com">// Remove all children.</span><span class="pln">
+    </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln">target</span><span class="pun">.</span><span class="pln">childNodes</span><span class="pun">.</span><span class="pln">length </span><span class="pun">&lt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        edit</span><span class="pun">.</span><span class="pln">removeChild</span><span class="pun">(</span><span class="pln">edit</span><span class="pun">.</span><span class="pln">childNodes</span><span class="pun">[</span><span class="lit">0</span><span class="pun">]);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="com">// Get the IME context.</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> ctx </span><span class="pun">=</span><span class="pln"> target</span><span class="pun">.</span><span class="pln">inputMethodContext</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="com">// Create clause spans.</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> text </span><span class="pun">=</span><span class="pln"> ctx</span><span class="pun">.</span><span class="pln">text</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> segments </span><span class="pun">=</span><span class="pln"> ctx</span><span class="pun">.</span><span class="pln">segments</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="pln">i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> segments</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">var</span><span class="pln"> span </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'span'</span><span class="pun">);</span><span class="pln">
+        span</span><span class="pun">.</span><span class="pln">classList</span><span class="pun">.</span><span class="pln">add</span><span class="pun">(</span><span class="str">'clause'</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">var</span><span class="pln"> selected </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">segments</span><span class="pun">[</span><span class="pln">i</span><span class="pun">]</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> ctx</span><span class="pun">.</span><span class="pln">selectionStart</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            selected </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+            span</span><span class="pun">.</span><span class="pln">classList</span><span class="pun">.</span><span class="pln">add</span><span class="pun">(</span><span class="str">'selected'</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+        </span><span class="kwd">var</span><span class="pln"> end </span><span class="pun">=</span><span class="pln"> text</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">i </span><span class="pun">&lt;</span><span class="pln"> segments</span><span class="pun">.</span><span class="pln">length </span><span class="pun">-</span><span class="pln"> </span><span class="lit">1</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+             end </span><span class="pun">=</span><span class="pln"> segments</span><span class="pun">[</span><span class="pln">i </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">];</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+        span</span><span class="pun">.</span><span class="pln">textContent </span><span class="pun">=</span><span class="pln"> text</span><span class="pun">.</span><span class="pln">substring</span><span class="pun">(</span><span class="pln">ctx</span><span class="pun">.</span><span class="pln">segments</span><span class="pun">[</span><span class="pln">i</span><span class="pun">],</span><span class="pln"> end</span><span class="pun">);</span><span class="pln">
+        target</span><span class="pun">.</span><span class="pln">appendChild</span><span class="pun">(</span><span class="pln">span</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">selected</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            ctx</span><span class="pun">.</span><span class="pln">setCaretRectangle</span><span class="pun">(</span><span class="pln">document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">,</span><span class="pln"> rect</span><span class="pun">.</span><span class="pln">left</span><span class="pun">,</span><span class="pln"> rect</span><span class="pun">.</span><span class="pln">top</span><span class="pun">,</span><span class="pln">
+                                                 rect</span><span class="pun">.</span><span class="pln">width</span><span class="pun">,</span><span class="pln"> rect</span><span class="pun">.</span><span class="pln">height</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="com">// Prevent the browser from drawing composition text.</span><span class="pln">
+    event</span><span class="pun">.</span><span class="pln">preventDefault</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">function</span><span class="pln"> init</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> composition </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'composition'</span><span class="pun">);</span><span class="pln">
+    composition</span><span class="pun">.</span><span class="pln">focus</span><span class="pun">();</span><span class="pln">
+    composition</span><span class="pun">.</span><span class="pln">addEventHandler</span><span class="pun">(</span><span class="str">'compositionupdate'</span><span class="pun">,</span><span class="pln"> onCompositionUpdate</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;/head&gt;</span><span class="pln">
+</span><span class="tag">&lt;body</span><span class="pln"> </span><span class="atn">onload</span><span class="pun">=</span><span class="atv">"</span><span class="pln">init</span><span class="pun">();</span><span class="atv">"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"composition"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></pre></div>
+    </section>
+
+    <section rel="bibo:chapter" resource="#background" typeof="bibo:Chapter" class="informative" id="background">
+      <!--OddPage--><h2><span class="secno">2. </span>Background: What’s an Input Method Editor?</h2><p><em>This section is non-normative.</em></p>
+      <p>An <dfn id="IME">IME</dfn> (input-method editor) is an application
+        that allows a standard keyboard (such as a US-101 keyboard) to be used
+        to type characters and symbols that are not directly represented on the
+        keyboard itself. In China, Japan, and Korea, IMEs are used ubiquitously
+        to enable standard keyboards to be employed to type the very large
+        number of characters required for writing in Chinese, Japanese, and
+        Korean.</p>
+      <p>On platforms with touch-based input device such as mobile phones,
+        an IME also plays a role to type text that a simple on-screen keyboard
+        cannot type directly.</p>
+      <p>A <dfn id="system-ime">system IME</dfn> is an IME already installed
+        on a user's system.
+      </p><p>An IME consists of two modules; a <a href="#composer">composer</a>
+        and a <a href="#converter">converter</a>.</p>
+
+      <p>A <dfn id="composer">composer</dfn> is a context-free parser that
+        composes non-ASCII characters (including phonetic characters) from
+        keystrokes, e.g. Hiragana or Pinyin.</p>
+      <p>A <dfn id="converter">converter</dfn> is a context-sensitive parser
+        that looks up a dictionary to convert phonetic characters to
+        a set of ideographic characters, e.g. Kanji.</p>
+      <p>An <dfn id="ime-clause">IME clause</dfn> is a grammatical word
+        produced in an IME.</p>
+      <p>An <dfn id="ime-selected-clause">IME selected clause</dfn> is an
+        <a href="#ime-clause">IME clause</a> currently being converted by
+        an IME.</p>
+      <p>An <dfn id="ime-composition">IME composition</dfn>
+        is an instance of text produced in an IME. For IMEs that can produce
+        multiple words, an IME composition consists of multiple IME clauses.
+        For IMEs that produce only one word, an IME composition is equal to an
+        IME clause.</p>
+
+      <p>When an IME receives keystrokes, it sends the keystrokes to a
+        composer and receives phonetic characters matching to the keystrokes.
+        When an IME receives phonetic characters from a composer, it sends the
+        phonetic characters to a converter and receives the list of ideographic
+        characters matching to the phonetic characters. The following figure
+        shows the basic structure of an IME.</p>
+      <figure id="fig-ime-structure">
+        <p><img src="TR3_files/image10.png" height="199" width="615"></p>
+        <figcaption>Fig. <span class="figno">1</span> <span class="fig-title">Basic structure of an IME</span></figcaption>
+      </figure>
+      <section rel="bibo:chapter" resource="#composer-section" typeof="bibo:Chapter" id="composer-section">
+        <h3><span class="secno">2.1 </span>Composer</h3><p><em>This section is non-normative.</em></p>
+        <p>A composer consists of two types of composers: a
+        <a href="#phonetic-composer">phonetic composer</a>
+        and a
+        <a href="#radical-composer">radical composer</a>.</p>
+
+        <p>A <dfn id="phonetic-composer">phonetic composer</dfn> composes a phonetic
+        character from its ASCII representation.</p>
+
+        <p>A <dfn id="radical-composer">radical composer</dfn> composes a
+        phonetic character from <a href="#phonetic-radical">phonetic radicals</a>.</p>
+
+        <p>A <dfn id="phonetic-radical">phonetic radical</dfn> is a character
+          component of a Latin character, a Chinese character, or a Korean
+          character. A Latin character can consist of an ASCII character and
+          accent marks, e.g. the character ‘á’ consists of
+          the ASCII character ‘a’ and the accent mark
+          ‘´’. A Chinese character can consist of Chinese
+          character components that refer to its semantic origins, e.g. the
+          Chinese character ‘略’ consists of two components
+          ‘田’ and ‘各’. A Korean
+          character consists of Korean character components that represent
+          consonants or vowels, e.g. the Korean character
+          ‘가’ consists of the consonant
+          ‘ㄱ’ and the vowel ‘ㅏ’.</p>
+
+        <p>A <dfn id="composition-window">composition window</dfn> is a window
+          that shows ASCII characters being composed by
+          <a href="#phonetic-composer">phonetic composers</a> or
+          <a href="#phonetic-radical">phonetic radicals</a> being composed by
+          <a href="#radical-composer">radical composers</a>.</p>
+
+        <p>An IME usually shows the text being composed by a composer with its
+          own style to distinguish it from the existing text. Even though most
+          of composers output phonetic characters, some composers (such as
+          Bopomofo composers) output a placeholder character
+          instead of phonetic characters while composing text.</p>
+
+        <section rel="bibo:chapter" resource="#phonetic-composer-section" typeof="bibo:Chapter" id="phonetic-composer-section">
+          <h4><span class="secno">2.1.1 </span>Phonetic Composer</h4><p><em>This section is non-normative.</em></p>
+          <p>Phonetic composers are not only used for typing Simplified
+            Chinese and Japanese, but also used for typing non-ASCII
+            characters (such as mathematical symbols, Yi, Amharic, etc.) with
+            a US-101 keyboard. Each of these languages has a mapping table
+            from its character to a sequence of ASCII characters representing
+            its pronunciation: e.g.,
+            ‘か’ to ‘ka’ in Japanese, and;
+            ‘卡’ to ‘ka’ in Simplified Chinese.
+            This mapping table is called as Romaji for Japanese and Pinyin for
+            Simplified Chinese, respectively. A phonetic composer uses these
+            mapping tables to compose a phonetic character from a sequence of
+            ASCII characters produced by a US keyboard.</p>
+          <p>An example of a phonetic composer for Simplified Chinese outputs
+            the ASCII characters that were input by the user, as its
+            composition text.</p>
+          <figure id="fig-ascii-composition-text">
+            <p><img src="TR3_files/image11.png" height="180" width="352"></p>
+            <figcaption>Fig. <span class="figno">2</span> <span class="fig-title">Composition text (Simplified Chinese)</span></figcaption>
+          </figure>
+          <p>On the other hand, a typical phonetic composer for Japanese
+            outputs phonetic characters when the typed ASCII characters have
+            corresponding phonetic characters.</p>
+          <figure id="fig-kana-composition-text">
+            <p><img src="TR3_files/image13.png" height="180" width="352"></p>
+            <figcaption>Fig. <span class="figno">3</span> <span class="fig-title">Composition text (Japanese)</span></figcaption>
+          </figure>
+          <p>An example of a phonetic composer for mathematical symbols
+            outputs composed mathematical symbol and shows the source
+            keystrokes in its own window, which is an example of a composition
+            window.</p>
+          <figure id="fig-composition-window">
+            <p><img src="TR3_files/image14.png" height="214" width="435"></p>
+            <figcaption>Fig. <span class="figno">4</span> <span class="fig-title">Composition text (Latex input)</span></figcaption>
+          </figure>
+        </section>
+        <section rel="bibo:chapter" resource="#radical-composer-section" typeof="bibo:Chapter" id="radical-composer-section">
+          <h4><span class="secno">2.1.2 </span>Radical Composer</h4>
+          <p>Radical composers are mainly used for typing Traditional
+            Chinese and Korean with phonetic keyboards. Each phonetic
+            keyboard of these languages can produce phonetic radicals:
+            e.g., typing ‘r’ produces ‘ㄱ’
+            on a Korean keyboard; typing ‘o’ produces
+            ‘人’ on a Traditional-Chinese (or Bopomofo)
+            keyboard, etc. A radical composer composes a phonetic
+            character from phonetic radicals given by these keyboards:
+            e.g., typing ‘ㄱ’ (r) and ‘ㅏ’
+            (k) produces ‘가’ on a Korean keyboard;
+            typing ‘人’ (o), ‘弓’ (n), and
+            ‘火’ (f) produces ‘你’ on a
+            Traditional-Chinese keyboard, etc.</p>
+          <p>A radical composer for Korean outputs the phonetic radicals as
+            its composition text.</p>
+          <figure id="fig-radical-composer-korean">
+            <p><img src="TR3_files/image15.png" height="180" width="352"></p>
+            <figcaption>Fig. <span class="figno">5</span> <span class="fig-title">Radical composer (Korean)</span></figcaption>
+          </figure>
+          <p>A radical composer for Traditional Chinese outputs a
+            placeholder character (U+3000) and shows the phonetic radicals
+            being composed to its own window. This window is an example
+            of a composition window.</p>
+          <figure id="fig-radical-composer-chinese">
+            <p><img src="TR3_files/image02.png" height="180" width="352"></p>
+            <figcaption>Fig. <span class="figno">6</span> <span class="fig-title">Radical composer (Traditional Chinese)</span></figcaption>
+          </figure>
+          <p>Some platforms (such as Mac and Linux) use radical composers
+            for typing accented characters used in European countries.
+            For example,
+            typing ‘ ̈ ’ (option+u) and ‘a’ (a)
+            produces ‘ä’ on US keyboards of Mac.</p>
+          <figure id="fig-radical-composer-mac">
+            <p><img src="TR3_files/image01.png" height="177" width="479"></p>
+            <figcaption>Fig. <span class="figno">7</span> <span class="fig-title">Radical composer (Mac)</span></figcaption>
+          </figure>
+        </section>
+        <section rel="bibo:chapter" resource="#on-screen-keyboard-section" typeof="bibo:Chapter" id="on-screen-keyboard-section">
+          <h4><span class="secno">2.1.3 </span>On-Screen Keyboard</h4>
+          <p>On touch-based platforms without hardware keyboard like
+            mobile phone or tablet platforms, some kind of on-screen keyboard
+            is displayed to help a user typing text, which occupies some
+            part of the screen. A user uses this keyboard to type composition
+            text.</p>
+          <figure id="fig-on-screen-keyboard-english">
+            <p><img src="TR3_files/mobile_ime_keyboard_en.png" height="557" width="416"></p>
+            <figcaption>Fig. <span class="figno">8</span> <span class="fig-title">An example of an on-screen keyboard (English)</span></figcaption>
+          </figure>
+          <p>The layout of an on-screen keyboard may vary depending on
+            language or its input modality (e.g. a telephone number
+            input field requires number buttons only).</p>
+          <figure id="fig-on-screen-keyboard-japanese">
+            <p><img src="TR3_files/mobile_ime_keyboard_jp.png" height="467" width="416"></p>
+            <figcaption>Fig. <span class="figno">9</span> <span class="fig-title">An example of an on-screen keyboard (Japanese)</span></figcaption>
+          </figure>
+        </section>
+      </section>
+      <section rel="bibo:chapter" resource="#converter-section" typeof="bibo:Chapter" id="converter-section">
+        <h3><span class="secno">2.2 </span>Converter</h3>
+        <p>A converter is a context-sensitive parser used for replacing
+          the outputs of a composer to ideographic characters on Chinese,
+          Japanese, and Korean.</p>
+        <div class="note"><div aria-level="4" class="note-title" role="heading"><span>Note</span></div><p class="">Korean seldom uses ideographic characters.</p></div>
+
+        <p>Because Chinese, Japanese, and Korean have many homonyms, each
+          sequence of phonetic characters usually matches many ideographic
+          characters: e.g., a Japanese
+          phonetic character ‘か’ matches Japanese
+          ideographic characters
+          ‘化’, ‘科’,
+          ‘課’,
+          etc.; Pinyin characters ‘ka’ matches Simplified-Chinese
+          ideographic characters ‘卡’,
+          ‘喀’,
+          ‘咯’, etc.; Bopomofo characters
+          ‘人弓’ matches Traditional-Chinese
+          ideographic characters ‘乞’,
+          ‘亿’, ‘亇’, etc.</p>
+        <p>A converter looks up a dictionary and shows a list of
+          candidates of possible ideographic characters so a user can choose
+          one. This list is known as a <dfn id="candidate-list">candidate
+            list</dfn>.
+          A candidate list is known as a <dfn id="candidate-window">candidate
+            window</dfn> when it has its own window.</p>
+        <p>Some Japanese IMEs show annotations in its
+          <a href="#candidate-window">candidate window</a>
+          for a character that is not so easy to distinguish from other
+          characters (such as full-width alphabets, full-width Katakanas,
+          and half-width Katakanas, etc.), as shown in the following
+          figure.</p>
+        <figure id="fig-candidate-window-japanese">
+          <p><img src="TR3_files/image05.png" height="342" width="393"></p>
+          <figcaption>Fig. <span class="figno">10</span> <span class="fig-title">Candidate window (Japanese)</span></figcaption>
+        </figure>
+        <p>The next figure shows a <a href="#candidate-window">candidate
+            window</a> of a Simplified-Chinese IME.</p>
+        <figure id="fig-candidate-window-simplified-chinese">
+          <p><img src="TR3_files/image04.png" height="308" width="390"></p>
+          <figcaption>Fig. <span class="figno">11</span> <span class="fig-title">Candidate window (Simplified Chinese)</span></figcaption>
+        </figure>
+        <p>And the next figure shows a <a href="#candidate-window">candidate
+            window</a> of a Traditional-Chinese IME.</p>
+        <figure id="fig-candidate-window-traditional-chinese">
+          <p><img src="TR3_files/image06.png" height="180" width="352"></p>
+          <figcaption>Fig. <span class="figno">12</span> <span class="fig-title">Candidate window (Traditional Chinese)</span></figcaption>
+        </figure>
+        <p>Some techniques are used to improve conversion quality.
+          For example, a converter integrates an <dfn id="MRU">MRU</dfn>
+          (Most-Recently Used) list.
+          Even though there are many ideographic characters for each phonetic
+          character (or phonetic radical), a user does not usually use all
+          these ideographic characters. A converter uses an
+          <a href="#MRU">MRU list</a> to filter out ideographic characters not
+          used so often from a <a href="#candidate-list">candidate list</a>.
+          Another example is a grammar parser. A converter that
+          integrates a grammar parser splits the given phonetic characters
+          into grammatical clauses and converts only one clause at a time.
+          When a sequence of phonetic characters consists of n clauses and the
+          i-th clause has m_i candidates, the total number of the candidates
+          for the input characters becomes (m_1 * m_2 * … * m_n).
+          To reduce the number of candidates owned by a converter,
+          a converter usually processes one clause at a time. This clause is
+          called the <dfn id="selected-clause">selected clause</dfn>.</p>
+
+        <p>An IME usually renders a <a href="#selected-clause">selected
+            clause</a> with a special style to distinguish it from other
+          clauses, as shown in the following figure.</p>
+        <figure id="fig-selected-clause">
+          <p><img src="TR3_files/image08.png" height="346" width="394"></p>
+          <figcaption>Fig. <span class="figno">13</span> <span class="fig-title">Selected clause (Japanese)</span></figcaption>
+        </figure>
+        <p>When a converter converts two or more clauses, it chooses
+          candidates for the selected clause so it becomes grammatically
+          consistent with the surrounding clauses:
+          e.g., Japanese converters usually output
+          ‘危機一髪’ (not
+          ‘危機一発’)
+          for Japanese phonetic characters
+          ‘ききいっぱつ’
+          because
+          ‘危機一発’ is grammatically
+          incorrect.</p>
+        <p>On a mobile platform, candidates may not appear in a separate
+          window, but occupies some part of the screen for the user to choose
+          the candidate word that they intend.
+        </p>
+        <figure id="fig-mobile-ime">
+          <p><img src="TR3_files/mobile_ime_composition.png" height="651" width="416"></p>
+          <figcaption>Fig. <span class="figno">14</span> <span class="fig-title">Composition on mobile platform (Japanese)</span></figcaption>
+        </figure>
+        <figure id="fig-mobile-ime2">
+          <p><img src="TR3_files/mobile_ime_composition3.png" height="592" width="416"></p>
+          <figcaption>Fig. <span class="figno">15</span> <span class="fig-title">Composition on mobile platform (Japanese)</span></figcaption>
+        </figure>
+      </section>
+    </section>
+    <section rel="bibo:chapter" resource="#conformance" typeof="bibo:Chapter" id="conformance"><!--OddPage--><h2><span class="secno">3. </span>Conformance</h2>
+<p>
+  As well as sections marked as non-normative, all authoring guidelines, diagrams, examples,
+  and notes in this specification are non-normative. Everything else in this specification is
+  normative.
+</p>
+<p>
+  The key words <em title="MUST" class="rfc2119">MUST</em>, <em title="MUST NOT" class="rfc2119">MUST NOT</em>, <em title="REQUIRED" class="rfc2119">REQUIRED</em>, <em title="SHOULD" class="rfc2119">SHOULD</em>, <em title="SHOULD NOT" class="rfc2119">SHOULD NOT</em>, <em title="RECOMMENDED" class="rfc2119">RECOMMENDED</em>, <em title="MAY" class="rfc2119">MAY</em>,
+  and <em title="OPTIONAL" class="rfc2119">OPTIONAL</em> in this specification are to be interpreted as described in [<cite><a href="#bib-RFC2119" class="bibref">RFC2119</a></cite>].
+</p>
+
+      <p><i>More to be written.</i></p>
+    </section>
+    <section rel="bibo:chapter" resource="#terminology" typeof="bibo:Chapter" id="terminology">
+      <!--OddPage--><h2><span class="secno">4. </span>Terminology and Algorithms</h2>
+      <p><i>To be written.</i></p>
+    </section>
+
+    <section id="the-inputmethodcontext-property">
+      <!--OddPage--><h2><span class="secno">5. </span>The inputMethodContext property</h2>
+      <p>Authors can get an object which implements the
+        <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a>
+        interface on an editable or
+        <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/editing.html#focusable">focusable</a>
+        element, which can get keyboard input first
+        (i.e. a “target” element).
+.
+        If this property is accessed
+        on non-editable, non-focusable element, a user agent <em title="SHOULD" class="rfc2119">SHOULD</em>
+        return a context for the innermost editable or focusable element
+        to the element.  In this case, the <code>target</code> property
+        in the <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a>
+        interface points to the target element.
+        If all ancestors of an element are neither editable nor focusable,
+        this property returns <code>null</code>.</p>
+      <p>To control the IME attached to an element, it is a good idea to add
+        this property to the HTMLElement interface.</p>
+      <pre class="idl"><span class="idlInterface" id="idl-def-HTMLElement">partial interface <span class="idlInterfaceID">HTMLElement</span> {
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a>?</span> <span class="idlAttrName"><a href="#widl-HTMLElement-inputMethodContext">inputMethodContext</a></span>;</span>
+};</span></pre><section id="attributes"><h3><span class="secno">5.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-HTMLElement-inputMethodContext"><code>inputMethodContext</code> of type <span class="idlAttrType"><a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a></span>, readonly   , nullable</dt><dd>
+            <p>Returns an <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a> interface associated with
+              this element.</p>
+            <p>To change the behavior of the IME associated with an
+              element, authors <em title="MUST" class="rfc2119">MUST</em> first obtain an <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a>
+              interface from the <code>inputMethodContext</code> property of
+              the HTMLElement interface.</p>
+            <p>The returned <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a> interface <em title="MAY" class="rfc2119">MAY</em> not be directly
+              associated to the element.  An interface <em title="MAY" class="rfc2119">MAY</em> be shared
+              among elements under an innermost editable or focusable element.
+              In that case, <code>target</code> property in the
+              <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a> interface points to the element which owns
+              the interface.</p>
+          </dd></dl></section>
+    </section>
+
+    <section rel="bibo:chapter" resource="#composition-interface" typeof="bibo:Chapter" id="composition-interface">
+      <!--OddPage--><h2><span class="secno">6. </span>The Composition Interface</h2>
+      <p>This interface represents an ongoing IME composition. It provides
+        attributes representing the text being composed by an IME and
+        its associated information.</p>
+      <div class="note"><div aria-level="3" class="note-title" role="heading"><span>Note</span></div><p class="">It might be a good idea to add this interface to
+        <a href="http://www.w3.org/TR/DOM-Level-3-Events/#events-CompositionEvent">CompositionEvent.</a></p></div>
+      <pre class="idl"><span class="idlInterface" id="idl-def-Composition">interface <span class="idlInterfaceID">Composition</span> {
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-Composition-text">text</a></span>;</span>
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a>long</a></span>      <span class="idlAttrName"><a href="#widl-Composition-selectionStart">selectionStart</a></span>;</span>
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a>long</a></span>      <span class="idlAttrName"><a href="#widl-Composition-selectionEnd">selectionEnd</a></span>;</span>
+<span class="idlMethod">    <span class="idlMethType">sequence&lt;<a>unsigned long</a>&gt;</span> <span class="idlMethName"><a href="#widl-Composition-getSegments-sequence-unsigned-long">getSegments</a></span> ();</span>
+};</span></pre><section id="attributes-1"><h3><span class="secno">6.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-Composition-selectionEnd"><code>selectionEnd</code> of type <span class="idlAttrType"><a>long</a></span>, readonly   </dt><dd><p>Represents the 0-based index to the next position of
+            the last character of the selection in the current composition
+            text.
+            If there is no selection, selectionStart and selectionEnd <em title="MUST" class="rfc2119">MUST</em>
+            be the same value and they indicate the position of the caret.</p>
+            <p>For example, if “DEF” is selected in composition
+              text “abcDEFghi”, <code>selectionStart</code> is 3
+              and <code>selectionEnd</code> is 6.
+              If the caret is between “B” and “C”
+              in composition text “ABCD”, both
+              <code>selectionStart</code> and <code>selectionEnd</code> are 2.
+          </p></dd><dt id="widl-Composition-selectionStart"><code>selectionStart</code> of type <span class="idlAttrType"><a>long</a></span>, readonly   </dt><dd><p>Represents the 0-based index to the first character of
+            the selection in the current composition text.</p>
+          <div class="note"><div aria-level="3" class="note-title" role="heading"><span>Note</span></div><p class="">An author can assume that
+            <code>selectionStart</code> and <code>selectionEnd</code>
+            boundary fit in with any of <code>segments</code>, and
+            that <code>selectionStart</code> is equal or less than
+            <code>selectionEnd</code>.</p></div></dd><dt id="widl-Composition-text"><code>text</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly   </dt><dd>Represents the text being composed by an IME.
+            The text attribute of this node is equal to the text
+            attribute of a compositionupdate event when this is referenced
+            in compositionupdate's event handler.</dd></dl></section><section id="methods"><h3><span class="secno">6.2 </span>Methods</h3><dl class="methods"><dt id="widl-Composition-getSegments-sequence-unsigned-long"><code>getSegments</code></dt><dd>If composition text is segmented into clauses by an IME,
+             this array contains 0-based indices of the starting character of
+             each clause in increasing order.  If composition text is not
+             segmented, it contains one '0' element.
+            <div class="note"><div aria-level="3" class="note-title" role="heading"><span>Note</span></div><p class="">This can be used to render compostion text as
+              segmented clauses, but how to visualize them are not specified
+              here.  It is recommended to follow the platform standard way to
+              visualize the segmentation (e.g. using underline or reverse
+              background etc.).</p></div>
+            <div class="note"><div aria-level="3" class="note-title" role="heading"><span>Note</span></div><p class="">The way the platform standard renders composition
+              text might be customized by a user (e.g. for accessibility).
+              CSS property to indicate the current default style to render
+              the composition is desired.
+            </p></div>
+          <div><em>No parameters.</em></div><div><em>Return type: </em><code>sequence&lt;<a>unsigned long</a>&gt;</code></div></dd></dl></section>
+    </section>
+
+    <section rel="bibo:chapter" resource="#inputmethodcontext-interface" typeof="bibo:Chapter" id="inputmethodcontext-interface">
+      <!--OddPage--><h2><span class="secno">7. </span>The InputMethodContext Interface</h2>
+      <pre class="idl"><span class="idlInterface" id="idl-def-InputMethodContext">interface <span class="idlInterfaceID">InputMethodContext</span> {
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-Composition"><code>Composition</code></a>?</span> <span class="idlAttrName"><a href="#widl-InputMethodContext-composition">composition</a></span>;</span>
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a>DOMString</a></span>    <span class="idlAttrName"><a href="#widl-InputMethodContext-locale">locale</a></span>;</span>
+<span class="idlAttribute">    readonly    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-HTMLElement"><code>HTMLElement</code></a>?</span> <span class="idlAttrName"><a href="#widl-InputMethodContext-target">target</a></span>;</span>
+<span class="idlMethod">    <span class="idlMethType"><a>void</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-confirmComposition-void">confirmComposition</a></span> ();</span>
+<span class="idlMethod">    <span class="idlMethType"><a>void</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-setCaretRectangle-void-Node-anchor-long-x-long-y-long-w-long-h">setCaretRectangle</a></span> (<span class="idlParam"><span class="idlParamType"><a>Node</a></span> <span class="idlParamName">anchor</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">x</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">y</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">w</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">h</span></span>);</span>
+<span class="idlMethod">    <span class="idlMethType"><a>void</a></span> <span class="idlMethName"><a href="#widl-InputMethodContext-setExclusionRectangle-void-Node-anchor-long-x-long-y-long-w-long-h">setExclusionRectangle</a></span> (<span class="idlParam"><span class="idlParamType"><a>Node</a></span> <span class="idlParamName">anchor</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">x</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">y</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">w</span></span>, <span class="idlParam"><span class="idlParamType"><a>long</a></span> <span class="idlParamName">h</span></span>);</span>
+};</span></pre><section id="attributes-2"><h3><span class="secno">7.1 </span>Attributes</h3><dl class="attributes"><dt id="widl-InputMethodContext-composition"><code>composition</code> of type <span class="idlAttrType"><a class="idlType" href="#idl-def-Composition"><code>Composition</code></a></span>, readonly   , nullable</dt><dd>Represents the current composition.  If there is no ongoing
+            composition, returns null.</dd><dt id="widl-InputMethodContext-locale"><code>locale</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly   </dt><dd>Represents the locale of the current input method as
+            a BCP-47 tag (e.g. "en-US").
+            The locale <em title="MAY" class="rfc2119">MAY</em> be the empty string when
+            inapplicable or unknown.</dd><dt id="widl-InputMethodContext-target"><code>target</code> of type <span class="idlAttrType"><a class="idlType" href="#idl-def-HTMLElement"><code>HTMLElement</code></a></span>, readonly   , nullable</dt><dd>
+            <p>Represents the element associated with the <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a>
+              object.</p>
+            <p>Once a target element gets deleted or modified not to accept
+              any input, any access to the
+              <a href="#inputmethodcontext-interface">InputMethodContext</a>
+              interface through the object has no effect.  Any method calls
+              will just return, accesses to <code>composition</code> and
+              <code>target</code> will return null, and accesses to
+              <code>locale</code> will return the empty string.
+            </p>
+          </dd></dl></section><section id="methods-1"><h3><span class="secno">7.2 </span>Methods</h3><dl class="methods"><dt id="widl-InputMethodContext-confirmComposition-void"><code>confirmComposition</code></dt><dd>
+          <p>Finishes the ongoing composition of the hosting user agent.</p>
+          <p>When a Web application calls this function, a user agent sends a
+          compositionend event and a textInput event as a user types an
+          ‘Accept’ key as written in
+          <a href="http://www.w3.org/TR/DOM-Level-3-Events/#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
+          [<cite><a href="#bib-DOM-LEVEL-3-EVENTS" class="bibref">DOM-LEVEL-3-EVENTS</a></cite>].</p>
+          <div class="note"><div aria-level="3" class="note-title" role="heading"><span>Note</span></div><p class="">This may cause the race condition when a script
+          calls confirmComposition while system IME gets accept key in the
+          same time, a user agent may confirm the ongoing composition twice.
+          Instead,
+            <a href="http://lists.w3.org/Archives/Public/public-webapps/2013AprJun/0361.html">
+              introducing cancelComposition() is proposed
+            </a>
+            and when a script needs the behavior of confirmComposition(), it
+            can commit the current composition and then call
+            cancelComposition().</p></div>
+          <div><em>No parameters.</em></div><div><em>Return type: </em><code><a>void</a></code></div></dd><dt id="widl-InputMethodContext-setCaretRectangle-void-Node-anchor-long-x-long-y-long-w-long-h"><code>setCaretRectangle</code></dt><dd>
+            <p>Notifies the rectangle of composition text to a user agent. When
+            a user agent renders a
+            <a href="#candidate-window">candidate window</a>
+            or a composition window, it uses
+            this rectangle to draw windows next to the composition or
+            prevent these windows from being rendered on this rectangle.</p>
+            <p>If a Web application wants to render composition text itself,
+            it has to tell a user agent where the composition text will be
+            located whenever it gets <code>compositionstart</code> event
+            or <code>compositionend</code> event.</p>
+            <p>On Windows, this rectangle is used as a parameter for
+            ImmSetCandidateWindow(). On Mac, this rectangle is sent when it calls
+            [firstRectForCharacterRange:]. On Linux (GTK), this rectangle is used as a
+            parameter for gtk_im_context_set_cursor_location().</p>
+            <ul>
+              <li>The <var>anchor</var> parameter represents the DOM node
+                against which the rectangle is positioned. This <em title="MAY" class="rfc2119">MAY</em>
+                be a different node than the node that listens to composition
+                events which has focus and therefore a Web application can
+                draw composition text where it does not have focus.
+              </li>
+              <li>The <var>x</var>, and <var>y</var> are the offsets to the
+                top-left of the rectangle relative to <var>anchor</var>
+                node's top-left.</li>
+              <li>The <var>w</var>, and <var>h</var> are width and height of
+                the rectangle.</li>
+            </ul>
+            <p>These set values apply only to the current
+              composition session (i.e. until <code>compositionend</code>
+              event is sent).</p>
+            <p>A user agent <em title="MAY" class="rfc2119">MAY</em> need to convert these
+              coordinates to the screen coordinates when it shows a
+              <a href="#candidate-window">candidate window</a>.
+          </p><table class="parameters"><tbody><tr><th>Parameter</th><th>Type</th><th>Nullable</th><th>Optional</th><th>Description</th></tr><tr><td class="prmName">anchor</td><td class="prmType"><code><a>Node</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr><tr><td class="prmName">x</td><td class="prmType"><code><a>long</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr><tr><td class="prmName">y</td><td class="prmType"><code><a>long</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr><tr><td class="prmName">w</td><td class="prmType"><code><a>long</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr><tr><td class="prmName">h</td><td class="prmType"><code><a>long</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr></tbody></table><div><em>Return type: </em><code><a>void</a></code></div></dd><dt id="widl-InputMethodContext-setExclusionRectangle-void-Node-anchor-long-x-long-y-long-w-long-h"><code>setExclusionRectangle</code></dt><dd>
+            <p>Gives a hint for a user agent to avoid showing any input
+              related UI elements (e.g. on-screen keyboard, a candidate window)
+              on the given rectangle, for an application to show some
+              input-related UI elements (such as search suggestions) in the
+              rectangle.</p>
+            <p>A user agent <em title="MAY" class="rfc2119">MAY</em> use this hint to explicitly control the
+              position for a candidate window, or determine zoom level
+              and view port when on-screen keyboard comes in.</p>
+            <p>These set values apply only to the current
+              composition session (i.e. until <code>compositionend</code>
+              event is sent).</p>
+            <ul>
+              <li>The <var>anchor</var> parameter represents the DOM node
+                against which the rectangle is positioned.
+              </li>
+              <li>The <var>x</var>, and <var>y</var> are the offsets to the
+                top-left of the rectangle relative to <var>anchor</var>
+                node's top-left.</li>
+              <li>The <var>w</var>, and <var>h</var> are width and height of
+                the rectangle.</li>
+            </ul>
+          <table class="parameters"><tbody><tr><th>Parameter</th><th>Type</th><th>Nullable</th><th>Optional</th><th>Description</th></tr><tr><td class="prmName">anchor</td><td class="prmType"><code><a>Node</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr><tr><td class="prmName">x</td><td class="prmType"><code><a>long</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr><tr><td class="prmName">y</td><td class="prmType"><code><a>long</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr><tr><td class="prmName">w</td><td class="prmType"><code><a>long</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr><tr><td class="prmName">h</td><td class="prmType"><code><a>long</a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc"></td></tr></tbody></table><div><em>Return type: </em><code><a>void</a></code></div></dd></dl></section>
+    </section>
+
+    <section rel="bibo:chapter" resource="#best-practices" typeof="bibo:Chapter" class="informative" id="best-practices">
+      <!--OddPage--><h2><span class="secno">8. </span>Best Practices</h2><p><em>This section is non-normative.</em></p>
+    <p>This specification provides an interface for developing IME-aware
+      Web applications.</p>
+    <p>This section describes practices for some use-cases.</p>
+    <section rel="bibo:chapter" resource="#life-of-inputmethodcontext" typeof="bibo:Chapter" id="life-of-inputmethodcontext">
+      <h3><span class="secno">8.1 </span>Life of InputMethodContext</h3><p><em>This section is non-normative.</em></p>
+      <p>Once a <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a> interface is obtained,
+        it should be valid for the lifetime of its <code>target</code>
+        element's lifetime, as long as the element is editable or focusable.
+        Once the target gets disabled,
+        authors <em title="MAY" class="rfc2119">MAY</em> NOT access an IME through the interface even after the
+        target gets enabled again.  Once the target is deleted,
+        any access to the interface is void.</p>
+      <p>Any access to the <a class="idlType" href="#idl-def-InputMethodContext"><code>InputMethodContext</code></a> interface makes sense
+        mostly when the target element has focus.  In other words,
+        it makes little sense if you access the interface when the target
+        element doesn't have focus.
+      </p>
+    </section>
+    <section rel="bibo:chapter" resource="#drawing-composition-text" typeof="bibo:Chapter" id="drawing-composition-text">
+      <h3><span class="secno">8.2 </span>Drawing Composition Text</h3>
+      <div class="note"><div aria-level="4" class="note-title" role="heading"><span>Note</span></div><p class="" id="note-beforeInput">As of this writing, the order of
+        <code>compositionupdate</code> event and DOM update is being
+        discussed
+        (see <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18931">Bug 18931</a>)
+        and if <code>compositionupdate</code> event happens after
+        DOM modification, this section has to be rewritten using
+        <code>beforeInput</code> event, which is also being discussed.
+        Example 2 code should be updated as well.</p></div>
+      <p>If a Web application wants to draw composition text by itself,
+        it <em title="SHOULD" class="rfc2119">SHOULD</em> handle the <code>compositionupdate</code> event
+        to get notified from the IME that the composition text has been
+        changed, and then
+        use the interface described in this document to retrieve
+        composition and let the IME know
+        where the composition text is drawn by calling
+        <code>setCaretRectangle()</code> method.
+        If <code>setCaretRectangle()</code> is not called, IME will not have
+        information about where to show IME UIs, and it may show UIs at
+        an obtrusive position. To avoid this situation, a user agent may
+        set some decent default position in the vicinity of the focused
+        input field.
+        Optionally it <em title="MAY" class="rfc2119">MAY</em> call
+        <code>setExclusionRectangle()</code> method to hint to the IME
+        that a certain area is not suitable for showing the IME UI.</p>
+      <p>When a Web application draws composition text, it <em title="MUST" class="rfc2119">MUST</em> call
+        <code>preventDefault()</code> in <code>compositionupdate</code>
+        handler so that the user agent will not draw the text.</p>
+      <p>When a Web application wants to handle DOM level3 composition events
+        on a non-<code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>,
+        or <code>contenteditable</code> node,
+        it <em title="MUST" class="rfc2119">MUST</em> add <code>inputmode</code> attribute with a proper value
+        and move focus to it to get composition events.</p>
+      <p>The following diagram shows the flow of events
+        among the keyboard, the IME, the user agent, and the Web application
+        when a user types
+        ‘kyouha’ to convert to
+        ‘今日は’.</p>
+      <figure id="fig-imeapi-flow">
+        <p><img src="TR3_files/imeapi_flow.png" height="1133" width="744"></p>
+        <figcaption>Fig. <span class="figno">16</span> <span class="fig-title">Event flow of IME and an IME-aware Web application.</span></figcaption>
+      </figure>
+    </section>
+
+
+</section>
+<section rel="bibo:chapter" resource="#references" typeof="bibo:Chapter" class="appendix" id="references"><!--OddPage-->
+<h2><span class="secno">A. </span>Revision History</h2>
+<section>
+<p>The following is an informative summary of the changes since the last
+publication of this specification.  A complete revision history of the
+Editor's Drafts of this specification can be found
+<a href="https://dvcs.w3.org/hg/ime-api/summary">here</a>.
+<ul>
+  <li>Example/use cases/best practices
+    <ul>
+      <li>Removed Javascript IME use-case</li>
+      <li>Removed example1 (drawing composition text in &lt;canvas&gt;)</li>
+      <li>Added example code for drawing composition text.</li>
+      <li>Added an explanation of InputMethodContext's scope in best practices section.</li>
+    </ul></li>
+  <li>API
+    <ul>
+      <li>Added target attribute <a href="https://dvcs.w3.org/hg/ime-api/raw-file/tip/proposals/IMEProposal.html">proposed by Microsoft</a>.</li>
+      <li>Renamed getInputContext() to .inputMethodContext per
+        <a href="http://lists.w3.org/Archives/Public/public-webapps/2013AprJun/0361.html">comment from James Su</a>.</li>
+      <li>Marked composition and target attributes as nullable.</li>
+      <li>Clarified that context is associated with one editable or focusable element.</li>
+      <li>Clarified the scope of setCaretRectangle()'s coordinates.</li>
+      <li>Removed confusing 'enabled' property and open() method in favor of
+        usual focus control and inputmode attribute.</li>
+      <li>Changed composition interface. the 'text' property was changed to plain
+        DOMString from Node, the 'caret' property was divided into the
+        'selectionStart' and the 'selectionEnd' properties.  Added the 'segments'
+        property to represent the position of segmentation of composition text.</li>
+    </ul></li>
+</ul>
+</section>
+<h2><span class="secno">B. </span>References</h2>
+<section rel="bibo:chapter" resource="#normative-references" typeof="bibo:Chapter" id="normative-references">
+<h3><span class="secno">B.1 </span>Normative references</h3>
+<dl about="" class="bibliography">
+  <dt id="bib-DOM-LEVEL-3-EVENTS">[DOM-LEVEL-3-EVENTS]</dt>
+    <dd rel="dcterms:requires">Travis Leithead; Jacob Rossi; Doug Schepers; Björn Höhrmann; Philippe Le Hégaret. <a href="http://www.w3.org/TR/DOM-Level-3-Events/"><cite>Document Object Model (DOM) Level 3 Events Specification</cite></a>. 6 September 2012. W3C Last Call Working Draft. URL: <a href="http://www.w3.org/TR/DOM-Level-3-Events/">http://www.w3.org/TR/DOM-Level-3-Events/</a></dd>
+  <dt id="bib-RFC2119">[RFC2119]</dt>
+    <dd rel="dcterms:requires">S. Bradner. <a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key words for use in RFCs to Indicate Requirement Levels.</cite></a> March 1997. Internet RFC 2119.  URL: <a href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a></dd>
+</dl>
+</section>
+</section>
+</body>
+</html>
