@@ -711,7 +711,7 @@ function init() {
     <section id="inputmethodcontext-interface">
       <h1>The InputMethodContext Interface</h1>
       <dl title="interface InputMethodContext : EventTarget" class="idl">
-        <dt>attribute EventHandler  oncandidatewindowshow</dt>
+        <dt>attribute EventHandler oncandidatewindowshow</dt>
         <dd><p>This event should be fired immediately after the IME
             candidate window is set to appear, which means immediately after
             the position information for the candidate window has been
@@ -732,7 +732,7 @@ function init() {
               per element (the handlers will remain valid for as long as
               the element is alive.</li>
         </ol></dd>
-        <dt>attribute EventHandler  oncandidatewindowupdate</dt>
+        <dt>attribute EventHandler oncandidatewindowupdate</dt>
         <dd><p>This events should be fired after either:</p>
           <ol>
             <li>The IME candidate window has been identified as needing to
@@ -746,7 +746,7 @@ function init() {
           <p>In either case, the event should be fired after the new
             size/location of the candidate window is known by the user agent.
         </dd>
-        <dt>attribute EventHandler  oncandidatewindowhide</dt>
+        <dt>attribute EventHandler oncandidatewindowhide</dt>
         <dd>This event should be fired after the candidate window is fully
           hidden (after the dismissal animation has ended, if there is any).
           The event handler code will see that no ClientRect can be obtained
@@ -770,6 +770,28 @@ function init() {
               will just return, accesses to <code>composition</code> and
               <code>target</code> will return null, and accesses to
               <code>locale</code> will return the empty string.
+            </p>
+          </dd>
+        <dt>readonly attribute unsigned long compositionStartOffset</dt>
+          <dd>
+            <p>Represents the starting offset of the composition relative to
+              the target if a composition is occurring, or 0 if there is no
+              composition in progress. For composition occurring on an
+              <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code>
+              element, the
+              <code>compositionStartOffset</code> is the starting offset of
+              the composition within the target's <code>value</code> string.
+              For compositions occurring on an element with the
+              <code>contentEditable</code>
+              flag set, then this is the starting offset relative to the
+              target's <code>textContent</code> property (textContent is a
+              linear view of all the text under an element).
+            </p>
+          </dd>
+        <dt>readonly attribute unsigned long compositionEndOffset</dt>
+          <dd>
+            <p>Represents the ending offset of the composition,
+              in a similar way to <code>compositionStartOffset</code>.
             </p>
           </dd>
         <dt>ClientRect  getCandidateWindowClientRect()</dt>
