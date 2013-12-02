@@ -639,25 +639,6 @@ function onCandidateWindowHide(event) {
             suggestions.</p>
           <p>Note: client coordinates are in document pixels and have origin
             at the upper-left corner of the client area.</p></dd>
-        <dt>void confirmComposition()</dt>
-          <dd>
-          <p>Finishes the ongoing composition of the hosting user agent.</p>
-          <p>When a Web application calls this function, a user agent sends a
-          compositionend event and a textInput event as a user types an
-          &lsquo;Accept&rsquo; key as written in
-          <a href="http://www.w3.org/TR/DOM-Level-3-Events/#keys-IME">“Input Method Editors” section the DOM Level 3 Events specification</a>
-          [[!DOM-LEVEL-3-EVENTS]].</p>
-          <p class="note">This may cause the race condition when a script
-          calls confirmComposition while system IME gets accept key in the
-          same time, a user agent may confirm the ongoing composition twice.
-          Instead,
-            <a href="http://lists.w3.org/Archives/Public/public-webapps/2013AprJun/0361.html">
-              introducing cancelComposition() is proposed
-            </a>
-            and when a script needs the behavior of confirmComposition(), it
-            can commit the current composition and then call
-            cancelComposition().</p>
-          </dd>
       </dl>
     </section>
 
