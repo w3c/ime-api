@@ -643,6 +643,15 @@ function onCandidateWindowHide(event) {
             suggestions.</p>
           <p>Note: client coordinates are in document pixels and have origin
             at the upper-left corner of the client area.</p></dd>
+        <dt>sequence&lt;DOMString&gt; getCompositionAlternatives()</dt>
+        <dd><p>Returns a copy (per call) of the current list of alternate
+            candidate strings from the InputMethodContext object.
+            The InputMethodContext object can produce alternates while it
+            has a composition in progress. When no composition is going on,
+            getCompositionAlternatives() will always return an empty list.
+            The list of alternatives is not updated "live"; it is only
+            updated between compositionupdate events.
+        </p></dd>
       </dl>
     </section>
 
