@@ -59,11 +59,11 @@
                     mailto:     "Travis.Leithead@google.com"
                 },
                 {   name:       "Takayoshi Kochi",
-                    company:    "previouis editor, Google",
+                    company:    "previous editor, Google",
                     mailto:     "kochi@google.com"
                 },
                 {   name:       "Kenji Baheux",
-                    company:    "previouis editor, Google",
+                    company:    "previous editor, Google",
                     mailto:     "kenjibaheux@google.com"
                 },
                 {   name:       "Hironori Bono (坊野 博典)",
@@ -142,7 +142,7 @@
         to retrieve <a href="#ime-composition">composition text</a>
         while it is being composed in an associated IME.</p>
       <p>However, Web applications can still run into difficulties
-        interarcting with IME, such as detecting any UI overlap between
+        interacting with IME, such as detecting any UI overlap between
         <a href="#candidate-window">IME candidate window</a> and its
         underlying UI elements.</p>
       <p>To solve the IME-related problems, this specification introduces
@@ -219,7 +219,7 @@ function expandSuggest(candidates) {
     for (i = 0; i &lt; suggest.childNodes.length; i++) {
         suggest.removeChild(suggest.childNodes[0]);
     }
-    // Render new suggeston list.
+    // Render new suggestion list.
     for (i = 0; i &lt; candidates.length; i++) {
         suggest.appendChild(document.createElement('li'));
         suggest.childNodes[i].textContent = candidates[i];
@@ -598,7 +598,7 @@ function onCandidateWindowHide(event) {
               event.currentTarget to refer to the <a>InputMethodContext</a>
               object upon which the event is firing.</li>
             <li>These events are not cancellable, meaning that the appearing
-              of the candicate window cannot be controlled via these events
+              of the candidate window cannot be controlled via these events
               by cancelling them.
             <li>Web applications need only register for these events once
               per element (the handlers will remain valid for as long as
