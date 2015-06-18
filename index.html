@@ -56,28 +56,28 @@
           editors: [
                 {   name:       "Travis Leithead",
                     company:    "Microsoft",
-                    mailto:     "Travis.Leithead@google.com",
+                    mailto:     "travil@microsoft.com",
                     w3cid: "40117"
-                },
-                {   name:       "Takayoshi Kochi",
-                    company:    "previous editor, Google",
-                    mailto:     "kochi@google.com",
-                    w3cid: "59029"
-                },
-                {   name:       "Kenji Baheux",
-                    company:    "previous editor, Google",
-                    mailto:     "kenjibaheux@google.com",
-                    w3cid: "48178"
-                },
-                {   name:       "Hironori Bono (坊野 博典)",
-                    company:    "previous editor, (formerly) Google",
-                    w3cid: "48337"
-                },
+                }
           ],
           wg:           "Web Applications Working Group",
           wgURI:        "http://www.w3.org/2008/webapps/",
           otherLinks: [{
-            key: 'Repository and Participation',
+            key: 'Previous Editors',
+			data: [
+				{
+					value: "Takayoshi Kochi, Google (through 2014)"
+				},
+				{
+					value: "Kenji Baheux, Google (through 2014)"
+				},
+				{
+					value: "Hironori Bono (坊野 博典), Google (through 2014)"
+				}
+			]
+		  },
+		  {
+			key: 'Repository and Participation',
             data: [
                 {
                     value: 'We are on github.',
@@ -121,8 +121,8 @@
             with current UI state of IME.
           </li>
         </ul>
-      <p>This API is designed to be used in conjunction with DOM events
-        [[DOM-LEVEL-3-EVENTS]].</a></p>
+      <p>This API is designed to be used in conjunction with UI Events
+        [[UI-EVENTS]].</a></p>
     </section>
     <section id="sotd">
       <p>
@@ -139,9 +139,8 @@
         WYSIWYG presentation editors, developers have difficulties when
         implementing Web applications that involve
         <a href="#IME">input-method editors</a>.
-        To mitigate the difficulties,
-        <a href="http://www.w3.org/TR/DOM-Level-3-Events/">the DOM
-          Level 3 Events specification</a>[[DOM-LEVEL-3-EVENTS]]
+        To mitigate the difficulties, the UI Events
+          specification [[UI-EVENTS]]
         introduces <i>composition events</i>
         to retrieve <a href="#ime-composition">composition text</a>
         while it is being composed in an associated IME.</p>
@@ -166,7 +165,7 @@
         <a href="https://dvcs.w3.org/hg/ime-api/raw-file/default/use-cases/Overview.html">use cases for Input Method Editor
           API </a>document for more information about possible use cases.</p>
       <p>For other possible improvements for interacting with IME, please
-        refer the <a href="Annex.html">IME API annex</a> document
+        refer the <a href="http://w3c.github.io/ime-api/Annex.html">IME API annex</a> document
         as a non-normative reference.</p>
       <p>Consider the following example.</p>
       <p>This example is a simple web search page which gives a user
@@ -545,7 +544,7 @@ function onCandidateWindowHide(event) {
     </section>
     <section id="terminology">
       <h1>Terminology and Algorithms</h1>
-      <p><i>To be written.</i></p>
+      <p><code>DOMRectReadOnly</code> is defined in Geometry Interfaces Module. [[!GEOMETRY-1]]</p>
     </section>
 
     <section>
@@ -625,7 +624,7 @@ function onCandidateWindowHide(event) {
         <dt>attribute EventHandler oncandidatewindowhide</dt>
         <dd>This event should be fired after the candidate window is fully
           hidden (after the dismissal animation has ended, if there is any).
-          The event handler code will see that no ClientRect can be obtained
+          The event handler code will see that no <code>DOMRectReadOnly</code> can be obtained
           inside this handler.</dd>
         <dt>readonly attribute HTMLElement? target</dt>
           <dd>
@@ -661,13 +660,12 @@ function onCandidateWindowHide(event) {
               in a similar way to <code>compositionStartOffset</code>.
             </p>
           </dd>
-        <dt>ClientRect  getCandidateWindowClientRect()</dt>
+        <dt>DOMRectReadOnly getCandidateWindowRect()</dt>
         <dd><p>
             An web application may use this information to explicitly control
             the position for its own input-related UI elements, such as search
             suggestions.</p>
-          <p>Note: client coordinates are in document pixels and have origin
-            at the upper-left corner of the client area.</p></dd>
+        </dd>
         <dt>sequence&lt;DOMString&gt; getCompositionAlternatives()</dt>
         <dd><p>Returns a copy (per call) of the current list of alternate
             candidate strings from the InputMethodContext object.
