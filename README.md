@@ -1,5 +1,3 @@
+This is the repository for the [Input Method Editor API](https://w3c.github.io/ime-api/) spec.
 
-# Specification 'ime-api'
-
-This is the repository for ime-api. You're welcome to contribute! Let's make the Web rock our socks
-off!
+This spec was started with W3C's Hg/Mercurial repository but work on [that repository] (https://dvcs.w3.org/hg/ime-api/) has stopped.
